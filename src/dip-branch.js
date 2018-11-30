@@ -7,14 +7,15 @@ import conf from './conf.js';
 
 program
   .version('0.1.0')
-  .action(async () => {
-    await rebase();
+  .arguments('<name>')
+  .action(async (name) => {
+    await branch(name);
   })
   .parse(process.argv);
 
-async function rebase() {
+async function branch(name) {
   shell.exec(`
     git fetch origin ${conf.branch}:${conf.branch}
-    git rebase ${conf.branch}
+    git checkout -b ${name} ${conf.branch}
   `);
 }
