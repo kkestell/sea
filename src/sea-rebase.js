@@ -9,4 +9,3 @@ program
   .option('-i, --interactive', 'interactive rebase')
   .action(rebase)
   .parse(process.argv);
-
