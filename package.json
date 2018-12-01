@@ -1,10 +1,10 @@
 {
-  "name": "dip",
+  "name": "sea",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "bin": {
-    "dip": "bin/dip.js"
+    "sea": "bin/sea.js"
   },
   "scripts": {
     "build": "babel src -d bin && chmod -R +x bin"
