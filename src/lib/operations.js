@@ -9,11 +9,23 @@ export function branch(name) {
 }
 
 export function checkout(name) {
+  // Current branch name
+  const branch = shell.exec('git rev-parse --abbrev-ref HEAD');
+
+  // Stash
+  shell.exec(`git stash save "${branch}"`);
+
+  // Checkout
+  shell.exec(`git checkout ${name}`);
+
+  // Unstash
+  const r = new RegExp(`^(stash@{\d+}).+?(?=${name}: autostash)`);
   const branches = shell.exec('git stash list').split(/\r?\n/);
-  console.log(branches);
-  shell.exec(`
-    git checkout ${name}
-  `);
+  const stash = branches.find(x => r.test(x));
+
+  if (stash === undefined) return;
+
+  shell.exec(`git stash pop "${stash}"`);
 }
 
 export function rebase(cmd) {
