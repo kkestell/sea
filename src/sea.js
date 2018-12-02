@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-import "@babel/polyfill";
-import program from 'commander';
+import '@babel/polyfill'
+import program from 'commander'
 
 program
   .version('0.0.1')
   .command('branch <name>', 'new branch')
   .command('checkout <name>', 'switch to a branch')
   .command('rebase', 'rebase branch')
-  .parse(process.argv);
+  .parse(process.argv)
