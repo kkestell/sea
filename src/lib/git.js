@@ -61,17 +61,17 @@ export function stashChanges () {
 }
 
 export function unstashChanges (name) {
-  const stash = findStash(name)
-  if (stash !== undefined) {
-    sh(`git stash pop "${stash[1]}"`)
+  const s = findStash(name)
+  if (s !== undefined) {
+    sh(`git stash pop "${s[1]}"`)
   }
 }
 
 export function workingDirectoryClean () {
-  const status = sh('git status')
+  const s = sh('git status')
   return (
-    status.includes('working tree clean') ||
-    status.includes('nothing added to commit but untracked files present')
+    s.includes('working tree clean') ||
+    s.includes('nothing added to commit but untracked files present')
   )
 }
 
