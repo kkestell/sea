@@ -1,6 +1,6 @@
 import rc from 'rc'
 
-const conf = rc('dip', {
+const conf = rc('sea', {
   branch: 'master'
 })
 
