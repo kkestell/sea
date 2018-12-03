@@ -3,14 +3,20 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.addFiles = addFiles;
 exports.currentBranchName = currentBranchName;
 exports.checkoutBranch = checkoutBranch;
 exports.checkoutNewBranch = checkoutNewBranch;
+exports.untrackedFiles = untrackedFiles;
+exports.modifiedFiles = modifiedFiles;
+exports.deletedFiles = deletedFiles;
 exports.updateDefaultBranch = updateDefaultBranch;
 exports.findStash = findStash;
 exports.popStash = popStash;
 exports.pushStash = pushStash;
 exports.rebaseCurrentBranch = rebaseCurrentBranch;
+exports.stageUntrackedFiles = stageUntrackedFiles;
+exports.unstageUntrackedFiles = unstageUntrackedFiles;
 exports.stashChanges = stashChanges;
 exports.unstashChanges = unstashChanges;
 exports.workingDirectoryClean = workingDirectoryClean;
@@ -25,6 +31,10 @@ var _conf = _interopRequireDefault(require("./conf"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function addFiles(files) {
+  sh("git add ".concat(files.join(' ')));
+}
+
 function currentBranchName() {
   return sh('git rev-parse --abbrev-ref HEAD');
 }
@@ -35,6 +45,24 @@ function checkoutBranch(name) {
 
 function checkoutNewBranch(name) {
   sh("git checkout -b ".concat(name, " ").concat(_conf.default.branch));
+}
+
+function untrackedFiles() {
+  return shs("git ls-files -o").split(/\r?\n/).filter(function (x) {
+    return x !== '';
+  });
+}
+
+function modifiedFiles() {
+  return shs("git ls-files -m").split(/\r?\n/).filter(function (x) {
+    return x !== '';
+  });
+}
+
+function deletedFiles() {
+  return shs("git ls-files -d").split(/\r?\n/).filter(function (x) {
+    return x !== '';
+  });
 }
 
 function updateDefaultBranch() {
@@ -79,22 +107,30 @@ function rebaseCurrentBranch(interactive) {
   shi("git rebase ".concat(interactive ? '-i' : '', " ").concat(_conf.default.branch));
 }
 
+function stageUntrackedFiles() {
+  sh('git add .');
+}
+
+function unstageUntrackedFiles() {
+  sh('git reset HEAD .');
+}
+
 function stashChanges() {
   if (workingDirectoryClean()) return;
   sh('git stash save "autostash"');
 }
 
 function unstashChanges(name) {
-  var stash = findStash(name);
+  var s = findStash(name);
 
-  if (stash !== undefined) {
-    sh("git stash pop \"".concat(stash[1], "\""));
+  if (s !== undefined) {
+    sh("git stash pop \"".concat(s[1], "\""));
   }
 }
 
 function workingDirectoryClean() {
-  var status = sh('git status');
-  return status.includes('working tree clean') || status.includes('nothing added to commit but untracked files present');
+  var s = sh('git status');
+  return s.includes('working tree clean') || s.includes('nothing added to commit but untracked files present');
 }
 
 function sh(cmd) {
@@ -103,9 +139,22 @@ function sh(cmd) {
   var _shell$exec = _shelljs.default.exec(cmd, {
     silent: true
   }),
-      stdout = _shell$exec.stdout;
+      stdout = _shell$exec.stdout,
+      stderr = _shell$exec.stderr;
 
   console.log(_chalk.default.gray(stdout));
+  if (stderr !== '') console.log(_chalk.default.red(stderr));
+  return stdout.trim();
+}
+
+function shs(cmd) {
+  var _shell$exec2 = _shelljs.default.exec(cmd, {
+    silent: true
+  }),
+      stdout = _shell$exec2.stdout,
+      stderr = _shell$exec2.stderr;
+
+  if (stderr !== '') console.log(_chalk.default.red(stderr));
   return stdout.trim();
 }
 

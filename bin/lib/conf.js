@@ -9,7 +9,7 @@ var _rc = _interopRequireDefault(require("rc"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var conf = (0, _rc.default)('dip', {
+var conf = (0, _rc.default)('sea', {
   branch: 'master'
 });
 var _default = conf;

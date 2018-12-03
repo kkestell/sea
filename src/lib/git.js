@@ -3,6 +3,10 @@ import childProcess from 'child_process'
 import shell from 'shelljs'
 import conf from './conf'
 
+export function addFiles (files) {
+  sh(`git add ${files.join(' ')}`)
+}
+
 export function currentBranchName () {
   return sh('git rev-parse --abbrev-ref HEAD')
 }
@@ -13,6 +17,24 @@ export function checkoutBranch (name) {
 
 export function checkoutNewBranch (name) {
   sh(`git checkout -b ${name} ${conf.branch}`)
+}
+
+export function untrackedFiles () {
+  return shs(`git ls-files -o`)
+    .split(/\r?\n/)
+    .filter(x => x !== '')
+}
+
+export function modifiedFiles () {
+  return shs(`git ls-files -m`)
+    .split(/\r?\n/)
+    .filter(x => x !== '')
+}
+
+export function deletedFiles () {
+  return shs(`git ls-files -d`)
+    .split(/\r?\n/)
+    .filter(x => x !== '')
 }
 
 export function updateDefaultBranch () {
@@ -55,6 +77,14 @@ export function rebaseCurrentBranch (interactive) {
   shi(`git rebase ${interactive ? '-i' : ''} ${conf.branch}`)
 }
 
+export function stageUntrackedFiles () {
+  sh('git add .')
+}
+
+export function unstageUntrackedFiles () {
+  sh('git reset HEAD .')
+}
+
 export function stashChanges () {
   if (workingDirectoryClean()) return
   sh('git stash save "autostash"')
@@ -77,8 +107,15 @@ export function workingDirectoryClean () {
 
 function sh (cmd) {
   console.log(cmd)
-  const { stdout } = shell.exec(cmd, { silent: true })
+  const { stdout, stderr } = shell.exec(cmd, { silent: true })
   console.log(chalk.gray(stdout))
+  if (stderr !== '') console.log(chalk.red(stderr))
+  return stdout.trim()
+}
+
+function shs (cmd) {
+  const { stdout, stderr } = shell.exec(cmd, { silent: true })
+  if (stderr !== '') console.log(chalk.red(stderr))
   return stdout.trim()
 }
 
