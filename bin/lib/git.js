@@ -7,6 +7,7 @@ exports.addFiles = addFiles;
 exports.currentBranchName = currentBranchName;
 exports.checkoutBranch = checkoutBranch;
 exports.checkoutNewBranch = checkoutNewBranch;
+exports.commitChanges = commitChanges;
 exports.untrackedFiles = untrackedFiles;
 exports.modifiedFiles = modifiedFiles;
 exports.deletedFiles = deletedFiles;
@@ -45,6 +46,10 @@ function checkoutBranch(name) {
 
 function checkoutNewBranch(name) {
   sh("git checkout -b ".concat(name, " ").concat(_conf.default.branch));
+}
+
+function commitChanges(message) {
+  sh("git commit -m \"".concat(message, "\""));
 }
 
 function untrackedFiles() {

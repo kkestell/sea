@@ -19,6 +19,10 @@ export function checkoutNewBranch (name) {
   sh(`git checkout -b ${name} ${conf.branch}`)
 }
 
+export function commitChanges (message) {
+  sh(`git commit -m "${message}"`)
+}
+
 export function untrackedFiles () {
   return shs(`git ls-files -o --exclude-standard`)
     .split(/\r?\n/)

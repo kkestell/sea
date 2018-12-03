@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import {
   checkoutBranch,
   checkoutNewBranch,
+  commitChanges,
   deletedFiles,
   modifiedFiles,
   popStash,
@@ -60,6 +61,11 @@ export function checkout (name) {
   checkoutBranch(name)
   unstashChanges(name)
   unstageUntrackedFiles()
+}
+
+export function commit (message) {
+  stageUntrackedFiles()
+  commitChanges(message)
 }
 
 export function rebase (cmd) {

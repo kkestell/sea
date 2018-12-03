@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.branch = branch;
 exports.changes = changes;
 exports.checkout = checkout;
+exports.commit = commit;
 exports.rebase = rebase;
 
 var _chalk = _interopRequireDefault(require("chalk"));
@@ -142,6 +143,11 @@ function checkout(name) {
   (0, _git.checkoutBranch)(name);
   (0, _git.unstashChanges)(name);
   (0, _git.unstageUntrackedFiles)();
+}
+
+function commit(message) {
+  (0, _git.stageUntrackedFiles)();
+  (0, _git.commitChanges)(message);
 }
 
 function rebase(cmd) {
