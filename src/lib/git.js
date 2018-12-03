@@ -20,19 +20,19 @@ export function checkoutNewBranch (name) {
 }
 
 export function untrackedFiles () {
-  return shs(`git ls-files -o`)
+  return shs(`git ls-files -o --exclude-standard`)
     .split(/\r?\n/)
     .filter(x => x !== '')
 }
 
 export function modifiedFiles () {
-  return shs(`git ls-files -m`)
+  return shs(`git ls-files -m --exclude-standard`)
     .split(/\r?\n/)
     .filter(x => x !== '')
 }
 
 export function deletedFiles () {
-  return shs(`git ls-files -d`)
+  return shs(`git ls-files -d --exclude-standard`)
     .split(/\r?\n/)
     .filter(x => x !== '')
 }

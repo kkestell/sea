@@ -48,19 +48,19 @@ function checkoutNewBranch(name) {
 }
 
 function untrackedFiles() {
-  return shs("git ls-files -o").split(/\r?\n/).filter(function (x) {
+  return shs("git ls-files -o --exclude-standard").split(/\r?\n/).filter(function (x) {
     return x !== '';
   });
 }
 
 function modifiedFiles() {
-  return shs("git ls-files -m").split(/\r?\n/).filter(function (x) {
+  return shs("git ls-files -m --exclude-standard").split(/\r?\n/).filter(function (x) {
     return x !== '';
   });
 }
 
 function deletedFiles() {
-  return shs("git ls-files -d").split(/\r?\n/).filter(function (x) {
+  return shs("git ls-files -d --exclude-standard").split(/\r?\n/).filter(function (x) {
     return x !== '';
   });
 }
