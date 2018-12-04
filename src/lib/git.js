@@ -1,7 +1,12 @@
 import chalk from 'chalk'
 import childProcess from 'child_process'
 import shell from 'shelljs'
+import style from 'ansi-styles'
 import conf from './conf'
+
+export function diff () {
+  sh(`git diff`)
+}
 
 export function addFiles (files) {
   sh(`git add ${files.join(' ')}`)
@@ -110,20 +115,22 @@ export function workingDirectoryClean () {
 }
 
 function sh (cmd) {
-  console.log(cmd)
+  console.log(chalk.gray.bold(cmd))
   const { stdout, stderr } = shell.exec(cmd, { silent: true })
-  console.log(chalk.gray(stdout))
-  if (stderr !== '') console.log(chalk.red(stderr))
+  if (stdout !== '') console.log(chalk.gray(stdout))
+  if (stderr !== '') console.log(chalk.gray(stderr))
   return stdout.trim()
 }
 
 function shs (cmd) {
   const { stdout, stderr } = shell.exec(cmd, { silent: true })
-  if (stderr !== '') console.log(chalk.red(stderr))
+  if (stderr !== '') console.log(chalk.gray(stderr))
   return stdout.trim()
 }
 
 function shi (cmd) {
-  console.log(cmd)
+  console.log(chalk.gray.bold(cmd))
+  process.stdout.write(style.gray.open)
   childProcess.execSync(cmd, { stdio: 'inherit' })
+  process.stdout.write(style.gray.close)
 }

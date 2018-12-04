@@ -3,7 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.branch = branch;
+exports.branchNew = branchNew;
+exports.branchDiff = branchDiff;
 exports.changes = changes;
 exports.checkout = checkout;
 exports.commit = commit;
@@ -37,12 +38,16 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-function branch(name) {
+function branchNew(name) {
   (0, _git.stageUntrackedFiles)();
   (0, _git.stashChanges)();
   (0, _git.updateDefaultBranch)();
   (0, _git.checkoutNewBranch)(name);
   (0, _git.checkoutBranch)(name);
+}
+
+function branchDiff() {
+  (0, _git.diff)();
 }
 
 function changes() {

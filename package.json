@@ -11,6 +11,7 @@
     "lint": "standard --fix \"src/**/*.js\""
   },
   "dependencies": {
+    "ansi-styles": "^3.2.1",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "rc": "^1.2.8",

@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.diff = diff;
 exports.addFiles = addFiles;
 exports.currentBranchName = currentBranchName;
 exports.checkoutBranch = checkoutBranch;
@@ -28,9 +29,15 @@ var _child_process = _interopRequireDefault(require("child_process"));
 
 var _shelljs = _interopRequireDefault(require("shelljs"));
 
+var _ansiStyles = _interopRequireDefault(require("ansi-styles"));
+
 var _conf = _interopRequireDefault(require("./conf"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function diff() {
+  sh("git diff");
+}
 
 function addFiles(files) {
   sh("git add ".concat(files.join(' ')));
@@ -139,7 +146,7 @@ function workingDirectoryClean() {
 }
 
 function sh(cmd) {
-  console.log(cmd);
+  console.log(_chalk.default.gray.bold(cmd));
 
   var _shell$exec = _shelljs.default.exec(cmd, {
     silent: true
@@ -147,8 +154,8 @@ function sh(cmd) {
       stdout = _shell$exec.stdout,
       stderr = _shell$exec.stderr;
 
-  console.log(_chalk.default.gray(stdout));
-  if (stderr !== '') console.log(_chalk.default.red(stderr));
+  if (stdout !== '') console.log(_chalk.default.gray(stdout));
+  if (stderr !== '') console.log(_chalk.default.gray(stderr));
   return stdout.trim();
 }
 
@@ -159,14 +166,17 @@ function shs(cmd) {
       stdout = _shell$exec2.stdout,
       stderr = _shell$exec2.stderr;
 
-  if (stderr !== '') console.log(_chalk.default.red(stderr));
+  if (stderr !== '') console.log(_chalk.default.gray(stderr));
   return stdout.trim();
 }
 
 function shi(cmd) {
-  console.log(cmd);
+  console.log(_chalk.default.gray.bold(cmd));
+  process.stdout.write(_ansiStyles.default.gray.open);
 
   _child_process.default.execSync(cmd, {
     stdio: 'inherit'
   });
+
+  process.stdout.write(_ansiStyles.default.gray.close);
 }

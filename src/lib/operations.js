@@ -4,6 +4,7 @@ import {
   checkoutNewBranch,
   commitChanges,
   deletedFiles,
+  diff,
   modifiedFiles,
   popStash,
   pushStash,
@@ -17,12 +18,16 @@ import {
   workingDirectoryClean
 } from './git'
 
-export function branch (name) {
+export function branchNew (name) {
   stageUntrackedFiles()
   stashChanges()
   updateDefaultBranch()
   checkoutNewBranch(name)
   checkoutBranch(name)
+}
+
+export function branchDiff () {
+  diff()
 }
 
 export function changes () {

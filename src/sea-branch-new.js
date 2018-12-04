@@ -2,9 +2,10 @@
 
 import '@babel/polyfill'
 import program from 'commander'
+import { branchNew } from './lib/operations'
 
 program
-  .version('0.0.1')
-  .command('new <name>', 'new branch')
-  .command('diff', 'diff with default branch')
+  .version('0.1.0')
+  .arguments('<name>')
+  .action(branchNew)
   .parse(process.argv)
