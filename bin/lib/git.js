@@ -49,7 +49,8 @@ function displayDiff() {
 
     _fs.default.writeFile(path, diff, function (err) {
       if (err) throw err;
-      sh("open -a Sea\\ Diff.app --args --diff=".concat(path));
+      sh("open -W -a Sea\\ Diff.app --args --diff=".concat(path));
+      cleanupCallback();
     });
   });
 }

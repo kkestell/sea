@@ -14,7 +14,8 @@ export function displayDiff () {
 
     fs.writeFile(path, diff, (err) => {
       if (err) throw err
-      sh(`open -a Sea\\ Diff.app --args --diff=${path}`)
+      sh(`open -W -a Sea\\ Diff.app --args --diff=${path}`)
+      cleanupCallback()
     });
   });
 }
