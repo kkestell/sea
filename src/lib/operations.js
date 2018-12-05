@@ -27,6 +27,7 @@ export function branchNew (name) {
 }
 
 export function diff () {
+  if (workingDirectoryClean()) return
   stageUntrackedFiles()
   displayDiff()
   unstageUntrackedFiles()

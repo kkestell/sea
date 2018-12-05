@@ -47,6 +47,7 @@ function branchNew(name) {
 }
 
 function diff() {
+  if ((0, _git.workingDirectoryClean)()) return;
   (0, _git.stageUntrackedFiles)();
   (0, _git.displayDiff)();
   (0, _git.unstageUntrackedFiles)();
