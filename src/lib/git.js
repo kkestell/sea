@@ -7,7 +7,7 @@ import tmp from 'tmp'
 import conf from './conf'
 
 export function displayDiff () {
-  const diff = shs(`git diff`)
+  const diff = shs(`git diff --cached`)
 
   tmp.file({ keep: true }, (err, path, fd, cleanupCallback) => {
     if (err) throw err

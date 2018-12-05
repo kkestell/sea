@@ -40,7 +40,7 @@ var _conf = _interopRequireDefault(require("./conf"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function displayDiff() {
-  var diff = shs("git diff");
+  var diff = shs("git diff --cached");
 
   _tmp.default.file({
     keep: true
