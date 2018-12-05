@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.diff = diff;
+exports.displayDiff = displayDiff;
 exports.addFiles = addFiles;
 exports.currentBranchName = currentBranchName;
 exports.checkoutBranch = checkoutBranch;
@@ -27,16 +27,31 @@ var _chalk = _interopRequireDefault(require("chalk"));
 
 var _child_process = _interopRequireDefault(require("child_process"));
 
+var _fs = _interopRequireDefault(require("fs"));
+
 var _shelljs = _interopRequireDefault(require("shelljs"));
 
 var _ansiStyles = _interopRequireDefault(require("ansi-styles"));
+
+var _tmp = _interopRequireDefault(require("tmp"));
 
 var _conf = _interopRequireDefault(require("./conf"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function diff() {
-  sh("git diff");
+function displayDiff() {
+  var diff = shs("git diff");
+
+  _tmp.default.file({
+    keep: true
+  }, function (err, path, fd, cleanupCallback) {
+    if (err) throw err;
+
+    _fs.default.writeFile(path, diff, function (err) {
+      if (err) throw err;
+      sh("open -a Sea\\ Diff.app --args --diff=".concat(path));
+    });
+  });
 }
 
 function addFiles(files) {

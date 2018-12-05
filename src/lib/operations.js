@@ -4,7 +4,7 @@ import {
   checkoutNewBranch,
   commitChanges,
   deletedFiles,
-  diff,
+  displayDiff,
   modifiedFiles,
   popStash,
   pushStash,
@@ -26,8 +26,10 @@ export function branchNew (name) {
   checkoutBranch(name)
 }
 
-export function branchDiff () {
-  diff()
+export function diff () {
+  stageUntrackedFiles()
+  displayDiff()
+  unstageUntrackedFiles()
 }
 
 export function changes () {

@@ -15,7 +15,8 @@
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "rc": "^1.2.8",
-    "shelljs": "^0.8.3"
+    "shelljs": "^0.8.3",
+    "tmp": "^0.0.33"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",

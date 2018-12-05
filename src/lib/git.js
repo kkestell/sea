@@ -1,11 +1,22 @@
 import chalk from 'chalk'
 import childProcess from 'child_process'
+import fs from 'fs'
 import shell from 'shelljs'
 import style from 'ansi-styles'
+import tmp from 'tmp'
 import conf from './conf'
 
-export function diff () {
-  sh(`git diff`)
+export function displayDiff () {
+  const diff = shs(`git diff`)
+
+  tmp.file({ keep: true }, (err, path, fd, cleanupCallback) => {
+    if (err) throw err
+
+    fs.writeFile(path, diff, (err) => {
+      if (err) throw err
+      sh(`open -a Sea\\ Diff.app --args --diff=${path}`)
+    });
+  });
 }
 
 export function addFiles (files) {
