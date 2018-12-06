@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.branchNew = branchNew;
+exports.branchDelete = branchDelete;
 exports.diff = diff;
 exports.changes = changes;
 exports.checkout = checkout;
@@ -44,6 +45,10 @@ function branchNew(name) {
   (0, _git.updateDefaultBranch)();
   (0, _git.checkoutNewBranch)(name);
   (0, _git.checkoutBranch)(name);
+}
+
+function branchDelete(name) {
+  (0, _git.deleteBranch)(name);
 }
 
 function diff() {

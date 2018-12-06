@@ -3,6 +3,7 @@ import {
   checkoutBranch,
   checkoutNewBranch,
   commitChanges,
+  deleteBranch,
   deletedFiles,
   displayDiff,
   modifiedFiles,
@@ -24,6 +25,10 @@ export function branchNew (name) {
   updateDefaultBranch()
   checkoutNewBranch(name)
   checkoutBranch(name)
+}
+
+export function branchDelete (name) {
+  deleteBranch(name)
 }
 
 export function diff () {

@@ -6,18 +6,8 @@ import style from 'ansi-styles'
 import tmp from 'tmp'
 import conf from './conf'
 
-export function displayDiff () {
-  const diff = shs(`git diff --cached`)
-
-  tmp.file({ keep: true }, (err, path, fd, cleanupCallback) => {
-    if (err) throw err
-
-    fs.writeFile(path, diff, (err) => {
-      if (err) throw err
-      sh(`open -W -a Sea\\ Diff.app --args --diff=${path}`)
-      cleanupCallback()
-    });
-  });
+export function abortRebase () {
+  sh('git rebase --abort')
 }
 
 export function addFiles (files) {
@@ -40,20 +30,55 @@ export function commitChanges (message) {
   sh(`git commit -m "${message}"`)
 }
 
-export function untrackedFiles () {
-  return shs(`git ls-files -o --exclude-standard`)
-    .split(/\r?\n/)
-    .filter(x => x !== '')
-}
+export function deleteBranch (name) {
+  const currentBranch = currentBranchName()
+  const targetBranch = name || currentBranch
 
-export function modifiedFiles () {
-  return shs(`git ls-files -m --exclude-standard`)
-    .split(/\r?\n/)
-    .filter(x => x !== '')
+  if (targetBranch === conf.branch) {
+    console.log("Can't delete the default branch")
+    return
+  }
+
+  if (currentBranch === targetBranch) {
+    checkoutBranch(conf.branch)
+  }
+
+  sh(`git branch -D ${targetBranch}`)
 }
 
 export function deletedFiles () {
-  return shs(`git ls-files -d --exclude-standard`)
+  return sh(`git ls-files -d --exclude-standard`)
+    .split(/\r?\n/)
+    .filter(x => x !== '')
+}
+
+export function displayDiff () {
+  const diff = sh(`git diff --cached`)
+
+  tmp.file({ keep: true }, (err, path, fd, cleanupCallback) => {
+    if (err) throw err
+
+    fs.writeFile(path, diff, (err) => {
+      if (err) throw err
+      sh(`open -W -a Sea\\ Diff.app --args --diff=${path}`)
+      cleanupCallback()
+    })
+  })
+}
+
+export function findStash (name) {
+  const r = new RegExp(`(stash@{\\d+\\}): On ${name}`)
+
+  return sh('git stash list')
+    .split(/\r?\n/)
+    .filter(x => x !== '')
+    .map(x => x.match(r))
+    .filter(x => x !== null)
+    .find(x => x.length === 2)
+}
+
+export function modifiedFiles () {
+  return sh(`git ls-files -m --exclude-standard`)
     .split(/\r?\n/)
     .filter(x => x !== '')
 }
@@ -75,15 +100,10 @@ export function updateDefaultBranch () {
   }
 }
 
-export function findStash (name) {
-  const r = new RegExp(`(stash@{\\d+\\}): On ${name}`)
-
-  return sh('git stash list')
+export function untrackedFiles () {
+  return sh(`git ls-files -o --exclude-standard`)
     .split(/\r?\n/)
     .filter(x => x !== '')
-    .map(x => x.match(r))
-    .filter(x => x !== null)
-    .find(x => x.length === 2)
 }
 
 export function popStash () {
@@ -95,20 +115,23 @@ export function pushStash () {
 }
 
 export function rebaseCurrentBranch (interactive) {
-  shi(`git rebase ${interactive ? '-i' : ''} ${conf.branch}`)
+  if (!shi(`git rebase ${conf.branch} ${interactive ? '-i' : ''}`)) {
+    console.log('Rebase encountered merge conflicts. Aborting!')
+    abortRebase()
+  }
 }
 
 export function stageUntrackedFiles () {
   sh('git add .')
 }
 
-export function unstageUntrackedFiles () {
-  sh('git reset HEAD .')
-}
-
 export function stashChanges () {
   if (workingDirectoryClean()) return
   sh('git stash save "autostash"')
+}
+
+export function unstageUntrackedFiles () {
+  sh('git reset HEAD .')
 }
 
 export function unstashChanges (name) {
@@ -128,21 +151,23 @@ export function workingDirectoryClean () {
 
 function sh (cmd) {
   console.log(chalk.gray.bold(cmd))
-  const { stdout, stderr } = shell.exec(cmd, { silent: true })
-  if (stdout !== '') console.log(chalk.gray(stdout))
-  if (stderr !== '') console.log(chalk.gray(stderr))
-  return stdout.trim()
-}
-
-function shs (cmd) {
-  const { stdout, stderr } = shell.exec(cmd, { silent: true })
-  if (stderr !== '') console.log(chalk.gray(stderr))
+  const { stdout } = shell.exec(cmd, { silent: true })
+  if (stdout !== '') console.log(chalk.gray(stdout.trim()))
+  // if (stderr !== '') console.log(chalk.gray.italic(stderr.trim()))
+  // console.log(chalk.red(`=> ${code}`))
   return stdout.trim()
 }
 
 function shi (cmd) {
   console.log(chalk.gray.bold(cmd))
   process.stdout.write(style.gray.open)
-  childProcess.execSync(cmd, { stdio: 'inherit' })
-  process.stdout.write(style.gray.close)
+  try {
+    childProcess.execSync(cmd, { stdio: 'inherit' })
+  } catch (error) {
+    // console.log(chalk.red(`=> ${error.status}`))
+    return false
+  } finally {
+    process.stdout.write(style.gray.close)
+  }
+  return true
 }

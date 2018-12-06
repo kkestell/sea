@@ -9,4 +9,4 @@ var _operations = require("./lib/operations");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_commander.default.version('0.1.0').action(_operations.branchDiff).parse(process.argv);
+_commander.default.version('0.1.0').arguments('[name]').action(_operations.branchDelete).parse(process.argv);

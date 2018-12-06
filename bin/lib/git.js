@@ -3,23 +3,25 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.displayDiff = displayDiff;
+exports.abortRebase = abortRebase;
 exports.addFiles = addFiles;
 exports.currentBranchName = currentBranchName;
 exports.checkoutBranch = checkoutBranch;
 exports.checkoutNewBranch = checkoutNewBranch;
 exports.commitChanges = commitChanges;
-exports.untrackedFiles = untrackedFiles;
-exports.modifiedFiles = modifiedFiles;
+exports.deleteBranch = deleteBranch;
 exports.deletedFiles = deletedFiles;
-exports.updateDefaultBranch = updateDefaultBranch;
+exports.displayDiff = displayDiff;
 exports.findStash = findStash;
+exports.modifiedFiles = modifiedFiles;
+exports.updateDefaultBranch = updateDefaultBranch;
+exports.untrackedFiles = untrackedFiles;
 exports.popStash = popStash;
 exports.pushStash = pushStash;
 exports.rebaseCurrentBranch = rebaseCurrentBranch;
 exports.stageUntrackedFiles = stageUntrackedFiles;
-exports.unstageUntrackedFiles = unstageUntrackedFiles;
 exports.stashChanges = stashChanges;
+exports.unstageUntrackedFiles = unstageUntrackedFiles;
 exports.unstashChanges = unstashChanges;
 exports.workingDirectoryClean = workingDirectoryClean;
 
@@ -39,20 +41,8 @@ var _conf = _interopRequireDefault(require("./conf"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function displayDiff() {
-  var diff = shs("git diff --cached");
-
-  _tmp.default.file({
-    keep: true
-  }, function (err, path, fd, cleanupCallback) {
-    if (err) throw err;
-
-    _fs.default.writeFile(path, diff, function (err) {
-      if (err) throw err;
-      sh("open -W -a Sea\\ Diff.app --args --diff=".concat(path));
-      cleanupCallback();
-    });
-  });
+function abortRebase() {
+  sh('git rebase --abort');
 }
 
 function addFiles(files) {
@@ -75,20 +65,59 @@ function commitChanges(message) {
   sh("git commit -m \"".concat(message, "\""));
 }
 
-function untrackedFiles() {
-  return shs("git ls-files -o --exclude-standard").split(/\r?\n/).filter(function (x) {
+function deleteBranch(name) {
+  var currentBranch = currentBranchName();
+  var targetBranch = name || currentBranch;
+
+  if (targetBranch === _conf.default.branch) {
+    console.log("Can't delete the default branch");
+    return;
+  }
+
+  if (currentBranch === targetBranch) {
+    checkoutBranch(_conf.default.branch);
+  }
+
+  sh("git branch -D ".concat(targetBranch));
+}
+
+function deletedFiles() {
+  return sh("git ls-files -d --exclude-standard").split(/\r?\n/).filter(function (x) {
     return x !== '';
+  });
+}
+
+function displayDiff() {
+  var diff = sh("git diff --cached");
+
+  _tmp.default.file({
+    keep: true
+  }, function (err, path, fd, cleanupCallback) {
+    if (err) throw err;
+
+    _fs.default.writeFile(path, diff, function (err) {
+      if (err) throw err;
+      sh("open -W -a Sea\\ Diff.app --args --diff=".concat(path));
+      cleanupCallback();
+    });
+  });
+}
+
+function findStash(name) {
+  var r = new RegExp("(stash@{\\d+\\}): On ".concat(name));
+  return sh('git stash list').split(/\r?\n/).filter(function (x) {
+    return x !== '';
+  }).map(function (x) {
+    return x.match(r);
+  }).filter(function (x) {
+    return x !== null;
+  }).find(function (x) {
+    return x.length === 2;
   });
 }
 
 function modifiedFiles() {
-  return shs("git ls-files -m --exclude-standard").split(/\r?\n/).filter(function (x) {
-    return x !== '';
-  });
-}
-
-function deletedFiles() {
-  return shs("git ls-files -d --exclude-standard").split(/\r?\n/).filter(function (x) {
+  return sh("git ls-files -m --exclude-standard").split(/\r?\n/).filter(function (x) {
     return x !== '';
   });
 }
@@ -110,16 +139,9 @@ function updateDefaultBranch() {
   }
 }
 
-function findStash(name) {
-  var r = new RegExp("(stash@{\\d+\\}): On ".concat(name));
-  return sh('git stash list').split(/\r?\n/).filter(function (x) {
+function untrackedFiles() {
+  return sh("git ls-files -o --exclude-standard").split(/\r?\n/).filter(function (x) {
     return x !== '';
-  }).map(function (x) {
-    return x.match(r);
-  }).filter(function (x) {
-    return x !== null;
-  }).find(function (x) {
-    return x.length === 2;
   });
 }
 
@@ -132,20 +154,23 @@ function pushStash() {
 }
 
 function rebaseCurrentBranch(interactive) {
-  shi("git rebase ".concat(interactive ? '-i' : '', " ").concat(_conf.default.branch));
+  if (!shi("git rebase ".concat(_conf.default.branch, " ").concat(interactive ? '-i' : ''))) {
+    console.log('Rebase encountered merge conflicts. Aborting!');
+    abortRebase();
+  }
 }
 
 function stageUntrackedFiles() {
   sh('git add .');
 }
 
-function unstageUntrackedFiles() {
-  sh('git reset HEAD .');
-}
-
 function stashChanges() {
   if (workingDirectoryClean()) return;
   sh('git stash save "autostash"');
+}
+
+function unstageUntrackedFiles() {
+  sh('git reset HEAD .');
 }
 
 function unstashChanges(name) {
@@ -167,22 +192,13 @@ function sh(cmd) {
   var _shell$exec = _shelljs.default.exec(cmd, {
     silent: true
   }),
+      code = _shell$exec.code,
       stdout = _shell$exec.stdout,
       stderr = _shell$exec.stderr;
 
-  if (stdout !== '') console.log(_chalk.default.gray(stdout));
-  if (stderr !== '') console.log(_chalk.default.gray(stderr));
-  return stdout.trim();
-}
+  if (stdout !== '') console.log(_chalk.default.gray(stdout.trim())); //if (stderr !== '') console.log(chalk.gray.italic(stderr.trim()))
+  //console.log(chalk.red(`=> ${code}`))
 
-function shs(cmd) {
-  var _shell$exec2 = _shelljs.default.exec(cmd, {
-    silent: true
-  }),
-      stdout = _shell$exec2.stdout,
-      stderr = _shell$exec2.stderr;
-
-  if (stderr !== '') console.log(_chalk.default.gray(stderr));
   return stdout.trim();
 }
 
@@ -190,9 +206,16 @@ function shi(cmd) {
   console.log(_chalk.default.gray.bold(cmd));
   process.stdout.write(_ansiStyles.default.gray.open);
 
-  _child_process.default.execSync(cmd, {
-    stdio: 'inherit'
-  });
+  try {
+    _child_process.default.execSync(cmd, {
+      stdio: 'inherit'
+    });
+  } catch (error) {
+    //console.log(chalk.red(`=> ${error.status}`))
+    return false;
+  } finally {
+    process.stdout.write(_ansiStyles.default.gray.close);
+  }
 
-  process.stdout.write(_ansiStyles.default.gray.close);
+  return true;
 }
