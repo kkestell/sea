@@ -1,4 +1,5 @@
 import Repository from './repository';
+import conf from './conf';
 
 export async function newBranch(name) {
   const repo = await Repository.open();
@@ -8,12 +9,12 @@ export async function newBranch(name) {
     return;
   }
 
-  if (!(await repo.pullRemote('master'))) {
+  if (!(await repo.pullRemote(conf.branch))) {
     return;
   }
 
   await repo.stashChanges();
-  await repo.checkoutBranch('master');
+  await repo.checkoutBranch(conf.branch);
   await repo.createBranch(name);
   await repo.checkoutBranch(name);
 
@@ -26,7 +27,7 @@ export async function switchBranch(name) {
   if (await repo.onBranch(name)) return;
 
   if (!(await repo.branchExists(name))) {
-    console.log('No such branch');
+    console.log(`No such branch '${name}'`);
     return;
   }
 

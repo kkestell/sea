@@ -8,6 +8,8 @@ exports.switchBranch = switchBranch;
 
 var _repository = _interopRequireDefault(require("./repository"));
 
+var _conf = _interopRequireDefault(require("./conf"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -46,7 +48,7 @@ function _newBranch() {
 
           case 8:
             _context.next = 10;
-            return repo.pullRemote('master');
+            return repo.pullRemote(_conf.default.branch);
 
           case 10:
             if (_context.sent) {
@@ -62,7 +64,7 @@ function _newBranch() {
 
           case 14:
             _context.next = 16;
-            return repo.checkoutBranch('master');
+            return repo.checkoutBranch(_conf.default.branch);
 
           case 16:
             _context.next = 18;
@@ -124,7 +126,7 @@ function _switchBranch() {
               break;
             }
 
-            console.log('No such branch');
+            console.log("No such branch '".concat(name, "'"));
             return _context2.abrupt("return");
 
           case 12:
