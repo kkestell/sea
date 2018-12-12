@@ -8,15 +8,12 @@
   },
   "scripts": {
     "build": "babel src -d bin && chmod -R +x bin",
-    "lint": "standard --fix \"src/**/*.js\""
+    "lint": "eslint src/**/* --fix"
   },
   "dependencies": {
-    "ansi-styles": "^3.2.1",
-    "chalk": "^2.4.1",
     "commander": "^2.19.0",
-    "rc": "^1.2.8",
-    "shelljs": "^0.8.3",
-    "tmp": "^0.0.33"
+    "nodegit": "^0.23.0",
+    "rc": "^1.2.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.5",
@@ -24,6 +21,11 @@
     "@babel/node": "^7.0.0",
     "@babel/plugin-transform-async-to-generator": "^7.1.0",
     "@babel/preset-env": "^7.1.6",
-    "standard": "^12.0.1"
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "prettier": "1.15.3"
   }
 }

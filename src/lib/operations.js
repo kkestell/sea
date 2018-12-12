@@ -1,90 +1,36 @@
-import chalk from 'chalk'
-import {
-  checkoutBranch,
-  checkoutNewBranch,
-  commitChanges,
-  deleteBranch,
-  deletedFiles,
-  displayDiff,
-  modifiedFiles,
-  popStash,
-  pushStash,
-  rebaseCurrentBranch,
-  stashChanges,
-  unstashChanges,
-  untrackedFiles,
-  stageUntrackedFiles,
-  unstageUntrackedFiles,
-  updateDefaultBranch,
-  workingDirectoryClean
-} from './git'
+import Repository from './repository';
 
-export function branchNew (name) {
-  stageUntrackedFiles()
-  stashChanges()
-  updateDefaultBranch()
-  checkoutNewBranch(name)
-  checkoutBranch(name)
-}
+export async function newBranch(name) {
+  const repo = await Repository.open();
 
-export function branchDelete (name) {
-  deleteBranch(name)
-}
-
-export function diff () {
-  if (workingDirectoryClean()) return
-  stageUntrackedFiles()
-  displayDiff()
-  unstageUntrackedFiles()
-}
-
-export function changes () {
-  const u = untrackedFiles()
-  const m = modifiedFiles()
-  const d = deletedFiles()
-
-  console.log()
-
-  if (u.length > 0) {
-    for (let f of u) {
-      console.log(chalk`{green     ${f}}`)
-    }
-    console.log()
+  if (await repo.branchExists(name)) {
+    console.log(`Branch exists '${name}'`);
+    return;
   }
 
-  if (m.length > 0) {
-    for (let f of m) {
-      // Ignore files which have been deleted
-      if (!d.includes(f)) console.log(`    ${f}`)
-    }
-    console.log()
+  if (!(await repo.pullRemote('master'))) {
+    return;
   }
 
-  if (d.length > 0) {
-    for (let f of d) {
-      console.log(chalk`{red     ${f}}`)
-    }
-    console.log()
+  await repo.stashChanges();
+  await repo.checkoutBranch('master');
+  await repo.createBranch(name);
+  await repo.checkoutBranch(name);
+
+  console.log(`Switched to new branch '${name}'`);
+}
+
+export async function switchBranch(name) {
+  const repo = await Repository.open();
+
+  if (await repo.onBranch(name)) return;
+
+  if (!(await repo.branchExists(name))) {
+    console.log('No such branch');
+    return;
   }
-}
 
-export function checkout (name) {
-  stageUntrackedFiles()
-  stashChanges()
-  checkoutBranch(name)
-  unstashChanges(name)
-  unstageUntrackedFiles()
-}
-
-export function commit (message) {
-  stageUntrackedFiles()
-  commitChanges(message)
-}
-
-export function rebase (cmd) {
-  updateDefaultBranch()
-  const stash = !workingDirectoryClean()
-  if (stash) pushStash()
-  rebaseCurrentBranch(cmd.interactive)
-  if (stash) popStash()
+  await repo.stashChanges();
+  await repo.checkoutBranch(name);
+  await repo.unstashChanges(name);
 }

@@ -3,170 +3,148 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.branchNew = branchNew;
-exports.branchDelete = branchDelete;
-exports.diff = diff;
-exports.changes = changes;
-exports.checkout = checkout;
-exports.commit = commit;
-exports.rebase = rebase;
+exports.newBranch = newBranch;
+exports.switchBranch = switchBranch;
 
-var _chalk = _interopRequireDefault(require("chalk"));
-
-var _git = require("./git");
+var _repository = _interopRequireDefault(require("./repository"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _templateObject2() {
-  var data = _taggedTemplateLiteral(["{red     ", "}"]);
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-  _templateObject2 = function _templateObject2() {
-    return data;
-  };
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-  return data;
+function newBranch(_x) {
+  return _newBranch.apply(this, arguments);
 }
 
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["{green     ", "}"]);
+function _newBranch() {
+  _newBranch = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee(name) {
+    var repo;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return _repository.default.open();
 
-  _templateObject = function _templateObject() {
-    return data;
-  };
+          case 2:
+            repo = _context.sent;
+            _context.next = 5;
+            return repo.branchExists(name);
 
-  return data;
-}
+          case 5:
+            if (!_context.sent) {
+              _context.next = 8;
+              break;
+            }
 
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+            console.log("Branch exists '".concat(name, "'"));
+            return _context.abrupt("return");
 
-function branchNew(name) {
-  (0, _git.stageUntrackedFiles)();
-  (0, _git.stashChanges)();
-  (0, _git.updateDefaultBranch)();
-  (0, _git.checkoutNewBranch)(name);
-  (0, _git.checkoutBranch)(name);
-}
+          case 8:
+            _context.next = 10;
+            return repo.pullRemote('master');
 
-function branchDelete(name) {
-  (0, _git.deleteBranch)(name);
-}
+          case 10:
+            if (_context.sent) {
+              _context.next = 12;
+              break;
+            }
 
-function diff() {
-  if ((0, _git.workingDirectoryClean)()) return;
-  (0, _git.stageUntrackedFiles)();
-  (0, _git.displayDiff)();
-  (0, _git.unstageUntrackedFiles)();
-}
+            return _context.abrupt("return");
 
-function changes() {
-  var u = (0, _git.untrackedFiles)();
-  var m = (0, _git.modifiedFiles)();
-  var d = (0, _git.deletedFiles)();
-  console.log();
+          case 12:
+            _context.next = 14;
+            return repo.stashChanges();
 
-  if (u.length > 0) {
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
+          case 14:
+            _context.next = 16;
+            return repo.checkoutBranch('master');
 
-    try {
-      for (var _iterator = u[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var f = _step.value;
-        console.log((0, _chalk.default)(_templateObject(), f));
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return != null) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
+          case 16:
+            _context.next = 18;
+            return repo.createBranch(name);
 
-    console.log();
-  }
+          case 18:
+            _context.next = 20;
+            return repo.checkoutBranch(name);
 
-  if (m.length > 0) {
-    var _iteratorNormalCompletion2 = true;
-    var _didIteratorError2 = false;
-    var _iteratorError2 = undefined;
+          case 20:
+            console.log("Switched to new branch '".concat(name, "'"));
 
-    try {
-      for (var _iterator2 = m[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-        var _f = _step2.value;
-        // Ignore files which have been deleted
-        if (!d.includes(_f)) console.log("    ".concat(_f));
-      }
-    } catch (err) {
-      _didIteratorError2 = true;
-      _iteratorError2 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-          _iterator2.return();
-        }
-      } finally {
-        if (_didIteratorError2) {
-          throw _iteratorError2;
+          case 21:
+          case "end":
+            return _context.stop();
         }
       }
-    }
+    }, _callee, this);
+  }));
+  return _newBranch.apply(this, arguments);
+}
 
-    console.log();
-  }
+function switchBranch(_x2) {
+  return _switchBranch.apply(this, arguments);
+}
 
-  if (d.length > 0) {
-    var _iteratorNormalCompletion3 = true;
-    var _didIteratorError3 = false;
-    var _iteratorError3 = undefined;
+function _switchBranch() {
+  _switchBranch = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee2(name) {
+    var repo;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return _repository.default.open();
 
-    try {
-      for (var _iterator3 = d[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-        var _f2 = _step3.value;
-        console.log((0, _chalk.default)(_templateObject2(), _f2));
-      }
-    } catch (err) {
-      _didIteratorError3 = true;
-      _iteratorError3 = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
-          _iterator3.return();
+          case 2:
+            repo = _context2.sent;
+            _context2.next = 5;
+            return repo.onBranch(name);
+
+          case 5:
+            if (!_context2.sent) {
+              _context2.next = 7;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 7:
+            _context2.next = 9;
+            return repo.branchExists(name);
+
+          case 9:
+            if (_context2.sent) {
+              _context2.next = 12;
+              break;
+            }
+
+            console.log('No such branch');
+            return _context2.abrupt("return");
+
+          case 12:
+            _context2.next = 14;
+            return repo.stashChanges();
+
+          case 14:
+            _context2.next = 16;
+            return repo.checkoutBranch(name);
+
+          case 16:
+            _context2.next = 18;
+            return repo.unstashChanges(name);
+
+          case 18:
+          case "end":
+            return _context2.stop();
         }
-      } finally {
-        if (_didIteratorError3) {
-          throw _iteratorError3;
-        }
       }
-    }
-
-    console.log();
-  }
-}
-
-function checkout(name) {
-  (0, _git.stageUntrackedFiles)();
-  (0, _git.stashChanges)();
-  (0, _git.checkoutBranch)(name);
-  (0, _git.unstashChanges)(name);
-  (0, _git.unstageUntrackedFiles)();
-}
-
-function commit(message) {
-  (0, _git.stageUntrackedFiles)();
-  (0, _git.commitChanges)(message);
-}
-
-function rebase(cmd) {
-  (0, _git.updateDefaultBranch)();
-  var stash = !(0, _git.workingDirectoryClean)();
-  if (stash) (0, _git.pushStash)();
-  (0, _git.rebaseCurrentBranch)(cmd.interactive);
-  if (stash) (0, _git.popStash)();
+    }, _callee2, this);
+  }));
+  return _switchBranch.apply(this, arguments);
 }

@@ -2,10 +2,10 @@
 
 import '@babel/polyfill'
 import program from 'commander'
-import { branchDelete } from './lib/operations'
+import { switchBranch } from './lib/operations'
 
 program
   .version('0.1.0')
-  .arguments('[name]')
-  .action(branchDelete)
+  .arguments('<name>')
+  .action(switchBranch)
   .parse(process.argv)
