@@ -135,6 +135,15 @@ function _showChanges() {
 
           case 5:
             changes = _context2.sent;
+
+            if (!(changes.new.length === 0 && changes.modified.length === 0 && changes.deleted.length === 0)) {
+              _context2.next = 8;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 8:
             console.log();
 
             if (changes.new.length > 0) {
@@ -158,7 +167,7 @@ function _showChanges() {
               console.log();
             }
 
-          case 10:
+          case 12:
           case "end":
             return _context2.stop();
         }

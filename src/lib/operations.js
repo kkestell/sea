@@ -25,6 +25,13 @@ export async function showChanges() {
 
   const changes = await repo.changedFiles();
 
+  if (
+    changes.new.length === 0 &&
+    changes.modified.length === 0 &&
+    changes.deleted.length === 0
+  )
+    return;
+
   console.log();
 
   if (changes.new.length > 0) {
