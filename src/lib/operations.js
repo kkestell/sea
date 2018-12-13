@@ -10,9 +10,7 @@ export async function newBranch(name) {
     return;
   }
 
-  if (!(await repo.pullRemote(conf.branch))) {
-    return;
-  }
+  if (!(await repo.pullRemote(conf.branch))) return;
 
   await repo.stashChanges();
   await repo.checkoutBranch(conf.branch);
@@ -20,6 +18,29 @@ export async function newBranch(name) {
   await repo.checkoutBranch(name);
 
   console.log(`Switched to new branch '${name}'`);
+}
+
+export async function showChanges() {
+  const repo = await Repository.open();
+
+  const changes = await repo.changedFiles();
+
+  console.log();
+
+  if (changes.new.length > 0) {
+    changes.new.forEach(f => console.log(chalk`{green     ${f}}`));
+    console.log();
+  }
+
+  if (changes.modified.length > 0) {
+    changes.modified.forEach(f => console.log(`    ${f}`));
+    console.log();
+  }
+
+  if (changes.deleted.length > 0) {
+    changes.deleted.forEach(f => console.log(chalk`{red     ${f}}`));
+    console.log();
+  }
 }
 
 export async function switchBranch(name) {
@@ -35,14 +56,4 @@ export async function switchBranch(name) {
   await repo.stashChanges();
   await repo.checkoutBranch(name);
   await repo.unstashChanges(name);
-}
-
-export async function showChanges() {
-  const repo = await Repository.open();
-
-  const changes = await repo.changedFiles();
-
-  changes.new.forEach(f => console.log(chalk.green(f)));
-  changes.modified.forEach(f => console.log(f));
-  changes.deleted.forEach(f => console.log(chalk.red(f)));
 }
