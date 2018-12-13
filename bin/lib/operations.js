@@ -10,9 +10,11 @@ exports.switchBranch = switchBranch;
 
 var _chalk = _interopRequireDefault(require("chalk"));
 
-var _repository = _interopRequireDefault(require("./repository"));
+var sea = _interopRequireWildcard(require("./sea"));
 
 var _conf = _interopRequireDefault(require("./conf"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58,7 +60,7 @@ function _initRepository() {
           case 0:
             path = _args.length > 0 && _args[0] !== undefined ? _args[0] : process.cwd();
             _context.next = 3;
-            return _repository.default.init(path);
+            return sea.init(path);
 
           case 3:
           case "end":
@@ -84,12 +86,12 @@ function _newBranch() {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return _repository.default.open();
+            return sea.open();
 
           case 2:
             repo = _context2.sent;
             _context2.next = 5;
-            return repo.branchExists(name);
+            return sea.branchExists(repo, name);
 
           case 5:
             if (!_context2.sent) {
@@ -102,7 +104,7 @@ function _newBranch() {
 
           case 8:
             _context2.next = 10;
-            return repo.pullRemote(_conf.default.branch);
+            return sea.pullRemote(repo, _conf.default.branch);
 
           case 10:
             if (_context2.sent) {
@@ -114,19 +116,19 @@ function _newBranch() {
 
           case 12:
             _context2.next = 14;
-            return repo.stashChanges();
+            return sea.stashChanges(repo);
 
           case 14:
             _context2.next = 16;
-            return repo.checkoutBranch(_conf.default.branch);
+            return sea.checkoutBranch(repo, _conf.default.branch);
 
           case 16:
             _context2.next = 18;
-            return repo.createBranch(name);
+            return sea.createBranch(repo, name);
 
           case 18:
             _context2.next = 20;
-            return repo.checkoutBranch(name);
+            return sea.checkoutBranch(repo, name);
 
           case 20:
             console.log("Switched to new branch '".concat(name, "'"));
@@ -155,12 +157,12 @@ function _showChanges() {
         switch (_context3.prev = _context3.next) {
           case 0:
             _context3.next = 2;
-            return _repository.default.open();
+            return sea.open();
 
           case 2:
             repo = _context3.sent;
             _context3.next = 5;
-            return repo.changedFiles();
+            return sea.changedFiles(repo);
 
           case 5:
             changes = _context3.sent;
@@ -220,12 +222,12 @@ function _switchBranch() {
         switch (_context4.prev = _context4.next) {
           case 0:
             _context4.next = 2;
-            return _repository.default.open();
+            return sea.open();
 
           case 2:
             repo = _context4.sent;
             _context4.next = 5;
-            return repo.onBranch(name);
+            return sea.onBranch(repo, name);
 
           case 5:
             if (!_context4.sent) {
@@ -237,7 +239,7 @@ function _switchBranch() {
 
           case 7:
             _context4.next = 9;
-            return repo.branchExists(name);
+            return sea.branchExists(repo, name);
 
           case 9:
             if (_context4.sent) {
@@ -250,15 +252,15 @@ function _switchBranch() {
 
           case 12:
             _context4.next = 14;
-            return repo.stashChanges();
+            return sea.stashChanges(repo);
 
           case 14:
             _context4.next = 16;
-            return repo.checkoutBranch(name);
+            return sea.checkoutBranch(repo, name);
 
           case 16:
             _context4.next = 18;
-            return repo.unstashChanges(name);
+            return sea.unstashChanges(repo, name);
 
           case 18:
           case "end":

@@ -1,33 +1,33 @@
 import chalk from 'chalk';
-import Repository from './repository';
+import * as sea from './sea';
 import conf from './conf';
 
 export async function initRepository(path = process.cwd()) {
-  await Repository.init(path);
+  await sea.init(path);
 }
 
 export async function newBranch(name) {
-  const repo = await Repository.open();
+  const repo = await sea.open();
 
-  if (await repo.branchExists(name)) {
+  if (await sea.branchExists(repo, name)) {
     console.log(`Branch exists '${name}'`);
     return;
   }
 
-  if (!(await repo.pullRemote(conf.branch))) return;
+  if (!(await sea.pullRemote(repo, conf.branch))) return;
 
-  await repo.stashChanges();
-  await repo.checkoutBranch(conf.branch);
-  await repo.createBranch(name);
-  await repo.checkoutBranch(name);
+  await sea.stashChanges(repo);
+  await sea.checkoutBranch(repo, conf.branch);
+  await sea.createBranch(repo, name);
+  await sea.checkoutBranch(repo, name);
 
   console.log(`Switched to new branch '${name}'`);
 }
 
 export async function showChanges() {
-  const repo = await Repository.open();
+  const repo = await sea.open();
 
-  const changes = await repo.changedFiles();
+  const changes = await sea.changedFiles(repo);
 
   if (
     changes.new.length === 0 &&
@@ -55,16 +55,16 @@ export async function showChanges() {
 }
 
 export async function switchBranch(name) {
-  const repo = await Repository.open();
+  const repo = await sea.open();
 
-  if (await repo.onBranch(name)) return;
+  if (await sea.onBranch(repo, name)) return;
 
-  if (!(await repo.branchExists(name))) {
+  if (!(await sea.branchExists(repo, name))) {
     console.log(`No such branch '${name}'`);
     return;
   }
 
-  await repo.stashChanges();
-  await repo.checkoutBranch(name);
-  await repo.unstashChanges(name);
+  await sea.stashChanges(repo);
+  await sea.checkoutBranch(repo, name);
+  await sea.unstashChanges(repo, name);
 }
