@@ -10,6 +10,20 @@ export default class Repository {
     return new Repository(repo);
   }
 
+  static async init(path = process.cwd()) {
+    let repo;
+
+    try {
+      repo = await Repository.open(path);
+      console.log(`Reinitialized existing repository in ${path}`);
+    } catch (err) {
+      repo = await git.Repository.init(path, 0);
+      console.log(`Initialized empty repository in ${path}`);
+    }
+
+    return new Repository(repo);
+  }
+
   constructor(repo) {
     this.repo = repo;
   }

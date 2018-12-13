@@ -2,6 +2,10 @@ import chalk from 'chalk';
 import Repository from './repository';
 import conf from './conf';
 
+export async function initRepository(path = process.cwd()) {
+  await Repository.init(path);
+}
+
 export async function newBranch(name) {
   const repo = await Repository.open();
 

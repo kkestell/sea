@@ -5,6 +5,7 @@ import program from 'commander'
 
 program
   .version('0.0.1')
+  .command('init [path]', 'initialize repository')
   .command('branch <cmd>', 'branching')
   .command('changes', 'display changes')
   .parse(process.argv)
