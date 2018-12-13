@@ -23,6 +23,29 @@ export default class Repository {
     }
   }
 
+  async changedFiles() {
+    const statusOptions = {
+      flags:
+        git.Status.OPT.INCLUDE_UNTRACKED + git.Status.OPT.RECURSE_UNTRACKED_DIRS
+    };
+
+    const changes = {
+      new: [],
+      modified: [],
+      deleted: []
+    };
+
+    await git.Status.foreachExt(this.repo, statusOptions, (path, status) => {
+      if (status === git.Status.STATUS.WT_NEW) changes.new.push(path);
+      else if (status === git.Status.STATUS.WT_MODIFIED)
+        changes.modified.push(path);
+      else if (status === git.Status.STATUS.WT_DELETED)
+        changes.deleted.push(path);
+    });
+
+    return changes;
+  }
+
   async checkoutBranch(name) {
     const checkoutOptions = new git.CheckoutOptions();
     checkoutOptions.checkoutStrategy = git.Checkout.STRATEGY.SAFE;
@@ -76,14 +99,14 @@ export default class Repository {
   }
 
   async stashChanges() {
-    if (!(await this.workingDirectoryClean())) {
-      await git.Stash.save(
-        this.repo,
-        this.repo.defaultSignature(),
-        stashName(await this.currentBranchName()),
-        git.Stash.FLAGS.INCLUDE_UNTRACKED
-      );
-    }
+    if (await this.workingDirectoryClean()) return;
+
+    await git.Stash.save(
+      this.repo,
+      this.repo.defaultSignature(),
+      stashName(await this.currentBranchName()),
+      git.Stash.FLAGS.INCLUDE_UNTRACKED
+    );
   }
 
   async unstashChanges(name) {

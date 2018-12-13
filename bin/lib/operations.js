@@ -5,6 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.newBranch = newBranch;
 exports.switchBranch = switchBranch;
+exports.showChanges = showChanges;
+
+var _chalk = _interopRequireDefault(require("chalk"));
 
 var _repository = _interopRequireDefault(require("./repository"));
 
@@ -149,4 +152,47 @@ function _switchBranch() {
     }, _callee2, this);
   }));
   return _switchBranch.apply(this, arguments);
+}
+
+function showChanges() {
+  return _showChanges.apply(this, arguments);
+}
+
+function _showChanges() {
+  _showChanges = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee3() {
+    var repo, changes;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.next = 2;
+            return _repository.default.open();
+
+          case 2:
+            repo = _context3.sent;
+            _context3.next = 5;
+            return repo.changedFiles();
+
+          case 5:
+            changes = _context3.sent;
+            changes.new.forEach(function (f) {
+              return console.log(_chalk.default.green(f));
+            });
+            changes.modified.forEach(function (f) {
+              return console.log(f);
+            });
+            changes.deleted.forEach(function (f) {
+              return console.log(_chalk.default.red(f));
+            });
+
+          case 9:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, this);
+  }));
+  return _showChanges.apply(this, arguments);
 }

@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import Repository from './repository';
 import conf from './conf';
 
@@ -34,4 +35,14 @@ export async function switchBranch(name) {
   await repo.stashChanges();
   await repo.checkoutBranch(name);
   await repo.unstashChanges(name);
+}
+
+export async function showChanges() {
+  const repo = await Repository.open();
+
+  const changes = await repo.changedFiles();
+
+  changes.new.forEach(f => console.log(chalk.green(f)));
+  changes.modified.forEach(f => console.log(f));
+  changes.deleted.forEach(f => console.log(chalk.red(f)));
 }
