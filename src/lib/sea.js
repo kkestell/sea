@@ -5,17 +5,28 @@ export async function open(path = process.cwd()) {
 }
 
 export async function init(path = process.cwd()) {
-  let repo;
+  const repo = await git.Repository.init(path, 0);
 
+  const index = await repo.refreshIndex();
+  const signature = git.Signature.default(repo);
+  const tree = await index.writeTree();
+  return repo.createCommit(
+    'HEAD',
+    signature,
+    signature,
+    'Initial commit',
+    tree,
+    []
+  );
+}
+
+export async function isRepo(path = process.cwd()) {
   try {
-    repo = await git.Repository.open(path);
-    console.log(`Reinitialized existing repository in ${path}`);
+    await open(path);
+    return true;
   } catch (err) {
-    repo = await git.Repository.init(path, 0);
-    console.log(`Initialized empty repository in ${path}`);
+    return false;
   }
-
-  return repo;
 }
 
 export async function branchExists(repo, name) {
@@ -57,6 +68,17 @@ export async function checkoutBranch(repo, name) {
   const treeish = await git.Revparse.single(repo, name);
   await git.Checkout.tree(repo, treeish, checkoutOptions);
   await repo.setHead(`refs/heads/${name}`);
+}
+
+export async function commitChanges(repo, msg) {
+  const index = await repo.refreshIndex();
+  await index.addAll();
+  await index.write();
+  const tree = await index.writeTree();
+  const head = await git.Reference.nameToId(repo, 'HEAD');
+  const parent = await repo.getCommit(head);
+  const signature = git.Signature.default(repo);
+  return repo.createCommit('HEAD', signature, signature, msg, tree, [parent]);
 }
 
 export async function createBranch(repo, name) {

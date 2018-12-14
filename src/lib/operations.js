@@ -1,9 +1,28 @@
 import chalk from 'chalk';
+import tmp from 'tmp-promise';
+
 import * as sea from './sea';
+import * as system from './system';
 import conf from './conf';
 
 export async function initRepository(path = process.cwd()) {
+  if (await sea.isRepo(path)) return;
   await sea.init(path);
+  console.log(`Initialized empty repository in ${path}`);
+}
+
+export async function commitChanges() {
+  const tmpfile = await tmp.file();
+
+  system.edit(tmpfile.path);
+  const msg = await system.readFile(tmpfile.path);
+
+  tmpfile.cleanup();
+
+  const repo = await sea.open();
+  const commitId = await sea.commitChanges(repo, msg);
+
+  console.log(`Committed ${commitId}`);
 }
 
 export async function newBranch(name) {

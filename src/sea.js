@@ -8,4 +8,5 @@ program
   .command('init [path]', 'initialize repository')
   .command('branch <cmd>', 'branching')
   .command('changes', 'display changes')
+  .command('commit', 'commit changes')
   .parse(process.argv)

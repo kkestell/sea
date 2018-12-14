@@ -5,9 +5,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.open = open;
 exports.init = init;
+exports.isRepo = isRepo;
 exports.branchExists = branchExists;
 exports.changedFiles = changedFiles;
 exports.checkoutBranch = checkoutBranch;
+exports.commitChanges = commitChanges;
 exports.createBranch = createBranch;
 exports.currentBranchName = currentBranchName;
 exports.onBranch = onBranch;
@@ -61,43 +63,78 @@ function _init() {
   regeneratorRuntime.mark(function _callee2() {
     var path,
         repo,
+        index,
+        signature,
+        tree,
         _args2 = arguments;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             path = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : process.cwd();
-            _context2.prev = 1;
-            _context2.next = 4;
-            return _nodegit.default.Repository.open(path);
-
-          case 4:
-            repo = _context2.sent;
-            console.log("Reinitialized existing repository in ".concat(path));
-            _context2.next = 14;
-            break;
-
-          case 8:
-            _context2.prev = 8;
-            _context2.t0 = _context2["catch"](1);
-            _context2.next = 12;
+            _context2.next = 3;
             return _nodegit.default.Repository.init(path, 0);
 
-          case 12:
+          case 3:
             repo = _context2.sent;
-            console.log("Initialized empty repository in ".concat(path));
+            _context2.next = 6;
+            return repo.refreshIndex();
 
-          case 14:
-            return _context2.abrupt("return", repo);
+          case 6:
+            index = _context2.sent;
+            signature = _nodegit.default.Signature.default(repo);
+            _context2.next = 10;
+            return index.writeTree();
 
-          case 15:
+          case 10:
+            tree = _context2.sent;
+            return _context2.abrupt("return", repo.createCommit('HEAD', signature, signature, 'Initial commit', tree, []));
+
+          case 12:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, this, [[1, 8]]);
+    }, _callee2, this);
   }));
   return _init.apply(this, arguments);
+}
+
+function isRepo() {
+  return _isRepo.apply(this, arguments);
+}
+
+function _isRepo() {
+  _isRepo = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee3() {
+    var path,
+        _args3 = arguments;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            path = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : process.cwd();
+            _context3.prev = 1;
+            _context3.next = 4;
+            return open(path);
+
+          case 4:
+            return _context3.abrupt("return", true);
+
+          case 7:
+            _context3.prev = 7;
+            _context3.t0 = _context3["catch"](1);
+            return _context3.abrupt("return", false);
+
+          case 10:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, this, [[1, 7]]);
+  }));
+  return _isRepo.apply(this, arguments);
 }
 
 function branchExists(_x, _x2) {
@@ -107,29 +144,29 @@ function branchExists(_x, _x2) {
 function _branchExists() {
   _branchExists = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee3(repo, name) {
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+  regeneratorRuntime.mark(function _callee4(repo, name) {
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
-            _context3.prev = 0;
-            _context3.next = 3;
+            _context4.prev = 0;
+            _context4.next = 3;
             return _nodegit.default.Branch.lookup(repo, name, _nodegit.default.Branch.BRANCH.LOCAL);
 
           case 3:
-            return _context3.abrupt("return", true);
+            return _context4.abrupt("return", true);
 
           case 6:
-            _context3.prev = 6;
-            _context3.t0 = _context3["catch"](0);
-            return _context3.abrupt("return", false);
+            _context4.prev = 6;
+            _context4.t0 = _context4["catch"](0);
+            return _context4.abrupt("return", false);
 
           case 9:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3, this, [[0, 6]]);
+    }, _callee4, this, [[0, 6]]);
   }));
   return _branchExists.apply(this, arguments);
 }
@@ -141,11 +178,11 @@ function changedFiles(_x3) {
 function _changedFiles() {
   _changedFiles = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee4(repo) {
+  regeneratorRuntime.mark(function _callee5(repo) {
     var statusOptions, changes;
-    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context5.prev = _context5.next) {
           case 0:
             statusOptions = {
               flags: _nodegit.default.Status.OPT.INCLUDE_UNTRACKED + _nodegit.default.Status.OPT.RECURSE_UNTRACKED_DIRS
@@ -155,20 +192,20 @@ function _changedFiles() {
               modified: [],
               deleted: []
             };
-            _context4.next = 4;
+            _context5.next = 4;
             return _nodegit.default.Status.foreachExt(repo, statusOptions, function (path, status) {
               if (status === _nodegit.default.Status.STATUS.WT_NEW) changes.new.push(path);else if (status === _nodegit.default.Status.STATUS.WT_MODIFIED) changes.modified.push(path);else if (status === _nodegit.default.Status.STATUS.WT_DELETED) changes.deleted.push(path);
             });
 
           case 4:
-            return _context4.abrupt("return", changes);
+            return _context5.abrupt("return", changes);
 
           case 5:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
       }
-    }, _callee4, this);
+    }, _callee5, this);
   }));
   return _changedFiles.apply(this, arguments);
 }
@@ -180,114 +217,110 @@ function checkoutBranch(_x4, _x5) {
 function _checkoutBranch() {
   _checkoutBranch = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee5(repo, name) {
-    var checkoutOptions, treeish;
-    return regeneratorRuntime.wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            checkoutOptions = new _nodegit.default.CheckoutOptions();
-            checkoutOptions.checkoutStrategy = _nodegit.default.Checkout.STRATEGY.SAFE;
-            _context5.next = 4;
-            return _nodegit.default.Revparse.single(repo, name);
-
-          case 4:
-            treeish = _context5.sent;
-            _context5.next = 7;
-            return _nodegit.default.Checkout.tree(repo, treeish, checkoutOptions);
-
-          case 7:
-            _context5.next = 9;
-            return repo.setHead("refs/heads/".concat(name));
-
-          case 9:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5, this);
-  }));
-  return _checkoutBranch.apply(this, arguments);
-}
-
-function createBranch(_x6, _x7) {
-  return _createBranch.apply(this, arguments);
-}
-
-function _createBranch() {
-  _createBranch = _asyncToGenerator(
-  /*#__PURE__*/
   regeneratorRuntime.mark(function _callee6(repo, name) {
-    var masterCommit;
+    var checkoutOptions, treeish;
     return regeneratorRuntime.wrap(function _callee6$(_context6) {
       while (1) {
         switch (_context6.prev = _context6.next) {
           case 0:
-            _context6.next = 2;
-            return repo.getMasterCommit();
+            checkoutOptions = new _nodegit.default.CheckoutOptions();
+            checkoutOptions.checkoutStrategy = _nodegit.default.Checkout.STRATEGY.SAFE;
+            _context6.next = 4;
+            return _nodegit.default.Revparse.single(repo, name);
 
-          case 2:
-            masterCommit = _context6.sent;
-            _context6.next = 5;
-            return repo.createBranch(name, masterCommit);
+          case 4:
+            treeish = _context6.sent;
+            _context6.next = 7;
+            return _nodegit.default.Checkout.tree(repo, treeish, checkoutOptions);
 
-          case 5:
+          case 7:
+            _context6.next = 9;
+            return repo.setHead("refs/heads/".concat(name));
+
+          case 9:
           case "end":
             return _context6.stop();
         }
       }
     }, _callee6, this);
   }));
-  return _createBranch.apply(this, arguments);
+  return _checkoutBranch.apply(this, arguments);
 }
 
-function currentBranchName(_x8) {
-  return _currentBranchName.apply(this, arguments);
+function commitChanges(_x6, _x7) {
+  return _commitChanges.apply(this, arguments);
 }
 
-function _currentBranchName() {
-  _currentBranchName = _asyncToGenerator(
+function _commitChanges() {
+  _commitChanges = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee7(repo) {
+  regeneratorRuntime.mark(function _callee7(repo, msg) {
+    var index, tree, head, parent, signature;
     return regeneratorRuntime.wrap(function _callee7$(_context7) {
       while (1) {
         switch (_context7.prev = _context7.next) {
           case 0:
             _context7.next = 2;
-            return repo.getCurrentBranch();
+            return repo.refreshIndex();
 
           case 2:
-            return _context7.abrupt("return", _context7.sent.shorthand());
+            index = _context7.sent;
+            _context7.next = 5;
+            return index.addAll();
 
-          case 3:
+          case 5:
+            _context7.next = 7;
+            return index.write();
+
+          case 7:
+            _context7.next = 9;
+            return index.writeTree();
+
+          case 9:
+            tree = _context7.sent;
+            _context7.next = 12;
+            return _nodegit.default.Reference.nameToId(repo, 'HEAD');
+
+          case 12:
+            head = _context7.sent;
+            _context7.next = 15;
+            return repo.getCommit(head);
+
+          case 15:
+            parent = _context7.sent;
+            signature = _nodegit.default.Signature.default(repo);
+            return _context7.abrupt("return", repo.createCommit('HEAD', signature, signature, msg, tree, [parent]));
+
+          case 18:
           case "end":
             return _context7.stop();
         }
       }
     }, _callee7, this);
   }));
-  return _currentBranchName.apply(this, arguments);
+  return _commitChanges.apply(this, arguments);
 }
 
-function onBranch(_x9, _x10) {
-  return _onBranch.apply(this, arguments);
+function createBranch(_x8, _x9) {
+  return _createBranch.apply(this, arguments);
 }
 
-function _onBranch() {
-  _onBranch = _asyncToGenerator(
+function _createBranch() {
+  _createBranch = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee8(repo, name) {
+    var masterCommit;
     return regeneratorRuntime.wrap(function _callee8$(_context8) {
       while (1) {
         switch (_context8.prev = _context8.next) {
           case 0:
             _context8.next = 2;
-            return currentBranchName(repo);
+            return repo.getMasterCommit();
 
           case 2:
-            _context8.t0 = _context8.sent;
-            _context8.t1 = name;
-            return _context8.abrupt("return", _context8.t0 === _context8.t1);
+            masterCommit = _context8.sent;
+            _context8.next = 5;
+            return repo.createBranch(name, masterCommit);
 
           case 5:
           case "end":
@@ -296,23 +329,81 @@ function _onBranch() {
       }
     }, _callee8, this);
   }));
+  return _createBranch.apply(this, arguments);
+}
+
+function currentBranchName(_x10) {
+  return _currentBranchName.apply(this, arguments);
+}
+
+function _currentBranchName() {
+  _currentBranchName = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee9(repo) {
+    return regeneratorRuntime.wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            _context9.next = 2;
+            return repo.getCurrentBranch();
+
+          case 2:
+            return _context9.abrupt("return", _context9.sent.shorthand());
+
+          case 3:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9, this);
+  }));
+  return _currentBranchName.apply(this, arguments);
+}
+
+function onBranch(_x11, _x12) {
   return _onBranch.apply(this, arguments);
 }
 
-function pullRemote(_x11, _x12) {
+function _onBranch() {
+  _onBranch = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee10(repo, name) {
+    return regeneratorRuntime.wrap(function _callee10$(_context10) {
+      while (1) {
+        switch (_context10.prev = _context10.next) {
+          case 0:
+            _context10.next = 2;
+            return currentBranchName(repo);
+
+          case 2:
+            _context10.t0 = _context10.sent;
+            _context10.t1 = name;
+            return _context10.abrupt("return", _context10.t0 === _context10.t1);
+
+          case 5:
+          case "end":
+            return _context10.stop();
+        }
+      }
+    }, _callee10, this);
+  }));
+  return _onBranch.apply(this, arguments);
+}
+
+function pullRemote(_x13, _x14) {
   return _pullRemote.apply(this, arguments);
 }
 
 function _pullRemote() {
   _pullRemote = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee9(repo, name) {
+  regeneratorRuntime.mark(function _callee11(repo, name) {
     var mergeOptions;
-    return regeneratorRuntime.wrap(function _callee9$(_context9) {
+    return regeneratorRuntime.wrap(function _callee11$(_context11) {
       while (1) {
-        switch (_context9.prev = _context9.next) {
+        switch (_context11.prev = _context11.next) {
           case 0:
-            _context9.next = 2;
+            _context11.next = 2;
             return repo.fetch('origin', {
               callbacks: {
                 credentials: function credentials(url, username) {
@@ -327,66 +418,66 @@ function _pullRemote() {
           case 2:
             mergeOptions = new _nodegit.default.MergeOptions();
             mergeOptions.fileFavor = _nodegit.default.Merge.FILE_FAVOR.THEIRS;
-            _context9.prev = 4;
-            _context9.next = 7;
+            _context11.prev = 4;
+            _context11.next = 7;
             return repo.mergeBranches(name, "origin/".concat(name), _nodegit.default.Merge.PREFERENCE.FASTFORWARD_ONLY, mergeOptions);
 
           case 7:
-            _context9.next = 15;
+            _context11.next = 15;
             break;
 
           case 9:
-            _context9.prev = 9;
-            _context9.t0 = _context9["catch"](4);
+            _context11.prev = 9;
+            _context11.t0 = _context11["catch"](4);
             console.log("Unable to fast-forward ".concat(name, ", branches have diverged"));
             console.log('You might consider:');
             console.log("    sea branch switch ".concat(name, " && git reset --hard origin/").concat(name));
-            return _context9.abrupt("return", false);
+            return _context11.abrupt("return", false);
 
           case 15:
-            return _context9.abrupt("return", true);
+            return _context11.abrupt("return", true);
 
           case 16:
           case "end":
-            return _context9.stop();
+            return _context11.stop();
         }
       }
-    }, _callee9, this, [[4, 9]]);
+    }, _callee11, this, [[4, 9]]);
   }));
   return _pullRemote.apply(this, arguments);
 }
 
-function workingDirectoryClean(_x13) {
+function workingDirectoryClean(_x15) {
   return _workingDirectoryClean.apply(this, arguments);
 }
 
 function _workingDirectoryClean() {
   _workingDirectoryClean = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee10(repo) {
+  regeneratorRuntime.mark(function _callee12(repo) {
     var statusOptions, cnt;
-    return regeneratorRuntime.wrap(function _callee10$(_context10) {
+    return regeneratorRuntime.wrap(function _callee12$(_context12) {
       while (1) {
-        switch (_context10.prev = _context10.next) {
+        switch (_context12.prev = _context12.next) {
           case 0:
             statusOptions = {
               flags: _nodegit.default.Status.OPT.INCLUDE_UNTRACKED + _nodegit.default.Status.OPT.RECURSE_UNTRACKED_DIRS
             };
             cnt = 0;
-            _context10.next = 4;
+            _context12.next = 4;
             return _nodegit.default.Status.foreachExt(repo, statusOptions, function () {
               cnt += 1;
             });
 
           case 4:
-            return _context10.abrupt("return", cnt === 0);
+            return _context12.abrupt("return", cnt === 0);
 
           case 5:
           case "end":
-            return _context10.stop();
+            return _context12.stop();
         }
       }
-    }, _callee10, this);
+    }, _callee12, this);
   }));
   return _workingDirectoryClean.apply(this, arguments);
 }
@@ -395,78 +486,78 @@ function stashName(name) {
   return "Sea autostash for ".concat(name);
 }
 
-function stashChanges(_x14) {
+function stashChanges(_x16) {
   return _stashChanges.apply(this, arguments);
 }
 
 function _stashChanges() {
   _stashChanges = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee11(repo) {
-    return regeneratorRuntime.wrap(function _callee11$(_context11) {
+  regeneratorRuntime.mark(function _callee13(repo) {
+    return regeneratorRuntime.wrap(function _callee13$(_context13) {
       while (1) {
-        switch (_context11.prev = _context11.next) {
+        switch (_context13.prev = _context13.next) {
           case 0:
-            _context11.next = 2;
+            _context13.next = 2;
             return workingDirectoryClean(repo);
 
           case 2:
-            if (!_context11.sent) {
-              _context11.next = 4;
+            if (!_context13.sent) {
+              _context13.next = 4;
               break;
             }
 
-            return _context11.abrupt("return");
+            return _context13.abrupt("return");
 
           case 4:
-            _context11.t0 = _nodegit.default.Stash;
-            _context11.t1 = repo;
-            _context11.t2 = repo.defaultSignature();
-            _context11.t3 = stashName;
-            _context11.next = 10;
+            _context13.t0 = _nodegit.default.Stash;
+            _context13.t1 = repo;
+            _context13.t2 = repo.defaultSignature();
+            _context13.t3 = stashName;
+            _context13.next = 10;
             return currentBranchName(repo);
 
           case 10:
-            _context11.t4 = _context11.sent;
-            _context11.t5 = (0, _context11.t3)(_context11.t4);
-            _context11.t6 = _nodegit.default.Stash.FLAGS.INCLUDE_UNTRACKED;
-            _context11.next = 15;
-            return _context11.t0.save.call(_context11.t0, _context11.t1, _context11.t2, _context11.t5, _context11.t6);
+            _context13.t4 = _context13.sent;
+            _context13.t5 = (0, _context13.t3)(_context13.t4);
+            _context13.t6 = _nodegit.default.Stash.FLAGS.INCLUDE_UNTRACKED;
+            _context13.next = 15;
+            return _context13.t0.save.call(_context13.t0, _context13.t1, _context13.t2, _context13.t5, _context13.t6);
 
           case 15:
           case "end":
-            return _context11.stop();
+            return _context13.stop();
         }
       }
-    }, _callee11, this);
+    }, _callee13, this);
   }));
   return _stashChanges.apply(this, arguments);
 }
 
-function unstashChanges(_x15, _x16) {
+function unstashChanges(_x17, _x18) {
   return _unstashChanges.apply(this, arguments);
 }
 
 function _unstashChanges() {
   _unstashChanges = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee13(repo, name) {
+  regeneratorRuntime.mark(function _callee15(repo, name) {
     var stashes, stash, checkoutOptions, stashApplyOptions;
-    return regeneratorRuntime.wrap(function _callee13$(_context13) {
+    return regeneratorRuntime.wrap(function _callee15$(_context15) {
       while (1) {
-        switch (_context13.prev = _context13.next) {
+        switch (_context15.prev = _context15.next) {
           case 0:
             stashes = [];
-            _context13.next = 3;
+            _context15.next = 3;
             return _nodegit.default.Stash.foreach(repo,
             /*#__PURE__*/
             function () {
               var _ref = _asyncToGenerator(
               /*#__PURE__*/
-              regeneratorRuntime.mark(function _callee12(index, message, oid) {
-                return regeneratorRuntime.wrap(function _callee12$(_context12) {
+              regeneratorRuntime.mark(function _callee14(index, message, oid) {
+                return regeneratorRuntime.wrap(function _callee14$(_context14) {
                   while (1) {
-                    switch (_context12.prev = _context12.next) {
+                    switch (_context14.prev = _context14.next) {
                       case 0:
                         stashes.push({
                           index: index,
@@ -476,13 +567,13 @@ function _unstashChanges() {
 
                       case 1:
                       case "end":
-                        return _context12.stop();
+                        return _context14.stop();
                     }
                   }
-                }, _callee12, this);
+                }, _callee14, this);
               }));
 
-              return function (_x17, _x18, _x19) {
+              return function (_x19, _x20, _x21) {
                 return _ref.apply(this, arguments);
               };
             }());
@@ -493,30 +584,30 @@ function _unstashChanges() {
             });
 
             if (stash) {
-              _context13.next = 6;
+              _context15.next = 6;
               break;
             }
 
-            return _context13.abrupt("return");
+            return _context15.abrupt("return");
 
           case 6:
             checkoutOptions = new _nodegit.default.CheckoutOptions();
             checkoutOptions.checkoutStrategy = _nodegit.default.Checkout.STRATEGY.SAFE;
             stashApplyOptions = new _nodegit.default.StashApplyOptions();
             stashApplyOptions.checkoutOptions = checkoutOptions;
-            _context13.next = 12;
+            _context15.next = 12;
             return _nodegit.default.Stash.apply(repo, stash.index, stashApplyOptions);
 
           case 12:
-            _context13.next = 14;
+            _context15.next = 14;
             return _nodegit.default.Stash.drop(repo, stash.index);
 
           case 14:
           case "end":
-            return _context13.stop();
+            return _context15.stop();
         }
       }
-    }, _callee13, this);
+    }, _callee15, this);
   }));
   return _unstashChanges.apply(this, arguments);
 }

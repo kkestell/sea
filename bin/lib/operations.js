@@ -4,13 +4,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.initRepository = initRepository;
+exports.commitChanges = commitChanges;
 exports.newBranch = newBranch;
 exports.showChanges = showChanges;
 exports.switchBranch = switchBranch;
 
 var _chalk = _interopRequireDefault(require("chalk"));
 
+var _tmpPromise = _interopRequireDefault(require("tmp-promise"));
+
 var sea = _interopRequireWildcard(require("./sea"));
+
+var system = _interopRequireWildcard(require("./system"));
 
 var _conf = _interopRequireDefault(require("./conf"));
 
@@ -60,9 +65,24 @@ function _initRepository() {
           case 0:
             path = _args.length > 0 && _args[0] !== undefined ? _args[0] : process.cwd();
             _context.next = 3;
-            return sea.init(path);
+            return sea.isRepo(path);
 
           case 3:
+            if (!_context.sent) {
+              _context.next = 5;
+              break;
+            }
+
+            return _context.abrupt("return");
+
+          case 5:
+            _context.next = 7;
+            return sea.init(path);
+
+          case 7:
+            console.log("Initialized empty repository in ".concat(path));
+
+          case 8:
           case "end":
             return _context.stop();
         }
@@ -72,6 +92,53 @@ function _initRepository() {
   return _initRepository.apply(this, arguments);
 }
 
+function commitChanges() {
+  return _commitChanges.apply(this, arguments);
+}
+
+function _commitChanges() {
+  _commitChanges = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee2() {
+    var tmpfile, msg, repo, commitId;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.next = 2;
+            return _tmpPromise.default.file();
+
+          case 2:
+            tmpfile = _context2.sent;
+            system.edit(tmpfile.path);
+            _context2.next = 6;
+            return system.readFile(tmpfile.path);
+
+          case 6:
+            msg = _context2.sent;
+            tmpfile.cleanup();
+            _context2.next = 10;
+            return sea.open();
+
+          case 10:
+            repo = _context2.sent;
+            _context2.next = 13;
+            return sea.commitChanges(repo, msg);
+
+          case 13:
+            commitId = _context2.sent;
+            console.log("Committed ".concat(commitId));
+
+          case 15:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, this);
+  }));
+  return _commitChanges.apply(this, arguments);
+}
+
 function newBranch(_x) {
   return _newBranch.apply(this, arguments);
 }
@@ -79,55 +146,55 @@ function newBranch(_x) {
 function _newBranch() {
   _newBranch = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee2(name) {
+  regeneratorRuntime.mark(function _callee3(name) {
     var repo;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
-        switch (_context2.prev = _context2.next) {
+        switch (_context3.prev = _context3.next) {
           case 0:
-            _context2.next = 2;
+            _context3.next = 2;
             return sea.open();
 
           case 2:
-            repo = _context2.sent;
-            _context2.next = 5;
+            repo = _context3.sent;
+            _context3.next = 5;
             return sea.branchExists(repo, name);
 
           case 5:
-            if (!_context2.sent) {
-              _context2.next = 8;
+            if (!_context3.sent) {
+              _context3.next = 8;
               break;
             }
 
             console.log("Branch exists '".concat(name, "'"));
-            return _context2.abrupt("return");
+            return _context3.abrupt("return");
 
           case 8:
-            _context2.next = 10;
+            _context3.next = 10;
             return sea.pullRemote(repo, _conf.default.branch);
 
           case 10:
-            if (_context2.sent) {
-              _context2.next = 12;
+            if (_context3.sent) {
+              _context3.next = 12;
               break;
             }
 
-            return _context2.abrupt("return");
+            return _context3.abrupt("return");
 
           case 12:
-            _context2.next = 14;
+            _context3.next = 14;
             return sea.stashChanges(repo);
 
           case 14:
-            _context2.next = 16;
+            _context3.next = 16;
             return sea.checkoutBranch(repo, _conf.default.branch);
 
           case 16:
-            _context2.next = 18;
+            _context3.next = 18;
             return sea.createBranch(repo, name);
 
           case 18:
-            _context2.next = 20;
+            _context3.next = 20;
             return sea.checkoutBranch(repo, name);
 
           case 20:
@@ -135,10 +202,10 @@ function _newBranch() {
 
           case 21:
           case "end":
-            return _context2.stop();
+            return _context3.stop();
         }
       }
-    }, _callee2, this);
+    }, _callee3, this);
   }));
   return _newBranch.apply(this, arguments);
 }
@@ -150,29 +217,29 @@ function showChanges() {
 function _showChanges() {
   _showChanges = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee3() {
+  regeneratorRuntime.mark(function _callee4() {
     var repo, changes;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context3.prev = _context3.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
-            _context3.next = 2;
+            _context4.next = 2;
             return sea.open();
 
           case 2:
-            repo = _context3.sent;
-            _context3.next = 5;
+            repo = _context4.sent;
+            _context4.next = 5;
             return sea.changedFiles(repo);
 
           case 5:
-            changes = _context3.sent;
+            changes = _context4.sent;
 
             if (!(changes.new.length === 0 && changes.modified.length === 0 && changes.deleted.length === 0)) {
-              _context3.next = 8;
+              _context4.next = 8;
               break;
             }
 
-            return _context3.abrupt("return");
+            return _context4.abrupt("return");
 
           case 8:
             console.log();
@@ -200,10 +267,10 @@ function _showChanges() {
 
           case 12:
           case "end":
-            return _context3.stop();
+            return _context4.stop();
         }
       }
-    }, _callee3, this);
+    }, _callee4, this);
   }));
   return _showChanges.apply(this, arguments);
 }
@@ -215,59 +282,59 @@ function switchBranch(_x2) {
 function _switchBranch() {
   _switchBranch = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee4(name) {
+  regeneratorRuntime.mark(function _callee5(name) {
     var repo;
-    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+    return regeneratorRuntime.wrap(function _callee5$(_context5) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context5.prev = _context5.next) {
           case 0:
-            _context4.next = 2;
+            _context5.next = 2;
             return sea.open();
 
           case 2:
-            repo = _context4.sent;
-            _context4.next = 5;
+            repo = _context5.sent;
+            _context5.next = 5;
             return sea.onBranch(repo, name);
 
           case 5:
-            if (!_context4.sent) {
-              _context4.next = 7;
+            if (!_context5.sent) {
+              _context5.next = 7;
               break;
             }
 
-            return _context4.abrupt("return");
+            return _context5.abrupt("return");
 
           case 7:
-            _context4.next = 9;
+            _context5.next = 9;
             return sea.branchExists(repo, name);
 
           case 9:
-            if (_context4.sent) {
-              _context4.next = 12;
+            if (_context5.sent) {
+              _context5.next = 12;
               break;
             }
 
             console.log("No such branch '".concat(name, "'"));
-            return _context4.abrupt("return");
+            return _context5.abrupt("return");
 
           case 12:
-            _context4.next = 14;
+            _context5.next = 14;
             return sea.stashChanges(repo);
 
           case 14:
-            _context4.next = 16;
+            _context5.next = 16;
             return sea.checkoutBranch(repo, name);
 
           case 16:
-            _context4.next = 18;
+            _context5.next = 18;
             return sea.unstashChanges(repo, name);
 
           case 18:
           case "end":
-            return _context4.stop();
+            return _context5.stop();
         }
       }
-    }, _callee4, this);
+    }, _callee5, this);
   }));
   return _switchBranch.apply(this, arguments);
 }

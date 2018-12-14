@@ -5,6 +5,8 @@ require("@babel/polyfill");
 
 var _commander = _interopRequireDefault(require("commander"));
 
+var _operations = require("./lib/operations");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_commander.default.version('0.0.1').command('init [path]', 'initialize repository').command('branch <cmd>', 'branching').command('changes', 'display changes').command('commit', 'commit changes').parse(process.argv);
+_commander.default.version('0.1.0').action(_operations.commitChanges).parse(process.argv);
