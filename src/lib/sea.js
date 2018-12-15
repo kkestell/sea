@@ -1,5 +1,6 @@
 import 'source-map-support/register';
 import git from 'nodegit';
+import _ from 'lodash';
 
 export async function open(path = process.cwd()) {
   return git.Repository.open(path);
@@ -99,21 +100,22 @@ export async function pullRemote(repo, name) {
   await repo.fetch('origin', {
     callbacks: {
       credentials: (url, username) => git.Cred.sshKeyFromAgent(username),
-      certificateCheck: () => 1
+      certificateCheck: () => 1,
+      transferProgress: () => console.log('.')
     }
   });
-
-  const mergeOptions = new git.MergeOptions();
-  mergeOptions.fileFavor = git.Merge.FILE_FAVOR.THEIRS;
 
   try {
     await repo.mergeBranches(
       name,
       `origin/${name}`,
       git.Merge.PREFERENCE.FASTFORWARD_ONLY,
-      mergeOptions
+      {
+        fileFavor: git.Merge.FILE_FAVOR.THEIRS
+      }
     );
   } catch (err) {
+    console.log(err);
     console.log(`Unable to fast-forward ${name}, branches have diverged`);
     console.log('You might consider:');
     console.log(
@@ -125,13 +127,50 @@ export async function pullRemote(repo, name) {
   return true;
 }
 
-export async function remoteExists(repo, name) {
+export async function pushRemote(repo, name) {
+  const ref = `refs/heads/${name}`;
+  const refs = [`${ref}:${ref}`];
+
+  const remote = await git.Remote.lookup(repo, 'origin');
+
+  await remote.push(refs, {
+    callbacks: {
+      credentials: (url, username) => git.Cred.sshKeyFromAgent(username),
+      certificateCheck: () => 1,
+      pushTransferProgress: () => console.log('.')
+    }
+  });
+}
+
+export async function remoteExists(repo) {
   try {
-    await git.Remote.lookup(repo, name);
+    await git.Remote.lookup(repo, 'origin');
     return true;
   } catch (err) {
     return false;
   }
+}
+
+export async function remoteBranchExists(repo, name) {
+  const remote = await git.Remote.lookup(repo, 'origin');
+
+  await remote.connect(
+    git.Enums.DIRECTION.FETCH,
+    {
+      credentials: (url, username) => git.Cred.sshKeyFromAgent(username),
+      certificateCheck: () => 1,
+      pushTransferProgress: () => console.log('.')
+    }
+  );
+
+  const references = await remote.referenceList();
+
+  await remote.disconnect();
+
+  return _.some(
+    references,
+    reference => reference.name() === `refs/heads/${name}`
+  );
 }
 
 export async function workingDirectoryClean(repo) {

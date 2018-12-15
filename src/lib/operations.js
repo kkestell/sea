@@ -33,7 +33,7 @@ export async function newBranch(name) {
     return;
   }
 
-  if (await sea.remoteExists(repo, conf.branch)) {
+  if (await sea.remoteExists(repo)) {
     if (!(await sea.pullRemote(repo, conf.branch))) return;
   }
 
@@ -88,4 +88,20 @@ export async function switchBranch(name) {
   await sea.stashChanges(repo);
   await sea.checkoutBranch(repo, name);
   await sea.unstashChanges(repo, name);
+}
+
+export async function syncBranch() {
+  const repo = await sea.open();
+
+  const branch = await sea.currentBranchName(repo);
+  await sea.stashChanges(repo);
+
+  if (await sea.remoteBranchExists(repo, branch)) {
+    if (!(await sea.pullRemote(repo, branch))) {
+      return;
+    }
+  }
+
+  await sea.pushRemote(repo, branch);
+  await sea.unstashChanges(repo, branch);
 }
