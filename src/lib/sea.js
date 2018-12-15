@@ -1,3 +1,4 @@
+import 'source-map-support/register';
 import git from 'nodegit';
 
 export async function open(path = process.cwd()) {
@@ -124,6 +125,15 @@ export async function pullRemote(repo, name) {
   return true;
 }
 
+export async function remoteExists(repo, name) {
+  try {
+    await git.Remote.lookup(repo, name);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 export async function workingDirectoryClean(repo) {
   const statusOptions = {
     flags:
@@ -158,7 +168,7 @@ export async function unstashChanges(repo, name) {
     stashes.push({ index, message, oid });
   });
 
-  const stash = stashes.find(x => x.message.includes(stashName(name)));
+  const stash = stashes.find(s => s.message.includes(stashName(name)));
 
   if (!stash) return;
 

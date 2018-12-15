@@ -33,7 +33,9 @@ export async function newBranch(name) {
     return;
   }
 
-  if (!(await sea.pullRemote(repo, conf.branch))) return;
+  if (await sea.remoteExists(repo, conf.branch)) {
+    if (!(await sea.pullRemote(repo, conf.branch))) return;
+  }
 
   await sea.stashChanges(repo);
   await sea.checkoutBranch(repo, conf.branch);
