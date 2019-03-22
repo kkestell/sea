@@ -1,6 +1,7 @@
 import 'source-map-support/register';
 import git from 'nodegit';
 import _ from 'lodash';
+import ora from 'ora';
 
 export async function open(path = process.cwd()) {
   return git.Repository.open(path);
@@ -100,8 +101,7 @@ export async function pullRemote(repo, name) {
   await repo.fetch('origin', {
     callbacks: {
       credentials: (url, username) => git.Cred.sshKeyFromAgent(username),
-      certificateCheck: () => 1,
-      transferProgress: () => console.log('.')
+      certificateCheck: () => 1
     }
   });
 
@@ -136,8 +136,7 @@ export async function pushRemote(repo, name) {
   await remote.push(refs, {
     callbacks: {
       credentials: (url, username) => git.Cred.sshKeyFromAgent(username),
-      certificateCheck: () => 1,
-      pushTransferProgress: () => console.log('.')
+      certificateCheck: () => 1
     }
   });
 }
@@ -158,8 +157,7 @@ export async function remoteBranchExists(repo, name) {
     git.Enums.DIRECTION.FETCH,
     {
       credentials: (url, username) => git.Cred.sshKeyFromAgent(username),
-      certificateCheck: () => 1,
-      pushTransferProgress: () => console.log('.')
+      certificateCheck: () => 1
     }
   );
 

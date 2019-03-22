@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import tmp from 'tmp-promise';
+import ora from 'ora';
 
 import * as sea from './sea';
 import * as system from './system';
@@ -34,7 +35,20 @@ export async function newBranch(name) {
   }
 
   if (await sea.remoteExists(repo)) {
-    if (!(await sea.pullRemote(repo, conf.branch))) return;
+    const spinner = ora('Enumerating remote branches').start();
+
+    if (await sea.remoteBranchExists(repo, name)) {
+      spinner.stop();
+      console.log(`Branch exists '${name}'`);
+      return;
+    }
+
+    spinner.text = `Pulling from origin/${conf.branch}`;
+    if (!(await sea.pullRemote(repo, conf.branch))) {
+      spinner.stop();
+      return;
+    }
+    spinner.stop();
   }
 
   await sea.stashChanges(repo);
@@ -96,12 +110,18 @@ export async function syncBranch() {
   const branch = await sea.currentBranchName(repo);
   await sea.stashChanges(repo);
 
+  const spinner = ora(`Enumeratig remote branches`).start();
   if (await sea.remoteBranchExists(repo, branch)) {
+    spinner.text = `Pulling origin/${branch}`
     if (!(await sea.pullRemote(repo, branch))) {
+      spinner.stop();
       return;
     }
   }
 
+  spinner.text = `Pushing origin/${branch}`
   await sea.pushRemote(repo, branch);
+  spinner.stop();
+
   await sea.unstashChanges(repo, branch);
 }
