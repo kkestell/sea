@@ -21,7 +21,7 @@ export async function commitChanges() {
   tmpfile.cleanup();
 
   const repo = await sea.open();
-  const commitId = await sea.commitChanges(repo, msg);
+  const commitId = await sea.commitChanges(repo, msg, conf.name, conf.email);
 
   console.log(`Committed ${commitId}`);
 }

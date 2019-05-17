@@ -72,15 +72,18 @@ export async function checkoutBranch(repo, name) {
   await repo.setHead(`refs/heads/${name}`);
 }
 
-export async function commitChanges(repo, msg) {
+function signature() {
+
+}
+
+export async function commitChanges(repo, msg, name, email) {
   const index = await repo.refreshIndex();
   await index.addAll();
   await index.write();
   const tree = await index.writeTree();
   const head = await git.Reference.nameToId(repo, 'HEAD');
   const parent = await repo.getCommit(head);
-  //const signature = git.Signature.default(repo);
-  const signature = git.Signature.now('Kyle Kestell', 'kyle@kestell.org');
+  const signature = git.Signature.now(name, email);
   return repo.createCommit('HEAD', signature, signature, msg, tree, [parent]);
 }
 
