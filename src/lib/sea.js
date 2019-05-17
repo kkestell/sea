@@ -1,7 +1,6 @@
 import 'source-map-support/register';
 import git from 'nodegit';
 import _ from 'lodash';
-import ora from 'ora';
 
 export async function open(path = process.cwd()) {
   return git.Repository.open(path);
@@ -80,7 +79,8 @@ export async function commitChanges(repo, msg) {
   const tree = await index.writeTree();
   const head = await git.Reference.nameToId(repo, 'HEAD');
   const parent = await repo.getCommit(head);
-  const signature = git.Signature.default(repo);
+  //const signature = git.Signature.default(repo);
+  const signature = git.Signature.now('Kyle Kestell', 'kyle@kestell.org');
   return repo.createCommit('HEAD', signature, signature, msg, tree, [parent]);
 }
 
@@ -153,13 +153,10 @@ export async function remoteExists(repo) {
 export async function remoteBranchExists(repo, name) {
   const remote = await git.Remote.lookup(repo, 'origin');
 
-  await remote.connect(
-    git.Enums.DIRECTION.FETCH,
-    {
-      credentials: (url, username) => git.Cred.sshKeyFromAgent(username),
-      certificateCheck: () => 1
-    }
-  );
+  await remote.connect(git.Enums.DIRECTION.FETCH, {
+    credentials: (url, username) => git.Cred.sshKeyFromAgent(username),
+    certificateCheck: () => 1
+  });
 
   const references = await remote.referenceList();
 

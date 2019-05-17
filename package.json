@@ -11,26 +11,26 @@
     "lint": "eslint src/**/* --fix"
   },
   "dependencies": {
-    "chalk": "^2.4.1",
-    "commander": "^2.19.0",
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
     "lodash": "^4.17.11",
-    "nodegit": "^0.23.0",
-    "ora": "^3.0.0",
+    "nodegit": "^0.24.3",
+    "ora": "^3.4.0",
     "rc": "^1.2.8",
-    "source-map-support": "^0.5.9",
-    "tmp-promise": "^1.0.5"
+    "source-map-support": "^0.5.12",
+    "tmp-promise": "^1.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.5",
-    "@babel/core": "^7.1.6",
-    "@babel/node": "^7.0.0",
-    "@babel/plugin-transform-async-to-generator": "^7.1.0",
-    "@babel/preset-env": "^7.1.6",
-    "eslint": "^5.10.0",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-async-to-generator": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^3.3.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-prettier": "^3.0.0",
-    "prettier": "1.15.3"
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "1.17.1"
   }
 }
