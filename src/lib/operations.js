@@ -110,7 +110,7 @@ export async function syncBranch() {
   const branch = await sea.currentBranchName(repo);
   await sea.stashChanges(repo);
 
-  const spinner = ora(`Enumeratig remote branches`).start();
+  const spinner = ora(`Enumerating remote branches`).start();
   if (await sea.remoteBranchExists(repo, branch)) {
     spinner.text = `Pulling origin/${branch}`;
     if (!(await sea.pullRemote(repo, branch))) {

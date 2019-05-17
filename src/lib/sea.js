@@ -72,10 +72,6 @@ export async function checkoutBranch(repo, name) {
   await repo.setHead(`refs/heads/${name}`);
 }
 
-function signature() {
-
-}
-
 export async function commitChanges(repo, msg, name, email) {
   const index = await repo.refreshIndex();
   await index.addAll();
