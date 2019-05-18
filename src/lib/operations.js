@@ -12,16 +12,25 @@ export async function initRepository(path = process.cwd()) {
   console.log(`Initialized empty repository in ${path}`);
 }
 
-export async function commitChanges() {
-  const tmpfile = await tmp.file();
+export async function commitChanges(options) {
+  let commitMessage = options.message;
 
-  system.edit(tmpfile.path);
-  const msg = await system.readFile(tmpfile.path);
+  if (!commitMessage) {
+    const tmpfile = await tmp.file();
 
-  tmpfile.cleanup();
+    system.edit(tmpfile.path);
+    commitMessage = await system.readFile(tmpfile.path);
+
+    tmpfile.cleanup();
+  }
 
   const repo = await sea.open();
-  const commitId = await sea.commitChanges(repo, msg, conf.name, conf.email);
+  const commitId = await sea.commitChanges(
+    repo,
+    commitMessage,
+    conf.name,
+    conf.email
+  );
 
   console.log(`Committed ${commitId}`);
 }
