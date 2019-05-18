@@ -7,8 +7,10 @@
     "sea": "bin/sea.js"
   },
   "scripts": {
-    "build": "babel src -d bin --source-maps inline && chmod -R +x bin",
-    "lint": "eslint src/**/* --fix"
+    "lint": "eslint src/**/* --fix",
+    "pretty": "prettier --write \"./src/**/*.{js,json}\"",
+    "babel": "babel src -d bin --source-maps inline && chmod -R +x bin",
+    "build": "yarn lint && yarn pretty && yarn babel"
   },
   "dependencies": {
     "chalk": "^2.4.2",
