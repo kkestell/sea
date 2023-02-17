@@ -1,0 +1,6 @@
+.nuget
+sdk
+*.dll
+*.pdb
+*.o
+sea/sea
