@@ -7,8 +7,8 @@ source "$SCRIPT_PATH/vars.sh"
 
 echo 'System.Console.WriteLine("Hello World");' > hello.cs
 
-"$ROOT_PATH/build/sea" build hello.cs -o hello -s
+"$ROOT_PATH/build/sea" build hello.cs
 
 ./hello
 
-rm hello hello.*
+rm hello*

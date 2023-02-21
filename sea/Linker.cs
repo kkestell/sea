@@ -39,10 +39,11 @@ internal class Linker
                 @"/LIBPATH:""C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\lib\um\x64""",
                 $"/LIBPATH:\"{windowsSdkPath}\\lib\\{windowsSdkVersion}\\ucrt\\x64\"",
                 $"/LIBPATH:\"{windowsSdkPath}\\lib\\{windowsSdkVersion}\\um\\x64\"",
-                $"\"{Path.Combine(aotFrameworkPath, "bootstrapper.lib")}\"",
-                $"\"{Path.Combine(aotFrameworkPath, "Runtime.WorkstationGC.lib")}\"",
-                $"\"{Path.Combine(aotFrameworkPath, "System.Globalization.Native.Aot.lib")}\"",
-                $"\"{Path.Combine(aotFrameworkPath, "System.IO.Compression.Native.Aot.lib")}\"",
+                $"\"{Path.Combine(aotSdkPath, "bootstrapper.lib")}\"",
+                $"\"{Path.Combine(aotSdkPath, "Runtime.WorkstationGC.lib")}\"",
+                $"\"{Path.Combine(aotSdkPath, "System.Globalization.Native.Aot.lib")}\"",
+                $"\"{Path.Combine(aotSdkPath, "System.IO.Compression.Native.Aot.lib")}\"",
+                $"\"{Path.Combine(aotSdkPath, "eventpipe-disabled.lib")}\"",
                 "\"advapi32.lib\"",
                 "\"bcrypt.lib\"",
                 "\"crypt32.lib\"",
@@ -66,9 +67,10 @@ internal class Linker
                 "/ENTRY:wmainCRTStartup",
                 "/NOEXP",
                 "/NOIMPLIB",
-                $"/NATVIS:\"{Path.Combine(aotFrameworkPath, "NativeAOT.natvis")}\"",
+                $"/NATVIS:\"{Path.Combine(aotSdkPath, "NativeAOT.natvis")}\"",
                 "/NODEFAULTLIB:libucrt.lib",
-                "/DEFAULTLIB:ucrt.lib"
+                "/DEFAULTLIB:ucrt.lib",
+                "/IGNORE:4099"
             };
 
             var argFile = new FileInfo(Path.Combine(outPath.FullName, $"{baseName}.link.rsp"));

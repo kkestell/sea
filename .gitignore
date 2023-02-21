@@ -7,3 +7,4 @@ deps
 sea/bin/*
 sea/obj/*
 build
+release/*

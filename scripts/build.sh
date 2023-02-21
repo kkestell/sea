@@ -5,6 +5,12 @@ SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 ROOT_PATH="${SCRIPT_PATH%/*}"
 source "$SCRIPT_PATH/vars.sh"
 
+if [ "$OPERATING_SYSTEM" = "win" ]; then
+    LIB_EXT=".lib"
+else
+    LIB_EXT=".a"
+fi
+
 # Sea
 
 dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$ROOT_PATH/build"
@@ -17,17 +23,24 @@ REF_FILES=("$SDK_PATH"/packs/Microsoft.NETCore.App.Ref/8.0.0-preview.2.23116.1/r
 
 cp "${REF_FILES[@]}" "$ROOT_PATH/build/third-party/ref"
 
-FRAMEWORK_FILES=("$ROOT_PATH"/.nuget/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*.dll)
-FRAMEWORK_FILES+=("$ROOT_PATH"/.nuget/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*.a)
+FRAMEWORK_FILES=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*.dll)
+
+if [ "$OPERATING_SYSTEM" != "win" ]; then
+    FRAMEWORK_FILES+=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*"$LIB_EXT")
+fi
 
 cp "${FRAMEWORK_FILES[@]}" "$ROOT_PATH/build/third-party/aot/framework"
 
-cp -r $ROOT_PATH/.nuget/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/tools/* "$ROOT_PATH/build/third-party/tools/ilc"
+cp -r $DEPS_PATH/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/tools/* "$ROOT_PATH/build/third-party/tools/ilc"
 
-SDK_FILES=("$ROOT_PATH"/.nuget/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.dll)
-SDK_FILES+=("$ROOT_PATH"/.nuget/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.a)
+SDK_FILES=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.dll)
+SDK_FILES+=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*"$LIB_EXT")
+SDK_FILES+=("$DEPS_PATH"/packages/microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/build/WindowsAPIs.txt)
+SDK_FILES+=("$DEPS_PATH"/packages/microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/build/NativeAOT.natvis)
 
 cp "${SDK_FILES[@]}" "$ROOT_PATH/build/third-party/aot/sdk"
+
+find "$ROOT_PATH/build" -type f -name '*.pdb' -delete
 
 exit 0
 
