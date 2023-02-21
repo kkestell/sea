@@ -13,15 +13,15 @@ fi
 
 # Sea
 
-dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$ROOT_PATH/build"
+dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$BUILD_PATH"
 
 # Third-Party
 
-mkdir -p "$ROOT_PATH"/build/third-party/{ref/,tools/ilc,aot/{framework/,sdk/}}
+mkdir -p "$BUILD_PATH"/third-party/{ref/,tools/ilc,aot/{framework/,sdk/}}
 
 REF_FILES=("$SDK_PATH"/packs/Microsoft.NETCore.App.Ref/8.0.0-preview.2.23116.1/ref/net8.0/*.dll)
 
-cp "${REF_FILES[@]}" "$ROOT_PATH/build/third-party/ref"
+cp "${REF_FILES[@]}" "$BUILD_PATH/third-party/ref"
 
 FRAMEWORK_FILES=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*.dll)
 
@@ -29,18 +29,19 @@ if [ "$OPERATING_SYSTEM" != "win" ]; then
     FRAMEWORK_FILES+=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*"$LIB_EXT")
 fi
 
-cp "${FRAMEWORK_FILES[@]}" "$ROOT_PATH/build/third-party/aot/framework"
+cp "${FRAMEWORK_FILES[@]}" "$BUILD_PATH/third-party/aot/framework"
 
-cp -r $DEPS_PATH/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/tools/* "$ROOT_PATH/build/third-party/tools/ilc"
+cp -r $DEPS_PATH/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/tools/* \
+    "$BUILD_PATH/third-party/tools/ilc"
 
 SDK_FILES=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.dll)
 SDK_FILES+=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*"$LIB_EXT")
 SDK_FILES+=("$DEPS_PATH"/packages/microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/build/WindowsAPIs.txt)
 SDK_FILES+=("$DEPS_PATH"/packages/microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/build/NativeAOT.natvis)
 
-cp "${SDK_FILES[@]}" "$ROOT_PATH/build/third-party/aot/sdk"
+cp "${SDK_FILES[@]}" "$BUILD_PATH/third-party/aot/sdk"
 
-find "$ROOT_PATH/build" -type f -name '*.pdb' -delete
+find "$BUILD_PATH" -type f -name '*.pdb' -delete
 
 exit 0
 

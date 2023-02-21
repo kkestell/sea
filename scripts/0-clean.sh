@@ -6,5 +6,5 @@ ROOT_PATH="${SCRIPT_PATH%/*}"
 source "$SCRIPT_PATH/vars.sh"
 
 pushd "$ROOT_PATH"
-rm -rf build deps release sdk sea/bin sea/obj hello hello.dll hello.ilc.rsp hello.o
+rm -rf build deps release sdk sea/bin sea/obj
 popd

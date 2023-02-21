@@ -34,6 +34,9 @@ fi
 export DEPS_PATH="$ROOT_PATH/deps"
 export SDK_PATH="$DEPS_PATH/sdk"
 export ZIP_PATH="$DEPS_PATH/zip"
+export META_PATH="$ROOT_PATH/meta"
+export BUILD_PATH="$ROOT_PATH/build"
+export RELEASE_PATH="$ROOT_PATH/release"
 
 export DOTNET_ROOT="$SDK_PATH"
 export PATH="$DOTNET_ROOT:$PATH"
