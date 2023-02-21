@@ -4,3 +4,4 @@ sdk
 *.pdb
 *.o
 sea/sea
+build

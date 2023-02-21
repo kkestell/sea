@@ -1,0 +1,871 @@
+Build started 2/20/2023 7:35:05 PM.
+     0>Process = "/sea/sdk/dotnet"
+       MSBuild executable path = "/sea/sdk/sdk/8.0.100-preview.2.23117.18/MSBuild.dll"
+       Command line arguments = "/sea/sdk/sdk/8.0.100-preview.2.23117.18/MSBuild.dll -maxcpucount -verbosity:m -nologo -target:Restore -verbosity:d -distributedlogger:Microsoft.DotNet.Tools.MSBuild.MSBuildLogger,/sea/sdk/sdk/8.0.100-preview.2.23117.18/dotnet.dll*Microsoft.DotNet.Tools.MSBuild.MSBuildForwardingLogger,/sea/sdk/sdk/8.0.100-preview.2.23117.18/dotnet.dll"
+       Current directory = "/sea/sea"
+       MSBuild version = "17.6.0-preview-23115-01+dfd8f413a"
+       Resolving SDK 'Microsoft.NET.Sdk'...
+       Property 'MSBuildExtensionsPath' with value '/sea/sdk/sdk/8.0.100-preview.2.23117.18/' expanded from the environment.
+       Property reassignment: $(MSBuildProjectExtensionsPath)="/sea/sea/obj/" (previous value: "obj/") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Current/Microsoft.Common.props (56,5)
+       Property reassignment: $(AssemblySearchPaths)="{CandidateAssemblyFiles};{HintPathFromItem}" (previous value: "{CandidateAssemblyFiles}") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.props (91,5)
+       Property reassignment: $(AssemblySearchPaths)="{CandidateAssemblyFiles};{HintPathFromItem};{TargetFrameworkDirectory}" (previous value: "{CandidateAssemblyFiles};{HintPathFromItem}") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.props (92,5)
+       Property reassignment: $(AssemblySearchPaths)="{CandidateAssemblyFiles};{HintPathFromItem};{TargetFrameworkDirectory};{RawFileName}" (previous value: "{CandidateAssemblyFiles};{HintPathFromItem};{TargetFrameworkDirectory}") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.props (93,5)
+       Resolving SDK 'Microsoft.NET.SDK.WorkloadAutoImportPropsLocator'...
+       Property reassignment: $(TargetsForTfmSpecificContentInPackage)=";PackTool;_PackProjectToolValidation" (previous value: ";PackTool") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.PackProjectTool.props (15,5)
+       Property reassignment: $(OutputType)="Exe" (previous value: "Library") at /sea/sea/sea.csproj (4,5)
+       Property reassignment: $(PublishProfileImported)="false" (previous value: "true") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.ImportPublishProfile.targets (28,5)
+       Property reassignment: $(TargetPlatformVersion)="" (previous value: "0.0") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets (65,5)
+       Property 'LANGUAGE' with value 'en_US:en' expanded from the environment.
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**" (previous value: ";bin/Debug//**") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets (233,5)
+       Property reassignment: $(IntermediateOutputPath)="obj/Debug/net8.0/" (previous value: "obj/Debug/") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets (252,5)
+       Property reassignment: $(OutputPath)="bin/Debug/net8.0/" (previous value: "bin/Debug/") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets (253,5)
+       Resolving SDK 'Microsoft.NET.SDK.WorkloadManifestTargetsLocator'...
+       Property reassignment: $(_FrameworkIdentifierForImplicitDefine)="NET" (previous value: "NETCOREAPP") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.BeforeCommon.targets (180,5)
+       Property reassignment: $(_FrameworkVersionForImplicitDefine)="8_0" (previous value: "8.0") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.BeforeCommon.targets (185,5)
+       Property reassignment: $(Language)="C#" (previous value: "en_US:en") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.CSharp.CurrentVersion.targets (38,9)
+       Property reassignment: $(CommandLineArgsForDesignTimeEvaluation)="-langversion: -define:TRACE" (previous value: "-langversion:") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Roslyn/Microsoft.CSharp.Core.targets (191,5)
+       Property reassignment: $(_DebugSymbolsProduced)="true" (previous value: "false") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (175,5)
+       Property reassignment: $(_DocumentationFileProduced)="false" (previous value: "true") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (185,5)
+       Property reassignment: $(ProcessorArchitecture)="msil" (previous value: "") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (529,5)
+       Property reassignment: $(DelaySign)="" (previous value: "false") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (568,5)
+       Property 'LocalAppData' with value '/home/kyle/.local/share' expanded from the environment.
+       Property reassignment: $(_SGenGenerateSerializationAssembliesConfig)="Auto" (previous value: "") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (3789,5)
+       Property reassignment: $(_SGenGenerateSerializationAssembliesConfig)="Off" (previous value: "Auto") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (3790,5)
+       Property reassignment: $(_TargetsThatPrepareProjectReferences)="
+             AssignProjectConfiguration;
+             _SplitProjectReferencesByFileExistence
+           " (previous value: "_SplitProjectReferencesByFileExistence") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (4927,5)
+       Property 'MSBuildExtensionsPath32' with value '/sea/sdk/sdk/8.0.100-preview.2.23117.18' expanded from the environment.
+       Property reassignment: $(ProjectAssetsCacheFile)="/sea/sea/obj/Debug/net8.0/sea.assets.cache" (previous value: "obj/Debug/net8.0/sea.assets.cache") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets (29,5)
+       Property reassignment: $(ResolveAssemblyReferencesDependsOn)="
+             
+             ResolveProjectReferences;
+             FindInvalidProjectReferences;
+             GetFrameworkPaths;
+             GetReferenceAssemblyPaths;
+             PrepareForBuild;
+             ResolveSDKReferences;
+             ExpandSDKReferences;
+           ;
+             ResolvePackageDependenciesForBuild;
+             _HandlePackageFileConflicts;
+           " (previous value: "
+             ResolveProjectReferences;
+             FindInvalidProjectReferences;
+             GetFrameworkPaths;
+             GetReferenceAssemblyPaths;
+             PrepareForBuild;
+             ResolveSDKReferences;
+             ExpandSDKReferences;
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets (80,5)
+       Property reassignment: $(PrepareResourcesDependsOn)="
+             ResolvePackageDependenciesForBuild;
+             _HandlePackageFileConflicts;
+             
+             ;
+             PrepareResourceNames;
+             ResGen;
+             CompileLicxFiles
+           
+           " (previous value: "
+             ;
+             PrepareResourceNames;
+             ResGen;
+             CompileLicxFiles
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets (86,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**" (previous value: ";bin/Debug//**;obj/Debug//**") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (27,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**;obj//**" (previous value: ";bin/Debug//**;obj/Debug//**;bin//**") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (29,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user" (previous value: ";bin/Debug//**;obj/Debug//**;bin//**;obj//**") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (32,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user;**/*.*proj" (previous value: ";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (33,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user;**/*.*proj;**/*.sln" (previous value: ";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user;**/*.*proj") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (34,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user;**/*.*proj;**/*.sln;**/*.vssscc" (previous value: ";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user;**/*.*proj;**/*.sln") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (35,5)
+       Property reassignment: $(ResolveAssemblyReferencesDependsOn)="
+             
+             
+             ResolveProjectReferences;
+             FindInvalidProjectReferences;
+             GetFrameworkPaths;
+             GetReferenceAssemblyPaths;
+             PrepareForBuild;
+             ResolveSDKReferences;
+             ExpandSDKReferences;
+           ;
+             ResolvePackageDependenciesForBuild;
+             _HandlePackageFileConflicts;
+           ;
+             ResolveTargetingPackAssets;
+           " (previous value: "
+             
+             ResolveProjectReferences;
+             FindInvalidProjectReferences;
+             GetFrameworkPaths;
+             GetReferenceAssemblyPaths;
+             PrepareForBuild;
+             ResolveSDKReferences;
+             ExpandSDKReferences;
+           ;
+             ResolvePackageDependenciesForBuild;
+             _HandlePackageFileConflicts;
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets (14,5)
+       Property reassignment: $(_GenerateRuntimeConfigurationPropertyInputsCache)="/sea/sea/obj/Debug/net8.0/sea.genruntimeconfig.cache" (previous value: "obj/Debug/net8.0/sea.genruntimeconfig.cache") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (44,5)
+       Property reassignment: $(GenerateRuntimeConfigDevFile)="false" (previous value: "true") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (61,5)
+       Property 'HOME' with value '/home/kyle' expanded from the environment.
+       Property reassignment: $(_DefaultUserProfileRuntimeStorePath)="/home/kyle/.dotnet/store" (previous value: "/home/kyle") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (78,5)
+       Property reassignment: $(AvailablePlatforms)="Any CPU,x86,x64,ARM32" (previous value: "Any CPU,x86,x64") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (112,5)
+       Property reassignment: $(AvailablePlatforms)="Any CPU,x86,x64,ARM32,ARM64" (previous value: "Any CPU,x86,x64,ARM32") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (116,5)
+       Property reassignment: $(CoreBuildDependsOn)="
+             _CheckForBuildWithNoBuild;
+             
+             BuildOnlySettings;
+             PrepareForBuild;
+             PreBuildEvent;
+             ResolveReferences;
+             PrepareResources;
+             ResolveKeySource;
+             Compile;
+             ExportWindowsMDFile;
+             UnmanagedUnregistration;
+             GenerateSerializationAssemblies;
+             CreateSatelliteAssemblies;
+             GenerateManifests;
+             GetTargetPath;
+             PrepareForRun;
+             UnmanagedRegistration;
+             IncrementalClean;
+             PostBuildEvent
+           ;
+             GenerateBuildDependencyFile;
+             GenerateBuildRuntimeConfigurationFiles
+           " (previous value: "
+             BuildOnlySettings;
+             PrepareForBuild;
+             PreBuildEvent;
+             ResolveReferences;
+             PrepareResources;
+             ResolveKeySource;
+             Compile;
+             ExportWindowsMDFile;
+             UnmanagedUnregistration;
+             GenerateSerializationAssemblies;
+             CreateSatelliteAssemblies;
+             GenerateManifests;
+             GetTargetPath;
+             PrepareForRun;
+             UnmanagedRegistration;
+             IncrementalClean;
+             PostBuildEvent
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (134,5)
+       Property reassignment: $(CoreCleanDependsOn)="
+             _SdkBeforeClean;
+             
+           " (previous value: "") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (143,5)
+       Property reassignment: $(RebuildDependsOn)="
+             _SdkBeforeRebuild;
+             
+             BeforeRebuild;
+             Clean;
+             Build;
+             AfterRebuild;
+           
+           " (previous value: "
+             BeforeRebuild;
+             Clean;
+             Build;
+             AfterRebuild;
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (150,5)
+       Property reassignment: $(CompileDependsOn)="
+             
+             ResolveReferences;
+             ResolveKeySource;
+             SetWin32ManifestProperties;
+             FindReferenceAssembliesForReferences;
+             _GenerateCompileInputs;
+             BeforeCompile;
+             _TimeStampBeforeCompile;
+             _GenerateCompileDependencyCache;
+             CoreCompile;
+             _TimeStampAfterCompile;
+             AfterCompile;
+           ;
+             _CreateAppHost;
+             _CreateComHost;
+             _GetIjwHostPaths;
+           " (previous value: "
+             ResolveReferences;
+             ResolveKeySource;
+             SetWin32ManifestProperties;
+             FindReferenceAssembliesForReferences;
+             _GenerateCompileInputs;
+             BeforeCompile;
+             _TimeStampBeforeCompile;
+             _GenerateCompileDependencyCache;
+             CoreCompile;
+             _TimeStampAfterCompile;
+             AfterCompile;
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (555,5)
+       Property reassignment: $(CreateSatelliteAssembliesDependsOn)="
+             
+             _GenerateSatelliteAssemblyInputs;
+             ComputeIntermediateSatelliteAssemblies;
+             GenerateSatelliteAssemblies
+           ;
+             CoreGenerateSatelliteAssemblies
+           " (previous value: "
+             _GenerateSatelliteAssemblyInputs;
+             ComputeIntermediateSatelliteAssemblies;
+             GenerateSatelliteAssemblies
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (941,5)
+       Property reassignment: $(DesignerRuntimeImplementationProjectOutputGroupDependsOn)="
+             
+             ;
+             
+             ;
+             BuildOnlySettings;
+             PrepareForBuild;
+             AssignTargetPaths;
+             ResolveReferences
+           
+           ;
+             _GenerateDesignerDepsFile;
+             _GenerateDesignerRuntimeConfigFile;
+             GetCopyToOutputDirectoryItems;
+             _GatherDesignerShadowCopyFiles;
+           " (previous value: "
+             ;
+             
+             ;
+             BuildOnlySettings;
+             PrepareForBuild;
+             AssignTargetPaths;
+             ResolveReferences
+           
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.DesignerSupport.targets (21,5)
+       Property reassignment: $(_ShimInputCacheFile)="/sea/sea/obj/Debug/net8.0/sea.shiminput.cache" (previous value: "obj/Debug/net8.0/sea.shiminput.cache") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.PackTool.targets (109,5)
+       Property reassignment: $(_ShimCreatedSentinelFile)="/sea/sea/obj/Debug/net8.0/sea.shimcreated.sentinel" (previous value: "obj/Debug/net8.0/sea.shimcreated.sentinel") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.PackTool.targets (111,5)
+       Property reassignment: $(DefineConstants)="TRACE;DEBUG" (previous value: "TRACE") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.CSharp.targets (31,5)
+       Property reassignment: $(DefineConstants)="TRACE;DEBUG;NET;NET8_0;NETCOREAPP" (previous value: "TRACE;DEBUG") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.CSharp.targets (34,5)
+       Property reassignment: $(WarningsAsErrors)=";NU1605;SYSLIB0011" (previous value: ";NU1605") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.CSharp.targets (48,5)
+       Property reassignment: $(IlcCompileDependsOn)="Compile;ComputeIlcCompileInputs;SetupOSSpecificProps" (previous value: "Compile;ComputeIlcCompileInputs") at /home/kyle/.nuget/packages/microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/build/Microsoft.NETCore.Native.targets (98,5)
+       Property reassignment: $(IlcCompileDependsOn)="Compile;ComputeIlcCompileInputs;SetupOSSpecificProps;PrepareForILLink" (previous value: "Compile;ComputeIlcCompileInputs;SetupOSSpecificProps") at /home/kyle/.nuget/packages/microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/build/Microsoft.NETCore.Native.targets (99,5)
+       Property reassignment: $(CppCompilerAndLinkerAlternative)="gcc" (previous value: "") at /home/kyle/.nuget/packages/microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/build/Microsoft.NETCore.Native.Unix.targets (18,5)
+       Property reassignment: $(NoWarn)="1701;1702;IL2121" (previous value: "1701;1702") at /home/kyle/.nuget/packages/microsoft.net.illink.tasks/8.0.0-preview.2.23116.1/build/Microsoft.NET.ILLink.targets (68,5)
+       Property reassignment: $(PackageDescription)="Package Description" (previous value: "") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/NuGet.Build.Tasks.Pack/build/NuGet.Build.Tasks.Pack.targets (34,5)
+       Property reassignment: $(GenerateNuspecDependsOn)="Build;_LoadPackInputItems; _GetTargetFrameworksOutput; _WalkEachTargetPerFramework; _GetPackageFiles; " (previous value: "_LoadPackInputItems; _GetTargetFrameworksOutput; _WalkEachTargetPerFramework; _GetPackageFiles; ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/NuGet.Build.Tasks.Pack/build/NuGet.Build.Tasks.Pack.targets (59,5)
+       Overriding target "ResolveFrameworkReferences" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "ResolveFrameworkReferences" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets".
+       Overriding target "Run" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "Run" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets".
+       Overriding target "GenerateSupportedTargetFrameworkAlias" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "GenerateSupportedTargetFrameworkAlias" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets".
+       Overriding target "GetReferenceAssemblyPaths" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "GetReferenceAssemblyPaths" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.DisableStandardFrameworkResolution.targets".
+       Overriding target "GetFrameworkPaths" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "GetFrameworkPaths" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.DisableStandardFrameworkResolution.targets".
+       Overriding target "DesignerRuntimeImplementationProjectOutputGroup" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "DesignerRuntimeImplementationProjectOutputGroup" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.DesignerSupport.targets".
+       Overriding target "Publish" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "Publish" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Publish.targets".
+       Overriding target "ResolveReadyToRunCompilers" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.CrossGen.targets" with target "ResolveReadyToRunCompilers" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Publish.targets".
+       Overriding target "GetCopyToPublishDirectoryItems" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "GetCopyToPublishDirectoryItems" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Publish.targets".
+       Overriding target "ILLink" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Publish.targets" with target "ILLink" from project "/home/kyle/.nuget/packages/microsoft.net.illink.tasks/8.0.0-preview.2.23116.1/build/Microsoft.NET.ILLink.targets".
+     1>Project "/sea/sea/sea.csproj" on node 1 (Restore target(s)).
+     1>Target "_LoadRestoreGraphEntryPoints" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_FilterRestoreGraphProjectInputItems" depends on it):
+     1>Task "GetRestoreSolutionProjectsTask" skipped, due to false condition; ( $(MSBuildProjectFullPath.EndsWith('.metaproj')) == 'true' AND @(RestoreGraphProjectInputItems) == '' ) was evaluated as ( False == 'true' AND /sea/sea/sea.csproj == '' ).
+     1>Done building target "_LoadRestoreGraphEntryPoints" in project "sea.csproj".
+     1>Target "_FilterRestoreGraphProjectInputItems" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateRestoreGraph" depends on it):
+       Using "RemoveDuplicates" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+       Task "RemoveDuplicates"
+       Done executing task "RemoveDuplicates".
+       Using "MSBuild" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+       Task "MSBuild"
+         Global Properties:
+           ExcludeRestorePackageImports=true
+     0>Property 'MSBuildExtensionsPath' with value '/sea/sdk/sdk/8.0.100-preview.2.23117.18/' expanded from the environment.
+       Property reassignment: $(MSBuildProjectExtensionsPath)="/sea/sea/obj/" (previous value: "obj/") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Current/Microsoft.Common.props (56,5)
+       Property reassignment: $(AssemblySearchPaths)="{CandidateAssemblyFiles};{HintPathFromItem}" (previous value: "{CandidateAssemblyFiles}") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.props (91,5)
+       Property reassignment: $(AssemblySearchPaths)="{CandidateAssemblyFiles};{HintPathFromItem};{TargetFrameworkDirectory}" (previous value: "{CandidateAssemblyFiles};{HintPathFromItem}") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.props (92,5)
+       Property reassignment: $(AssemblySearchPaths)="{CandidateAssemblyFiles};{HintPathFromItem};{TargetFrameworkDirectory};{RawFileName}" (previous value: "{CandidateAssemblyFiles};{HintPathFromItem};{TargetFrameworkDirectory}") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.props (93,5)
+       Property reassignment: $(TargetsForTfmSpecificContentInPackage)=";PackTool;_PackProjectToolValidation" (previous value: ";PackTool") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.PackProjectTool.props (15,5)
+       Property reassignment: $(OutputType)="Exe" (previous value: "Library") at /sea/sea/sea.csproj (4,5)
+       Property reassignment: $(PublishProfileImported)="false" (previous value: "true") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.ImportPublishProfile.targets (28,5)
+       Property reassignment: $(TargetPlatformVersion)="" (previous value: "0.0") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets (65,5)
+       Property 'LANGUAGE' with value 'en_US:en' expanded from the environment.
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**" (previous value: ";bin/Debug//**") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets (233,5)
+       Property reassignment: $(IntermediateOutputPath)="obj/Debug/net8.0/" (previous value: "obj/Debug/") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets (252,5)
+       Property reassignment: $(OutputPath)="bin/Debug/net8.0/" (previous value: "bin/Debug/") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets (253,5)
+       Property reassignment: $(_FrameworkIdentifierForImplicitDefine)="NET" (previous value: "NETCOREAPP") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.BeforeCommon.targets (180,5)
+       Property reassignment: $(_FrameworkVersionForImplicitDefine)="8_0" (previous value: "8.0") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.BeforeCommon.targets (185,5)
+       Property reassignment: $(Language)="C#" (previous value: "en_US:en") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.CSharp.CurrentVersion.targets (38,9)
+       Property reassignment: $(CommandLineArgsForDesignTimeEvaluation)="-langversion: -define:TRACE" (previous value: "-langversion:") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Roslyn/Microsoft.CSharp.Core.targets (191,5)
+       Property reassignment: $(_DebugSymbolsProduced)="true" (previous value: "false") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (175,5)
+       Property reassignment: $(_DocumentationFileProduced)="false" (previous value: "true") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (185,5)
+       Property reassignment: $(ProcessorArchitecture)="msil" (previous value: "") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (529,5)
+       Property reassignment: $(DelaySign)="" (previous value: "false") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (568,5)
+       Property 'LocalAppData' with value '/home/kyle/.local/share' expanded from the environment.
+       Property reassignment: $(_SGenGenerateSerializationAssembliesConfig)="Auto" (previous value: "") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (3789,5)
+       Property reassignment: $(_SGenGenerateSerializationAssembliesConfig)="Off" (previous value: "Auto") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (3790,5)
+       Property reassignment: $(_TargetsThatPrepareProjectReferences)="
+             AssignProjectConfiguration;
+             _SplitProjectReferencesByFileExistence
+           " (previous value: "_SplitProjectReferencesByFileExistence") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets (4927,5)
+       Property 'MSBuildExtensionsPath32' with value '/sea/sdk/sdk/8.0.100-preview.2.23117.18' expanded from the environment.
+       Property reassignment: $(ProjectAssetsFile)="/sea/sea/obj/project.assets.json" (previous value: "/sea/sea/obj//project.assets.json") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets (24,5)
+       Property reassignment: $(ProjectAssetsCacheFile)="/sea/sea/obj/Debug/net8.0/sea.assets.cache" (previous value: "obj/Debug/net8.0/sea.assets.cache") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets (29,5)
+       Property reassignment: $(ResolveAssemblyReferencesDependsOn)="
+             
+             ResolveProjectReferences;
+             FindInvalidProjectReferences;
+             GetFrameworkPaths;
+             GetReferenceAssemblyPaths;
+             PrepareForBuild;
+             ResolveSDKReferences;
+             ExpandSDKReferences;
+           ;
+             ResolvePackageDependenciesForBuild;
+             _HandlePackageFileConflicts;
+           " (previous value: "
+             ResolveProjectReferences;
+             FindInvalidProjectReferences;
+             GetFrameworkPaths;
+             GetReferenceAssemblyPaths;
+             PrepareForBuild;
+             ResolveSDKReferences;
+             ExpandSDKReferences;
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets (80,5)
+       Property reassignment: $(PrepareResourcesDependsOn)="
+             ResolvePackageDependenciesForBuild;
+             _HandlePackageFileConflicts;
+             
+             ;
+             PrepareResourceNames;
+             ResGen;
+             CompileLicxFiles
+           
+           " (previous value: "
+             ;
+             PrepareResourceNames;
+             ResGen;
+             CompileLicxFiles
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets (86,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**" (previous value: ";bin/Debug//**;obj/Debug//**") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (27,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**;obj//**" (previous value: ";bin/Debug//**;obj/Debug//**;bin//**") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (29,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user" (previous value: ";bin/Debug//**;obj/Debug//**;bin//**;obj//**") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (32,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user;**/*.*proj" (previous value: ";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (33,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user;**/*.*proj;**/*.sln" (previous value: ";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user;**/*.*proj") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (34,5)
+       Property reassignment: $(DefaultItemExcludes)=";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user;**/*.*proj;**/*.sln;**/*.vssscc" (previous value: ";bin/Debug//**;obj/Debug//**;bin//**;obj//**;**/*.user;**/*.*proj;**/*.sln") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.targets (35,5)
+       Property reassignment: $(ResolveAssemblyReferencesDependsOn)="
+             
+             
+             ResolveProjectReferences;
+             FindInvalidProjectReferences;
+             GetFrameworkPaths;
+             GetReferenceAssemblyPaths;
+             PrepareForBuild;
+             ResolveSDKReferences;
+             ExpandSDKReferences;
+           ;
+             ResolvePackageDependenciesForBuild;
+             _HandlePackageFileConflicts;
+           ;
+             ResolveTargetingPackAssets;
+           " (previous value: "
+             
+             ResolveProjectReferences;
+             FindInvalidProjectReferences;
+             GetFrameworkPaths;
+             GetReferenceAssemblyPaths;
+             PrepareForBuild;
+             ResolveSDKReferences;
+             ExpandSDKReferences;
+           ;
+             ResolvePackageDependenciesForBuild;
+             _HandlePackageFileConflicts;
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets (14,5)
+       Property reassignment: $(_GenerateRuntimeConfigurationPropertyInputsCache)="/sea/sea/obj/Debug/net8.0/sea.genruntimeconfig.cache" (previous value: "obj/Debug/net8.0/sea.genruntimeconfig.cache") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (44,5)
+       Property reassignment: $(GenerateRuntimeConfigDevFile)="false" (previous value: "true") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (61,5)
+       Property 'HOME' with value '/home/kyle' expanded from the environment.
+       Property reassignment: $(_DefaultUserProfileRuntimeStorePath)="/home/kyle/.dotnet/store" (previous value: "/home/kyle") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (78,5)
+       Property reassignment: $(AvailablePlatforms)="Any CPU,x86,x64,ARM32" (previous value: "Any CPU,x86,x64") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (112,5)
+       Property reassignment: $(AvailablePlatforms)="Any CPU,x86,x64,ARM32,ARM64" (previous value: "Any CPU,x86,x64,ARM32") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (116,5)
+       Property reassignment: $(CoreBuildDependsOn)="
+             _CheckForBuildWithNoBuild;
+             
+             BuildOnlySettings;
+             PrepareForBuild;
+             PreBuildEvent;
+             ResolveReferences;
+             PrepareResources;
+             ResolveKeySource;
+             Compile;
+             ExportWindowsMDFile;
+             UnmanagedUnregistration;
+             GenerateSerializationAssemblies;
+             CreateSatelliteAssemblies;
+             GenerateManifests;
+             GetTargetPath;
+             PrepareForRun;
+             UnmanagedRegistration;
+             IncrementalClean;
+             PostBuildEvent
+           ;
+             GenerateBuildDependencyFile;
+             GenerateBuildRuntimeConfigurationFiles
+           " (previous value: "
+             BuildOnlySettings;
+             PrepareForBuild;
+             PreBuildEvent;
+             ResolveReferences;
+             PrepareResources;
+             ResolveKeySource;
+             Compile;
+             ExportWindowsMDFile;
+             UnmanagedUnregistration;
+             GenerateSerializationAssemblies;
+             CreateSatelliteAssemblies;
+             GenerateManifests;
+             GetTargetPath;
+             PrepareForRun;
+             UnmanagedRegistration;
+             IncrementalClean;
+             PostBuildEvent
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (134,5)
+       Property reassignment: $(CoreCleanDependsOn)="
+             _SdkBeforeClean;
+             
+           " (previous value: "") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (143,5)
+       Property reassignment: $(RebuildDependsOn)="
+             _SdkBeforeRebuild;
+             
+             BeforeRebuild;
+             Clean;
+             Build;
+             AfterRebuild;
+           
+           " (previous value: "
+             BeforeRebuild;
+             Clean;
+             Build;
+             AfterRebuild;
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (150,5)
+       Property reassignment: $(CompileDependsOn)="
+             
+             ResolveReferences;
+             ResolveKeySource;
+             SetWin32ManifestProperties;
+             FindReferenceAssembliesForReferences;
+             _GenerateCompileInputs;
+             BeforeCompile;
+             _TimeStampBeforeCompile;
+             _GenerateCompileDependencyCache;
+             CoreCompile;
+             _TimeStampAfterCompile;
+             AfterCompile;
+           ;
+             _CreateAppHost;
+             _CreateComHost;
+             _GetIjwHostPaths;
+           " (previous value: "
+             ResolveReferences;
+             ResolveKeySource;
+             SetWin32ManifestProperties;
+             FindReferenceAssembliesForReferences;
+             _GenerateCompileInputs;
+             BeforeCompile;
+             _TimeStampBeforeCompile;
+             _GenerateCompileDependencyCache;
+             CoreCompile;
+             _TimeStampAfterCompile;
+             AfterCompile;
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (555,5)
+       Property reassignment: $(CreateSatelliteAssembliesDependsOn)="
+             
+             _GenerateSatelliteAssemblyInputs;
+             ComputeIntermediateSatelliteAssemblies;
+             GenerateSatelliteAssemblies
+           ;
+             CoreGenerateSatelliteAssemblies
+           " (previous value: "
+             _GenerateSatelliteAssemblyInputs;
+             ComputeIntermediateSatelliteAssemblies;
+             GenerateSatelliteAssemblies
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets (941,5)
+       Property reassignment: $(DesignerRuntimeImplementationProjectOutputGroupDependsOn)="
+             
+             ;
+             
+             ;
+             BuildOnlySettings;
+             PrepareForBuild;
+             AssignTargetPaths;
+             ResolveReferences
+           
+           ;
+             _GenerateDesignerDepsFile;
+             _GenerateDesignerRuntimeConfigFile;
+             GetCopyToOutputDirectoryItems;
+             _GatherDesignerShadowCopyFiles;
+           " (previous value: "
+             ;
+             
+             ;
+             BuildOnlySettings;
+             PrepareForBuild;
+             AssignTargetPaths;
+             ResolveReferences
+           
+           ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.DesignerSupport.targets (21,5)
+       Property reassignment: $(_ShimInputCacheFile)="/sea/sea/obj/Debug/net8.0/sea.shiminput.cache" (previous value: "obj/Debug/net8.0/sea.shiminput.cache") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.PackTool.targets (109,5)
+       Property reassignment: $(_ShimCreatedSentinelFile)="/sea/sea/obj/Debug/net8.0/sea.shimcreated.sentinel" (previous value: "obj/Debug/net8.0/sea.shimcreated.sentinel") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.PackTool.targets (111,5)
+       Property reassignment: $(DefineConstants)="TRACE;DEBUG" (previous value: "TRACE") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.CSharp.targets (31,5)
+       Property reassignment: $(DefineConstants)="TRACE;DEBUG;NET;NET8_0;NETCOREAPP" (previous value: "TRACE;DEBUG") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.CSharp.targets (34,5)
+       Property reassignment: $(WarningsAsErrors)=";NU1605;SYSLIB0011" (previous value: ";NU1605") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.CSharp.targets (48,5)
+       Property reassignment: $(PackageDescription)="Package Description" (previous value: "") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/NuGet.Build.Tasks.Pack/build/NuGet.Build.Tasks.Pack.targets (34,5)
+       Property reassignment: $(GenerateNuspecDependsOn)="Build;_LoadPackInputItems; _GetTargetFrameworksOutput; _WalkEachTargetPerFramework; _GetPackageFiles; " (previous value: "_LoadPackInputItems; _GetTargetFrameworksOutput; _WalkEachTargetPerFramework; _GetPackageFiles; ") at /sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/NuGet.Build.Tasks.Pack/build/NuGet.Build.Tasks.Pack.targets (59,5)
+       Overriding target "ResolveFrameworkReferences" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "ResolveFrameworkReferences" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets".
+       Overriding target "Run" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "Run" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets".
+       Overriding target "GenerateSupportedTargetFrameworkAlias" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "GenerateSupportedTargetFrameworkAlias" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.targets".
+       Overriding target "GetReferenceAssemblyPaths" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "GetReferenceAssemblyPaths" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.DisableStandardFrameworkResolution.targets".
+       Overriding target "GetFrameworkPaths" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "GetFrameworkPaths" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.DisableStandardFrameworkResolution.targets".
+       Overriding target "DesignerRuntimeImplementationProjectOutputGroup" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "DesignerRuntimeImplementationProjectOutputGroup" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.DesignerSupport.targets".
+       Overriding target "Publish" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "Publish" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Publish.targets".
+       Overriding target "ResolveReadyToRunCompilers" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.CrossGen.targets" with target "ResolveReadyToRunCompilers" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Publish.targets".
+       Overriding target "GetCopyToPublishDirectoryItems" in project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Microsoft.Common.CurrentVersion.targets" with target "GetCopyToPublishDirectoryItems" from project "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Publish.targets".
+     1>Project "/sea/sea/sea.csproj" (1) is building "/sea/sea/sea.csproj" (1:2) on node 1 (_IsProjectRestoreSupported target(s)).
+   1:2>Target "_IsProjectRestoreSupported" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (entry point):
+   1:2>Done building target "_IsProjectRestoreSupported" in project "sea.csproj".
+   1:2>Done Building Project "/sea/sea/sea.csproj" (_IsProjectRestoreSupported target(s)).
+     1>Done executing task "MSBuild".
+       Task "MSBuild" skipped, due to false condition; ( '$(RestoreUseSkipNonexistentTargets)' != 'true' ) was evaluated as ( 'true' != 'true' ).
+       Using "WarnForInvalidProjectsTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "WarnForInvalidProjectsTask"
+         (in) AllProjects '/sea/sea/sea.csproj'
+         (in) ValidProjects '/sea/sea/sea.csproj'
+       Done executing task "WarnForInvalidProjectsTask".
+     1>Done building target "_FilterRestoreGraphProjectInputItems" in project "sea.csproj".
+       Target "_FilterRestoreGraphProjectInputItems" skipped. Previously built successfully.
+     1>Target "_GetAllRestoreProjectPathItems" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateRestoreGraph" depends on it):
+       Using "NuGetMessageTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "NuGetMessageTask"
+         Determining projects to restore...
+       Done executing task "NuGetMessageTask".
+       Task "MSBuild"
+         Global Properties:
+           ExcludeRestorePackageImports=true
+     1>Project "/sea/sea/sea.csproj" (1) is building "/sea/sea/sea.csproj" (1:3) on node 1 (_GenerateRestoreProjectPathWalk target(s)).
+   1:3>Target "_GenerateRestoreProjectPathItemsAllFrameworks" skipped, due to false condition; ( '$(TargetFrameworks)' != '' ) was evaluated as ( '' != '' ).
+   1:3>Target "_GenerateRestoreProjectPathItemsPerFramework" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateRestoreProjectPathItemsCurrentProject" depends on it):
+       Using "ConvertToAbsolutePath" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+       Task "ConvertToAbsolutePath"
+       Done executing task "ConvertToAbsolutePath".
+   1:3>Done building target "_GenerateRestoreProjectPathItemsPerFramework" in project "sea.csproj".
+   1:3>Target "_GenerateRestoreProjectPathItemsCurrentProject" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateRestoreProjectPathItems" depends on it):
+   1:3>Done building target "_GenerateRestoreProjectPathItemsCurrentProject" in project "sea.csproj".
+   1:3>Target "_GenerateRestoreProjectPathItems" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateRestoreProjectPathWalk" depends on it):
+       Task "RemoveDuplicates"
+       Done executing task "RemoveDuplicates".
+   1:3>Done building target "_GenerateRestoreProjectPathItems" in project "sea.csproj".
+   1:3>Target "_GenerateRestoreProjectPathWalk" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (entry point):
+       Task "MSBuild"
+       Done executing task "MSBuild".
+       Task "MSBuild" skipped, due to false condition; ( '$(RestoreUseSkipNonexistentTargets)' != 'true' ) was evaluated as ( 'true' != 'true' ).
+       Task "RemoveDuplicates"
+       Done executing task "RemoveDuplicates".
+   1:3>Done building target "_GenerateRestoreProjectPathWalk" in project "sea.csproj".
+   1:3>Done Building Project "/sea/sea/sea.csproj" (_GenerateRestoreProjectPathWalk target(s)).
+     1>Done executing task "MSBuild".
+       Task "MSBuild" skipped, due to false condition; ( '$(RestoreUseSkipNonexistentTargets)' != 'true' ) was evaluated as ( 'true' != 'true' ).
+       Task "RemoveDuplicates"
+       Done executing task "RemoveDuplicates".
+       Task "MSBuild"
+         Global Properties:
+           ExcludeRestorePackageImports=true
+     1>Project "/sea/sea/sea.csproj" (1) is building "/sea/sea/sea.csproj" (1:4) on node 1 (_IsProjectRestoreSupported target(s)).
+   1:4>Target "_IsProjectRestoreSupported" skipped. Previously built successfully.
+   1:4>Done Building Project "/sea/sea/sea.csproj" (_IsProjectRestoreSupported target(s)).
+     1>Done executing task "MSBuild".
+       Task "MSBuild" skipped, due to false condition; ( '$(RestoreUseSkipNonexistentTargets)' != 'true' ) was evaluated as ( 'true' != 'true' ).
+     1>Done building target "_GetAllRestoreProjectPathItems" in project "sea.csproj".
+     1>Target "_GenerateRestoreGraph" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "Restore" depends on it):
+       Using "Message" task from assembly "Microsoft.Build.Tasks.Core, Version=15.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a".
+       Task "Message"
+         Generating dg file
+       Done executing task "Message".
+       Task "Message"
+         /sea/sea/sea.csproj
+       Done executing task "Message".
+       Task "MSBuild"
+         Global Properties:
+           ExcludeRestorePackageImports=true
+     1>Project "/sea/sea/sea.csproj" (1) is building "/sea/sea/sea.csproj" (1:5) on node 1 (_GenerateRestoreGraphProjectEntry target(s)).
+   1:5>Target "_GetProjectJsonPath" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GetRestoreProjectStyle" depends on it):
+   1:5>Task "GetRestoreProjectJsonPathTask" skipped, due to false condition; ( '$(RestoreProjectStyle)' == 'ProjectJson' OR '$(RestoreProjectStyle)' == '' ) was evaluated as ( 'PackageReference' == 'ProjectJson' OR 'PackageReference' == '' ).
+   1:5>Done building target "_GetProjectJsonPath" in project "sea.csproj".
+       Target "_CheckForUnsupportedTargetPlatformIdentifier" skipped, due to false condition; ('$(TargetPlatformIdentifier)' != '' and '$(TargetFrameworkIdentifier)' == '.NETCoreApp' and $([MSBuild]::VersionGreaterThanOrEquals($(TargetFrameworkVersion), 5.0)) And ('$(DesignTimeBuild)' != 'true' Or '@(MissingWorkloadPack)' == '')) was evaluated as ('' != '' and '.NETCoreApp' == '.NETCoreApp' and True And ('' != 'true' Or '' == '')).
+       Target "_CheckForMissingWorkload" skipped, due to false condition; ('@(MissingWorkloadPack)' != '' And '$(DesignTimeBuild)' != 'true') was evaluated as ('' != '' And '' != 'true').
+   1:5>Target "_CheckForUnsupportedNETCoreVersion" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets" from project "/sea/sea/sea.csproj" (target "CollectPackageReferences" depends on it):
+       Task "NETSdkError" skipped, due to false condition; ('$(_TargetFrameworkVersionWithoutV)' > '$(NETCoreAppMaximumVersion)') was evaluated as ('8.0' > '8.0').
+   1:5>Done building target "_CheckForUnsupportedNETCoreVersion" in project "sea.csproj".
+       Target "_CheckForEolTargetFrameworks" skipped, due to false condition; ('@(_EolNetCoreTargetFrameworkVersions->AnyHaveMetadataValue('Identity', '$(_TargetFrameworkVersionWithoutV)'))' and '$(TargetFrameworkIdentifier)' == '.NETCoreApp' and '$(CheckEolTargetFramework)' == 'true') was evaluated as ('false' and '.NETCoreApp' == '.NETCoreApp' and 'true' == 'true').
+   1:5>Target "_CheckForUnsupportedCppNETCoreVersion" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets" from project "/sea/sea/sea.csproj" (target "CollectPackageReferences" depends on it):
+       Task "NETSdkError" skipped, due to false condition; ('$(TargetFrameworkIdentifier)' == '.NETCoreApp' and '$(_TargetFrameworkVersionWithoutV)' < '3.1' and ('$(Language)' == 'C++' and '$(_EnablePackageReferencesInVCProjects)' != 'true')) was evaluated as ('.NETCoreApp' == '.NETCoreApp' and '8.0' < '3.1' and ('C#' == 'C++' and '' != 'true')).
+   1:5>Done building target "_CheckForUnsupportedCppNETCoreVersion" in project "sea.csproj".
+       Target "_CheckForUnsupportedNETStandardVersion" skipped, due to false condition; ('$(TargetFrameworkIdentifier)' == '.NETStandard' And '$(NETStandardMaximumVersion)' != '') was evaluated as ('.NETCoreApp' == '.NETStandard' And '' != '').
+       Target "_CheckForUnsupportedTargetFrameworkAndFeatureCombination" skipped, due to false condition; ('$(TargetFrameworkIdentifier)' == '.NETFramework') was evaluated as ('.NETCoreApp' == '.NETFramework').
+   1:5>Target "UpdateAspNetToFrameworkReference" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.Shared.targets" from project "/sea/sea/sea.csproj" (target "ApplyImplicitVersions" depends on it):
+       Using "CheckIfPackageReferenceShouldBeFrameworkReference" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/../tools/net8.0/Microsoft.NET.Build.Tasks.dll".
+       Task "CheckIfPackageReferenceShouldBeFrameworkReference"
+       Done executing task "CheckIfPackageReferenceShouldBeFrameworkReference".
+       Task "NETSdkError" skipped, due to false condition; ('$(_ShouldRemoveAspNetCoreAll)' == 'true') was evaluated as ('False' == 'true').
+       Task "CheckIfPackageReferenceShouldBeFrameworkReference"
+       Done executing task "CheckIfPackageReferenceShouldBeFrameworkReference".
+       Task "NETSdkWarning" skipped, due to false condition; ('$(_ShouldRemoveAspNetCoreApp)' == 'true') was evaluated as ('False' == 'true').
+   1:5>Done building target "UpdateAspNetToFrameworkReference" in project "sea.csproj".
+       Target "IncludeTargetingPackReference" skipped, due to false condition; ('$(TargetFrameworkMoniker)' != '' and '$(TargetFrameworkIdentifier)' == '.NETFramework' and '$(AutomaticallyUseReferenceAssemblyPackages)' == 'true') was evaluated as ('.NETCoreApp,Version=v8.0' != '' and '.NETCoreApp' == '.NETFramework' and 'true' == 'true').
+   1:5>Target "CheckForImplicitPackageReferenceOverrides" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.Shared.targets" from project "/sea/sea/sea.csproj" (target "ApplyImplicitVersions" depends on it):
+       Using "CheckForImplicitPackageReferenceOverrides" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/../tools/net8.0/Microsoft.NET.Build.Tasks.dll".
+       Task "CheckForImplicitPackageReferenceOverrides"
+       Done executing task "CheckForImplicitPackageReferenceOverrides".
+   1:5>Done building target "CheckForImplicitPackageReferenceOverrides" in project "sea.csproj".
+   1:5>Target "ApplyImplicitVersions" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.DefaultItems.Shared.targets" from project "/sea/sea/sea.csproj" (target "CollectPackageReferences" depends on it):
+       Using "ApplyImplicitVersions" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/../tools/net8.0/Microsoft.NET.Build.Tasks.dll".
+       Task "ApplyImplicitVersions"
+       Done executing task "ApplyImplicitVersions".
+   1:5>Done building target "ApplyImplicitVersions" in project "sea.csproj".
+       Target "CheckForImplicitPackageReferenceOverrides" skipped. Previously built successfully.
+       Target "AddWindowsSdkKnownFrameworkReferences" skipped, due to false condition; ('$(TargetFrameworkIdentifier)' == '.NETCoreApp' And '$(TargetPlatformIdentifier)' == 'Windows') was evaluated as ('.NETCoreApp' == '.NETCoreApp' And '' == 'Windows').
+       Target "_NormalizeTargetPlatformVersion" skipped, due to false condition; ('$(TargetPlatformVersion)' != '' and '$(TargetFrameworkIdentifier)' == '.NETCoreApp' and $([MSBuild]::VersionGreaterThanOrEquals($(TargetFrameworkVersion), 5.0)) and ('$(Language)' != 'C++' or '$(_EnablePackageReferencesInVCProjects)' == 'true')) was evaluated as ('' != '' and '.NETCoreApp' == '.NETCoreApp' and True and ('C#' != 'C++' or '' == 'true')).
+   1:5>Target "_CheckForLanguageAndFeatureCombinationSupport" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.RuntimeIdentifierInference.targets" from project "/sea/sea/sea.csproj" (target "ProcessFrameworkReferences" depends on it):
+       Task "NETSdkError" skipped, due to false condition; (('$(Language)' == 'C++' and '$(_EnablePackageReferencesInVCProjects)' != 'true') and $(OutputType) != 'library' and '$(TargetFrameworkIdentifier)' == '.NETCoreApp') was evaluated as (('C#' == 'C++' and '' != 'true') and Exe != 'library' and '.NETCoreApp' == '.NETCoreApp').
+       Task "NETSdkError" skipped, due to false condition; (('$(Language)' == 'C++' and '$(_EnablePackageReferencesInVCProjects)' != 'true') and $(EnableComHosting) == 'true') was evaluated as (('C#' == 'C++' and '' != 'true') and  == 'true').
+       Task "NETSdkError" skipped, due to false condition; (('$(Language)' == 'C++' and '$(_EnablePackageReferencesInVCProjects)' != 'true') and $(SelfContained) == 'true') was evaluated as (('C#' == 'C++' and '' != 'true') and false == 'true').
+   1:5>Done building target "_CheckForLanguageAndFeatureCombinationSupport" in project "sea.csproj".
+   1:5>Target "ProcessFrameworkReferences" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.Sdk.FrameworkReferenceResolution.targets" from project "/sea/sea/sea.csproj" (target "CollectPackageReferences" depends on it):
+       Using "CheckForDuplicateFrameworkReferences" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/../tools/net8.0/Microsoft.NET.Build.Tasks.dll".
+       Task "CheckForDuplicateFrameworkReferences"
+       Done executing task "CheckForDuplicateFrameworkReferences".
+       Using "ProcessFrameworkReferences" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/../tools/net8.0/Microsoft.NET.Build.Tasks.dll".
+       Task "ProcessFrameworkReferences"
+       Done executing task "ProcessFrameworkReferences".
+       Using "ResolveAppHosts" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/../tools/net8.0/Microsoft.NET.Build.Tasks.dll".
+       Task "ResolveAppHosts"
+       Done executing task "ResolveAppHosts".
+   1:5>Done building target "ProcessFrameworkReferences" in project "sea.csproj".
+       Target "IncludeTargetingPackReference" skipped, due to false condition; ('$(TargetFrameworkMoniker)' != '' and '$(TargetFrameworkIdentifier)' == '.NETFramework' and '$(AutomaticallyUseReferenceAssemblyPackages)' == 'true') was evaluated as ('.NETCoreApp,Version=v8.0' != '' and '.NETCoreApp' == '.NETFramework' and 'true' == 'true').
+   1:5>Target "_CheckForObsoleteDotNetCliToolReferences" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.ObsoleteReferences.targets" from project "/sea/sea/sea.csproj" (target "CollectPackageReferences" depends on it):
+       Task "NETSdkWarning" skipped, due to false condition; ( '%(_ReferenceToObsoleteDotNetCliTool.Identity)' != '' ) was evaluated as ( '' != '' ).
+   1:5>Done building target "_CheckForObsoleteDotNetCliToolReferences" in project "sea.csproj".
+   1:5>Target "CollectPackageReferences" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GetRestoreProjectStyle" depends on it):
+       Using "CheckForDuplicateNuGetItemsTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "CheckForDuplicateNuGetItemsTask"
+       Done executing task "CheckForDuplicateNuGetItemsTask".
+   1:5>Done building target "CollectPackageReferences" in project "sea.csproj".
+   1:5>Target "_GetRestoreProjectStyle" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateRestoreSpecs" depends on it):
+       Using "GetRestoreProjectStyleTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "GetRestoreProjectStyleTask"
+         (in) HasPackageReferenceItems 'True'
+         (in) MSBuildProjectDirectory '/sea/sea'
+         (in) MSBuildProjectName 'sea'
+         (in) ProjectJsonPath ''
+         (in) RestoreProjectStyle 'PackageReference'
+         (out) IsPackageReferenceCompatibleProjectStyle 'True'
+         (out) ProjectStyle 'PackageReference'
+       Done executing task "GetRestoreProjectStyleTask".
+   1:5>Done building target "_GetRestoreProjectStyle" in project "sea.csproj".
+   1:5>Target "_GenerateRestoreSpecs" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateRestoreGraphProjectEntry" depends on it):
+       Task "Message"
+         Restore entry point /sea/sea/sea.csproj
+       Done executing task "Message".
+   1:5>Done building target "_GenerateRestoreSpecs" in project "sea.csproj".
+   1:5>Target "_GetRestoreSettingsOverrides" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GetRestoreSettings" depends on it):
+       Task "MSBuild" skipped, due to false condition; ( '$(RestorePackagesPath)' != '' ) was evaluated as ( '' != '' ).
+       Task "MSBuild" skipped, due to false condition; ( '$(RestoreRepositoryPathOverride)' != '' ) was evaluated as ( '' != '' ).
+       Task "MSBuild" skipped, due to false condition; ( '$(RestoreSources)' != '' ) was evaluated as ( '' != '' ).
+       Task "MSBuild" skipped, due to false condition; ( '$(RestoreFallbackFolders)' != '' ) was evaluated as ( '' != '' ).
+   1:5>Done building target "_GetRestoreSettingsOverrides" in project "sea.csproj".
+   1:5>Target "_GetRestoreSettingsPerFramework" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GetRestoreSettingsCurrentProject" depends on it):
+   1:5>Done building target "_GetRestoreSettingsPerFramework" in project "sea.csproj".
+   1:5>Target "_GetRestoreSettingsCurrentProject" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GetRestoreSettings" depends on it):
+   1:5>Done building target "_GetRestoreSettingsCurrentProject" in project "sea.csproj".
+       Target "_GetRestoreSettingsAllFrameworks" skipped, due to false condition; ( '$(TargetFrameworks)' != '' AND '$(PackageReferenceCompatibleProjectStyle)' == 'true' ) was evaluated as ( '' != '' AND 'True' == 'true' ).
+   1:5>Target "_GetRestoreSettings" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateDotnetCliToolReferenceSpecs" depends on it):
+       Using "GetRestoreSettingsTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "GetRestoreSettingsTask"
+         (in) ProjectUniqueName '/sea/sea/sea.csproj'
+         (in) RestoreSources ''
+         (in) RestorePackagesPath ''
+         (in) RestoreRepositoryPath ''
+         (in) RestoreFallbackFolders ''
+         (in) RestoreConfigFile ''
+         (in) RestoreSolutionDirectory ''
+         (in) RestoreRootConfigDirectory ''
+         (in) RestorePackagesPathOverride ''
+         (in) RestoreSourcesOverride ''
+         (in) RestoreFallbackFoldersOverride ''
+         (in) RestoreProjectStyle 'PackageReference'
+         (in) MSBuildStartupDirectory '/sea/sea'
+         (out) OutputPackagesPath '/home/kyle/.nuget/packages/'
+         (out) OutputRepositoryPath ''
+         (out) OutputSources 'https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet8/nuget/v3/index.json;https://api.nuget.org/v3/index.json;https://api.nuget.org/v3/index.json'
+         (out) OutputFallbackFolders ''
+         (out) OutputConfigFilePaths '/sea/sea/NuGet.Config;/home/kyle/.nuget/NuGet/NuGet.Config'
+       Done executing task "GetRestoreSettingsTask".
+   1:5>Done building target "_GetRestoreSettings" in project "sea.csproj".
+   1:5>Target "_GenerateDotnetCliToolReferenceSpecs" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateRestoreGraphProjectEntry" depends on it):
+       Using "GetRestoreDotnetCliToolsTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "GetRestoreDotnetCliToolsTask"
+         (in) ProjectPath '/sea/sea/sea.csproj'
+         (in) DotnetCliToolReferences ''
+         (in) RestoreSources 'https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet8/nuget/v3/index.json;https://api.nuget.org/v3/index.json;https://api.nuget.org/v3/index.json'
+         (in) RestorePackagesPath '/home/kyle/.nuget/packages/'
+         (in) RestoreConfigFilePaths '/sea/sea/NuGet.Config;/home/kyle/.nuget/NuGet/NuGet.Config'
+       Done executing task "GetRestoreDotnetCliToolsTask".
+   1:5>Done building target "_GenerateDotnetCliToolReferenceSpecs" in project "sea.csproj".
+   1:5>Target "_GenerateRestoreGraphProjectEntry" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (entry point):
+   1:5>Done building target "_GenerateRestoreGraphProjectEntry" in project "sea.csproj".
+   1:5>Done Building Project "/sea/sea/sea.csproj" (_GenerateRestoreGraphProjectEntry target(s)).
+     1>Done executing task "MSBuild".
+       Task "MSBuild"
+         Global Properties:
+           ExcludeRestorePackageImports=true
+     1>Project "/sea/sea/sea.csproj" (1) is building "/sea/sea/sea.csproj" (1:6) on node 1 (_GenerateProjectRestoreGraph target(s)).
+   1:6>Target "_GetRestoreProjectStyle" skipped. Previously built successfully.
+       Target "_GetRestoreProjectStyle" skipped. Previously built successfully.
+       Target "_GetRestoreProjectStyle" skipped. Previously built successfully.
+   1:6>Target "_GetRestoreTargetFrameworkOverride" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GetRestoreTargetFrameworksOutput" depends on it):
+       Task "GetGlobalPropertyValueTask" skipped, due to false condition; ( '$(TargetFrameworks)' != '' ) was evaluated as ( '' != '' ).
+   1:6>Done building target "_GetRestoreTargetFrameworkOverride" in project "sea.csproj".
+   1:6>Target "_GetRestoreTargetFrameworksOutput" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateRestoreProjectSpec" depends on it):
+       Using "GetProjectTargetFrameworksTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "GetProjectTargetFrameworksTask"
+         (in) ProjectPath '/sea/sea/sea.csproj'
+         (in) TargetFrameworkMoniker '.NETCoreApp,Version=v8.0'
+         (in) TargetPlatformIdentifier ''
+         (in) TargetPlatformVersion ''
+         (in) TargetPlatformMinVersion ''
+         (in) TargetFrameworks ''
+         (in) TargetFramework 'net8.0'
+         (out) ProjectTargetFrameworks 'net8.0'
+       Done executing task "GetProjectTargetFrameworksTask".
+   1:6>Done building target "_GetRestoreTargetFrameworksOutput" in project "sea.csproj".
+       Target "_GetRestoreSettings" skipped. Previously built successfully.
+   1:6>Target "_GenerateRestoreProjectSpec" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateProjectRestoreGraph" depends on it):
+       Task "ConvertToAbsolutePath"
+       Done executing task "ConvertToAbsolutePath".
+   1:6>Done building target "_GenerateRestoreProjectSpec" in project "sea.csproj".
+       Target "_GenerateProjectRestoreGraphAllFrameworks" skipped, due to false condition; ( '$(TargetFrameworks)' != '' ) was evaluated as ( '' != '' ).
+       Target "_GetRestoreProjectStyle" skipped. Previously built successfully.
+       Target "CollectPackageReferences" skipped. Previously built successfully.
+   1:6>Target "CollectPackageDownloads" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateProjectRestoreGraphPerFramework" depends on it):
+       Task "CheckForDuplicateNuGetItemsTask"
+       Done executing task "CheckForDuplicateNuGetItemsTask".
+   1:6>Done building target "CollectPackageDownloads" in project "sea.csproj".
+   1:6>Target "CollectFrameworkReferences" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateProjectRestoreGraphPerFramework" depends on it):
+   1:6>Done building target "CollectFrameworkReferences" in project "sea.csproj".
+   1:6>Target "CollectCentralPackageVersions" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateProjectRestoreGraphPerFramework" depends on it):
+       Task "CheckForDuplicateNuGetItemsTask"
+       Done executing task "CheckForDuplicateNuGetItemsTask".
+   1:6>Done building target "CollectCentralPackageVersions" in project "sea.csproj".
+       Target "PrepRestoreForStoreProjects" skipped, due to false condition; ('$(StorePackageName)' != '') was evaluated as ('' != '').
+   1:6>Target "_GenerateProjectRestoreGraphPerFramework" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateProjectRestoreGraphCurrentProject" depends on it):
+       Using "GetRestoreProjectReferencesTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "GetRestoreProjectReferencesTask"
+         (in) ProjectUniqueName '/sea/sea/sea.csproj'
+         (in) TargetFrameworks 'net8.0'
+         (in) ProjectReferences ''
+         (in) ParentProjectPath '/sea/sea/sea.csproj'
+       Done executing task "GetRestoreProjectReferencesTask".
+       Using "GetRestorePackageReferencesTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "GetRestorePackageReferencesTask"
+         (in) ProjectUniqueName '/sea/sea/sea.csproj'
+         (in) TargetFrameworks 'net8.0'
+         (in) PackageReferences 'Microsoft.DotNet.ILCompiler;runtime.linux-x64.Microsoft.DotNet.ILCompiler;runtime.win-x64.Microsoft.DotNet.ILCompiler;Microsoft.NETCore.App.Runtime.linux-x64;Microsoft.NET.ILLink.Tasks'
+       Done executing task "GetRestorePackageReferencesTask".
+       Task "GetCentralPackageVersionsTask" skipped, due to false condition; ( '$(PackageReferenceCompatibleProjectStyle)' == 'true' AND '$(_CentralPackageVersionsEnabled)' == 'true' ) was evaluated as ( 'True' == 'true' AND '' == 'true' ).
+       Using "GetRestorePackageDownloadsTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "GetRestorePackageDownloadsTask"
+         (in) ProjectUniqueName '/sea/sea/sea.csproj'
+         (in) TargetFrameworks 'net8.0'
+         (in) PackageDownloads 'runtime.linux-x64.Microsoft.DotNet.ILCompiler'
+       Done executing task "GetRestorePackageDownloadsTask".
+       Using "GetRestoreFrameworkReferencesTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "GetRestoreFrameworkReferencesTask"
+         (in) ProjectUniqueName '/sea/sea/sea.csproj'
+         (in) TargetFrameworks 'net8.0'
+         (in) FrameworkReferences 'Microsoft.NETCore.App'
+       Done executing task "GetRestoreFrameworkReferencesTask".
+   1:6>Done building target "_GenerateProjectRestoreGraphPerFramework" in project "sea.csproj".
+   1:6>Target "_GenerateProjectRestoreGraphCurrentProject" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateRestoreDependencies" depends on it):
+   1:6>Done building target "_GenerateProjectRestoreGraphCurrentProject" in project "sea.csproj".
+   1:6>Target "_GenerateRestoreDependencies" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (target "_GenerateProjectRestoreGraph" depends on it):
+   1:6>Done building target "_GenerateRestoreDependencies" in project "sea.csproj".
+   1:6>Target "_GenerateProjectRestoreGraph" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (entry point):
+   1:6>Done building target "_GenerateProjectRestoreGraph" in project "sea.csproj".
+   1:6>Done Building Project "/sea/sea/sea.csproj" (_GenerateProjectRestoreGraph target(s)).
+     1>Done executing task "MSBuild".
+     1>Done building target "_GenerateRestoreGraph" in project "sea.csproj".
+       Target "_CheckForUnsupportedTargetFramework" skipped, due to false condition; ('$(_UnsupportedTargetFrameworkError)' == 'true') was evaluated as ('' == 'true').
+     1>Target "_CollectTargetFrameworkForTelemetry" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets" from project "/sea/sea/sea.csproj" (target "Restore" depends on it):
+       Using "AllowEmptyTelemetry" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/../tools/net8.0/Microsoft.NET.Build.Tasks.dll".
+       Task "AllowEmptyTelemetry"
+       Done executing task "AllowEmptyTelemetry".
+     1>Done building target "_CollectTargetFrameworkForTelemetry" in project "sea.csproj".
+     1>Target "_CheckForUnsupportedNETCoreVersion" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets" from project "/sea/sea/sea.csproj" (target "Restore" depends on it):
+       Task "NETSdkError" skipped, due to false condition; ('$(_TargetFrameworkVersionWithoutV)' > '$(NETCoreAppMaximumVersion)') was evaluated as ('8.0' > '8.0').
+     1>Done building target "_CheckForUnsupportedNETCoreVersion" in project "sea.csproj".
+       Target "_CheckForEolTargetFrameworks" skipped, due to false condition; ('@(_EolNetCoreTargetFrameworkVersions->AnyHaveMetadataValue('Identity', '$(_TargetFrameworkVersionWithoutV)'))' and '$(TargetFrameworkIdentifier)' == '.NETCoreApp' and '$(CheckEolTargetFramework)' == 'true') was evaluated as ('false' and '.NETCoreApp' == '.NETCoreApp' and 'true' == 'true').
+     1>Target "_CheckForUnsupportedCppNETCoreVersion" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets" from project "/sea/sea/sea.csproj" (target "Restore" depends on it):
+       Task "NETSdkError" skipped, due to false condition; ('$(TargetFrameworkIdentifier)' == '.NETCoreApp' and '$(_TargetFrameworkVersionWithoutV)' < '3.1' and ('$(Language)' == 'C++' and '$(_EnablePackageReferencesInVCProjects)' != 'true')) was evaluated as ('.NETCoreApp' == '.NETCoreApp' and '8.0' < '3.1' and ('C#' == 'C++' and '' != 'true')).
+     1>Done building target "_CheckForUnsupportedCppNETCoreVersion" in project "sea.csproj".
+       Target "_CheckForUnsupportedNETStandardVersion" skipped, due to false condition; ('$(TargetFrameworkIdentifier)' == '.NETStandard' And '$(NETStandardMaximumVersion)' != '') was evaluated as ('.NETCoreApp' == '.NETStandard' And '' != '').
+       Target "_CheckForUnsupportedTargetFrameworkAndFeatureCombination" skipped, due to false condition; ('$(TargetFrameworkIdentifier)' == '.NETFramework') was evaluated as ('.NETCoreApp' == '.NETFramework').
+     1>Target "Restore" in file "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.targets" from project "/sea/sea/sea.csproj" (entry point):
+       Task "RemoveDuplicates"
+       Done executing task "RemoveDuplicates".
+       Using "RestoreTask" task from assembly "/sea/sdk/sdk/8.0.100-preview.2.23117.18/NuGet.Build.Tasks.dll".
+       Task "RestoreTask"
+         (in) RestoreGraphItems Count '10'
+         (in) RestoreDisableParallel 'False'
+         (in) RestoreNoCache 'False'
+         (in) RestoreIgnoreFailedSources 'False'
+         (in) RestoreRecursive 'True'
+         (in) RestoreForce 'False'
+         (in) HideWarningsAndErrors 'False'
+         (in) RestoreForceEvaluate 'False'
+         (in) RestorePackagesConfig 'False'
+         X.509 certificate chain validation will use the fallback certificate bundle at '/sea/sdk/sdk/8.0.100-preview.2.23117.18/trustedroots/codesignctl.pem'.
+         X.509 certificate chain validation will use the fallback certificate bundle at '/sea/sdk/sdk/8.0.100-preview.2.23117.18/trustedroots/timestampctl.pem'.
+         Running restore with 16 concurrent jobs.
+         Reading project file /sea/sea/sea.csproj.
+         The restore inputs for 'sea' have changed. Continuing restore.
+         Restoring packages for /sea/sea/sea.csproj...
+         Restoring packages for .NETCoreApp,Version=v8.0...
+         Resolving conflicts for net8.0...
+         Checking compatibility of packages on net8.0.
+         Checking compatibility for sea 1.0.0 with net8.0.
+         Checking compatibility for Microsoft.DotNet.ILCompiler 8.0.0-preview.2.23116.1 with net8.0.
+         Checking compatibility for runtime.linux-x64.Microsoft.DotNet.ILCompiler 8.0.0-preview.2.23116.1 with net8.0.
+         Checking compatibility for runtime.win-x64.Microsoft.DotNet.ILCompiler 8.0.0-preview.2.23116.1 with net8.0.
+         Checking compatibility for Microsoft.NETCore.App.Runtime.linux-x64 8.0.0-preview.2.23116.1 with net8.0.
+     1>/sea/sea/sea.csproj : error NU1213: The package Microsoft.NETCore.App.Runtime.linux-x64 8.0.0-preview.2.23116.1 has a package type DotnetPlatform that is incompatible with this project. 
+         Checking compatibility for Microsoft.NET.ILLink.Tasks 8.0.0-preview.2.23116.1 with net8.0.
+         Incompatible packages: 1
+         Committing restore...
+         Assets file has not changed. Skipping assets file writing. Path: /sea/sea/obj/project.assets.json
+         Writing cache file to disk. Path: /sea/sea/obj/project.nuget.cache
+         Persisting dg to /sea/sea/obj/sea.csproj.nuget.dgspec.json
+         Failed to restore /sea/sea/sea.csproj (in 168 ms).
+         
+         NuGet Config files used:
+             /sea/sea/NuGet.Config
+             /home/kyle/.nuget/NuGet/NuGet.Config
+         
+         Feeds used:
+             https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet8/nuget/v3/index.json
+             https://api.nuget.org/v3/index.json
+       Done executing task "RestoreTask" -- FAILED.
+     1>Done building target "Restore" in project "sea.csproj" -- FAILED.
+     1>Done Building Project "/sea/sea/sea.csproj" (Restore target(s)) -- FAILED.
+
+Build FAILED.
+
+       "/sea/sea/sea.csproj" (Restore target) (1) ->
+       (Restore target) -> 
+         /sea/sea/sea.csproj : error NU1213: The package Microsoft.NETCore.App.Runtime.linux-x64 8.0.0-preview.2.23116.1 has a package type DotnetPlatform that is incompatible with this project. 
+
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:00.77
