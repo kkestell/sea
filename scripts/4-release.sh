@@ -23,12 +23,10 @@ pushd "$BUILD_PATH"
 
 echo "Creating archive $ARCHIVE"
 
-if [ "$OPERATING_SYSTEM" = "linux" ]; then
-    ZIP="$ZIP_PATH/7zz"
-elif [ "$OPERATING_SYSTEM" = "osx" ]; then
-    exit 1
-elif [ "$OPERATING_SYSTEM" = "win" ]; then
+if [ "$OPERATING_SYSTEM" = "win" ]; then
     ZIP="$ZIP_PATH/7zr.exe"
+else
+    ZIP="$ZIP_PATH/7zz"
 fi
 
 "$ZIP" a -t7z -m0=lzma2 -mx=9 -mfb=273 -ms=8g -mmt=off -mmtf=off -mqs=on -bt -bb3 "$ARCHIVE" ./*

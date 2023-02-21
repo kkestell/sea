@@ -1,12 +1,8 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euxo pipefail
 
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 source "$SCRIPT_PATH/vars.sh"
-
-if [ ! -d "$RUNTIME_PATH/artifacts" ]; then
-    "$RUNTIME_PATH/build$CMD_EXT" -subset clr -c $CONFIGURATION -os "$OPERATING_SYSTEM" -arch "$ARCHITECTURE" --ninja
-fi
 
 if [ "$OPERATING_SYSTEM" = "win" ]; then
     LIB_EXT=".lib"
@@ -18,12 +14,18 @@ else
     CMD_EXT=".sh"
 fi
 
+if [ ! -d "$RUNTIME_PATH/artifacts" ]; then
+    "$RUNTIME_PATH/build$CMD_EXT" -subset clr -c $CONFIGURATION -os "$OPERATING_SYSTEM" -arch "$ARCHITECTURE" --ninja
+fi
+
 # Sea
 
 DOTNET_ROOT="$SDK_PATH"
 PATH="$DOTNET_ROOT:$BUILD_PATH:$PATH"
+export NUGET_PACKAGES="$DEPS_PATH/packages"
 
-dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$BUILD_PATH"
+dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$BUILD_PATH" -c Release
+strip "$BUILD_PATH"/sea
 
 # Third-Party
 
@@ -44,7 +46,7 @@ cp "${FRAMEWORK_FILES[@]}" "$BUILD_PATH/third-party/aot/framework"
 #cp -r $DEPS_PATH/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/tools/* \
 #    "$BUILD_PATH/third-party/tools/ilc"
 
-cp -r $RUNTIME_PATH/artifacts/bin/coreclr/linux.x64.Release/ilc/* "$BUILD_PATH/third-party/tools/ilc"
+cp -r $RUNTIME_PATH/artifacts/bin/coreclr/$OPERATING_SYSTEM.x64.Release/ilc/* "$BUILD_PATH/third-party/tools/ilc"
 
 SDK_FILES=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.dll)
 SDK_FILES+=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*"$LIB_EXT")

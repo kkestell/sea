@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />
     <PackageReference Include="runtime.linux-x64.Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />
     <PackageReference Include="runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />
+    <PackageReference Include="runtime.osx-x64.Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />
   </ItemGroup>
 
 </Project>
