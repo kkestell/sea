@@ -7,18 +7,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PublishAot>true</PublishAot>
+  </PropertyGroup>
+
   <ItemGroup>
-    <!--
-    Latest version from:
-    https://dev.azure.com/dnceng/public/_artifacts/feed/dotnet8/NuGet/Microsoft.DotNet.ILCompiler/versions/
-    -->
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="4.5.0-2.final" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />
     <PackageReference Include="runtime.linux-x64.Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />
     <PackageReference Include="runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <PublishAot>true</PublishAot>
-  </PropertyGroup>
 
 </Project>

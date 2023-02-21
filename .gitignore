@@ -3,5 +3,6 @@ sdk
 *.dll
 *.pdb
 *.o
+*.rsp
 sea/sea
 build
