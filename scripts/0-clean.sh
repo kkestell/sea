@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
-set -euox
+set -euo pipefail
 
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
-ROOT_PATH="${SCRIPT_PATH%/*}"
 source "$SCRIPT_PATH/vars.sh"
 
-pushd "$ROOT_PATH"
-rm -rf build deps release sdk sea/bin sea/obj
-popd
+rm -rf "$BUILD_PATH" "$DEPS_PATH" "$RELEASE_PATH" "$ROOT_PATH"/sea/bin "$ROOT_PATH"/sea/obj

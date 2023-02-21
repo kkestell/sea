@@ -1,17 +1,27 @@
 #!/usr/bin/env bash
-set -euox
+set -euo pipefail
 
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
-ROOT_PATH="${SCRIPT_PATH%/*}"
 source "$SCRIPT_PATH/vars.sh"
+
+if [ ! -d "$RUNTIME_PATH/artifacts" ]; then
+    "$RUNTIME_PATH/build$CMD_EXT" -subset clr -c $CONFIGURATION -os "$OPERATING_SYSTEM" -arch "$ARCHITECTURE" --ninja
+fi
 
 if [ "$OPERATING_SYSTEM" = "win" ]; then
     LIB_EXT=".lib"
+    EXE_EXT=".exe"
+    CMD_EXT=".cmd"
 else
     LIB_EXT=".a"
+    EXE_EXT=""
+    CMD_EXT=".sh"
 fi
 
 # Sea
+
+DOTNET_ROOT="$SDK_PATH"
+PATH="$DOTNET_ROOT:$BUILD_PATH:$PATH"
 
 dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$BUILD_PATH"
 
@@ -31,8 +41,10 @@ fi
 
 cp "${FRAMEWORK_FILES[@]}" "$BUILD_PATH/third-party/aot/framework"
 
-cp -r $DEPS_PATH/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/tools/* \
-    "$BUILD_PATH/third-party/tools/ilc"
+#cp -r $DEPS_PATH/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/tools/* \
+#    "$BUILD_PATH/third-party/tools/ilc"
+
+cp -r $RUNTIME_PATH/artifacts/bin/coreclr/linux.x64.Release/ilc/* "$BUILD_PATH/third-party/tools/ilc"
 
 SDK_FILES=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.dll)
 SDK_FILES+=("$DEPS_PATH"/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*"$LIB_EXT")
@@ -40,6 +52,8 @@ SDK_FILES+=("$DEPS_PATH"/packages/microsoft.dotnet.ilcompiler/8.0.0-preview.2.23
 SDK_FILES+=("$DEPS_PATH"/packages/microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/build/NativeAOT.natvis)
 
 cp "${SDK_FILES[@]}" "$BUILD_PATH/third-party/aot/sdk"
+
+cp "$RUNTIME_PATH/artifacts/bin/coreclr/$OPERATING_SYSTEM.x64.Release/corerun$EXE_EXT" "$BUILD_PATH/third-party/tools/ilc"
 
 find "$BUILD_PATH" -type f -name '*.pdb' -delete
 

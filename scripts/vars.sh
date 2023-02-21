@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
 uname_out="$(uname -s)"
 case "${uname_out}" in
@@ -31,17 +31,29 @@ if [ "$os" = "win" ]; then
     echo
 fi
 
+script_path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export ROOT_PATH="${script_path%/*}"
+
 export DEPS_PATH="$ROOT_PATH/deps"
 export SDK_PATH="$DEPS_PATH/sdk"
+export RUNTIME_PATH="$DEPS_PATH/runtime"
 export ZIP_PATH="$DEPS_PATH/zip"
 export META_PATH="$ROOT_PATH/meta"
 export BUILD_PATH="$ROOT_PATH/build"
 export RELEASE_PATH="$ROOT_PATH/release"
 
-export DOTNET_ROOT="$SDK_PATH"
-export PATH="$DOTNET_ROOT:$PATH"
-export RestorePackagesPath="$DEPS_PATH/packages"
-
 export CONFIGURATION=Release
 export OPERATING_SYSTEM=$os
 export ARCHITECTURE=x64
+
+# echo "ROOT_PATH=$ROOT_PATH"
+# echo "DEPS_PATH=$DEPS_PATH"
+# echo "SDK_PATH=$SDK_PATH"
+# echo "RUNTIME_PATH=$RUNTIME_PATH"
+# echo "ZIP_PATH=$ZIP_PATH"
+# echo "META_PATH=$META_PATH"
+# echo "BUILD_PATH=$BUILD_PATH"
+# echo "RELEASE_PATH=$RELEASE_PATH"
+# echo "CONFIGURATION=$CONFIGURATION"
+# echo "OPERATING_SYSTEM=$OPERATING_SYSTEM"
+# echo "ARCHITECTURE=$ARCHITECTURE"

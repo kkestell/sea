@@ -14,7 +14,7 @@ namespace dflat
         public void Run(FileInfo ilFile)
         {
             var rootPath = AppContext.BaseDirectory;
-            var ilcPath = Path.Combine(Path.Combine(rootPath, "third-party"), "ilc");
+            var ilcPath = Path.Combine(Path.Combine(Path.Combine(rootPath, "third-party"), "tools"), "ilc");
             var corerunExecutable = Path.Combine(ilcPath, $"corerun{Platform.ExecutableFileExtension}");
             var corerunArguments = ilFile.FullName;
 

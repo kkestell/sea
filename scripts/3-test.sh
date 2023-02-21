@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-set -euox
+set -euo pipefail
 
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
-ROOT_PATH="${SCRIPT_PATH%/*}"
 source "$SCRIPT_PATH/vars.sh"
 
-echo 'System.Console.WriteLine("Hello World");' > hello.cs
+DOTNET_ROOT="$SDK_PATH"
+PATH="$DOTNET_ROOT:$BUILD_PATH:$PATH"
 
-"$ROOT_PATH/build/sea" build hello.cs
-
+echo 'System.Console.WriteLine("Hello World!");' > hello.cs
+sea build hello.cs
 ./hello
-
+sea run hello.cs
 rm hello*
