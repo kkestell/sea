@@ -5,36 +5,56 @@ SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 ROOT_PATH="${SCRIPT_PATH%/*}"
 source "$SCRIPT_PATH/vars.sh"
 
+# Sea
+
 dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$ROOT_PATH/build"
 
-mkdir -p $ROOT_PATH/build/third-party/{ref/,tools/ilc,aot/{framework/,sdk/}}
+# Third-Party
 
-cp $ROOT_PATH/sdk/packs/Microsoft.NETCore.App.Ref/8.0.0-preview.2.23116.1/ref/net8.0/*.dll "$ROOT_PATH/build/third-party/ref"
+mkdir -p "$ROOT_PATH"/build/third-party/{ref/,tools/ilc,aot/{framework/,sdk/}}
 
-cp $ROOT_PATH/.nuget/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*.dll "$ROOT_PATH/build/third-party/aot/framework"
-cp $ROOT_PATH/.nuget/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*.a "$ROOT_PATH/build/third-party/aot/framework"
+REF_FILES=("$SDK_PATH"/packs/Microsoft.NETCore.App.Ref/8.0.0-preview.2.23116.1/ref/net8.0/*.dll)
 
-cp -r $ROOT_PATH/.nuget/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/tools/* "$ROOT_PATH/build/third-party/tools/ilc"
-cp $ROOT_PATH/.nuget/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.dll "$ROOT_PATH/build/third-party/aot/sdk"
-cp $ROOT_PATH/.nuget/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.a "$ROOT_PATH/build/third-party/aot/sdk"
+cp "${REF_FILES[@]}" "$ROOT_PATH/build/third-party/ref"
 
-find "$ROOT_PATH/build" -type f -name '*.pdb' -delete
+FRAMEWORK_FILES=("$ROOT_PATH"/.nuget/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*.dll)
+FRAMEWORK_FILES+=("$ROOT_PATH"/.nuget/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*.a)
 
-if [ ! -d "$ROOT_PATH/release" ]; then
-    mkdir "$ROOT_PATH/release"
-fi
+cp "${FRAMEWORK_FILES[@]}" "$ROOT_PATH/build/third-party/aot/framework"
+
+cp -r $ROOT_PATH/.nuget/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/tools/* "$ROOT_PATH/build/third-party/tools/ilc"
+
+SDK_FILES=("$ROOT_PATH"/.nuget/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.dll)
+SDK_FILES+=("$ROOT_PATH"/.nuget/packages/runtime."$OPERATING_SYSTEM"-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.a)
+
+cp "${SDK_FILES[@]}" "$ROOT_PATH/build/third-party/aot/sdk"
+
+exit 0
+
+# cp $ROOT_PATH/.nuget/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*.dll "$ROOT_PATH/build/third-party/aot/framework"
+# cp $ROOT_PATH/.nuget/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/framework/*.a "$ROOT_PATH/build/third-party/aot/framework"
+
+# cp -r $ROOT_PATH/.nuget/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/tools/* "$ROOT_PATH/build/third-party/tools/ilc"
+# cp $ROOT_PATH/.nuget/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.dll "$ROOT_PATH/build/third-party/aot/sdk"
+# cp $ROOT_PATH/.nuget/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.a "$ROOT_PATH/build/third-party/aot/sdk"
+
+# find "$ROOT_PATH/build" -type f -name '*.pdb' -delete
+
+# if [ ! -d "$ROOT_PATH/release" ]; then
+#     mkdir "$ROOT_PATH/release"
+# fi
 
 #cp "/sea/meta/LICENSE.txt" "/sea/build/dflat/LICENSE.txt"
 #cp "/sea/meta/README.md" "/sea/build/dflat/README.md"
 #cp "/sea/meta/third-party/LICENSE.txt" "/sea/build/dflat/third-party/LICENSE.txt"
 
-archive_filename="$ROOT_PATH/release/sea-0.0.0-$OPERATING_SYSTEM-$ARCHITECTURE.7z"
+# archive_filename="$ROOT_PATH/release/sea-0.0.0-$OPERATING_SYSTEM-$ARCHITECTURE.7z"
 
-if [ -f "$archive_filename" ]; then
-    rm "$archive_filename"
-fi
+# if [ -f "$archive_filename" ]; then
+#     rm "$archive_filename"
+# fi
 
-pushd build
+# pushd build
 
 # echo "Creating archive $archive_filename"
 

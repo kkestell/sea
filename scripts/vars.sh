@@ -31,6 +31,14 @@ if [ "$os" = "windows" ]; then
     echo
 fi
 
+export DEPS_PATH="$ROOT_PATH/deps"
+export SDK_PATH="$DEPS_PATH/sdk"
+export ZIP_PATH="$DEPS_PATH/zip"
+
+export DOTNET_ROOT="$SDK_PATH"
+export PATH="$DOTNET_ROOT:$PATH"
+export RestorePackagesPath="$ROOT_PATH/.nuget/packages"
+
 export CONFIGURATION=Release
 export OPERATING_SYSTEM=$os
 export ARCHITECTURE=x64

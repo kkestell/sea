@@ -1,8 +1,9 @@
 .nuget
-sdk
+deps
 *.dll
 *.pdb
 *.o
 *.rsp
-sea/sea
+sea/bin/*
+sea/obj/*
 build
