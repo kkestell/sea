@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-    <Deterministic>False</Deterministic>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <PublishAot>true</PublishAot>
   </PropertyGroup>
 

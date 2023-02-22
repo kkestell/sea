@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Text;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
 namespace DFlat;
@@ -10,6 +11,31 @@ internal class BytecodeGenerator
     public BytecodeGenerator(BytecodeGeneratorOptions buildOptions)
     {
         this.buildOptions = buildOptions;
+    }
+
+    private SyntaxTree AssemblyInfo()
+    {
+        var asmInfo = new StringBuilder();
+
+        asmInfo.AppendLine("using System.Reflection;");
+        
+        asmInfo.AppendLine("[assembly: AssemblyTitle(\"Test\")]");
+        asmInfo.AppendLine("[assembly: AssemblyVersion(\"1.1.0\")]");
+        asmInfo.AppendLine("[assembly: AssemblyFileVersion(\"1.1.0\")]");
+
+        asmInfo.AppendLine("[assembly: AssemblyProduct(\"Foo\")]");
+        asmInfo.AppendLine("[assembly: AssemblyInformationalVersion(\"1.3.3.7\")]");
+
+        return CSharpSyntaxTree.ParseText(asmInfo.ToString());
+    }
+
+    private SyntaxTree GlobalUsings()
+    {
+        var asmInfo = new StringBuilder();
+
+        asmInfo.AppendLine("global using System;");
+
+        return CSharpSyntaxTree.ParseText(asmInfo.ToString());
     }
 
     public FileInfo Emit(DirectoryInfo outPath)
@@ -27,7 +53,8 @@ internal class BytecodeGenerator
             optimizationLevel: optimizationLevel);
 
         var syntaxTrees = buildOptions.InputFiles
-            .Select(x => CSharpSyntaxTree.ParseText(File.ReadAllText(x.FullName)));
+            .Select(x => CSharpSyntaxTree.ParseText(File.ReadAllText(x.FullName)))
+            .Concat(new SyntaxTree[] { AssemblyInfo(), GlobalUsings() });
 
         var baseDirectory = AppContext.BaseDirectory;
         var refPath = Path.Combine(Path.Combine(baseDirectory, "third-party"), "ref");

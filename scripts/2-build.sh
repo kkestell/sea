@@ -47,7 +47,7 @@ if [ "$OPERATING_SYSTEM" = "linux" ]; then
     cp "${SDK_FILES[@]}" "$BUILD_PATH/third-party/aot/sdk"
 
     cp -r "$RUNTIME_PATH"/artifacts/bin/coreclr/linux.x64.Release/ilc/* "$BUILD_PATH/third-party/tools/ilc"
-    cp "$RUNTIME_PATH/artifacts/bin/coreclr/linux.x64.Release/corerun.exe" "$BUILD_PATH/third-party/tools/ilc"
+    cp "$RUNTIME_PATH/artifacts/bin/coreclr/linux.x64.Release/corerun" "$BUILD_PATH/third-party/tools/ilc"
 
 elif [ "$OPERATING_SYSTEM" = "osx" ]; then
 
@@ -60,7 +60,7 @@ elif [ "$OPERATING_SYSTEM" = "osx" ]; then
     cp "${SDK_FILES[@]}" "$BUILD_PATH/third-party/aot/sdk"
 
     cp -r "$RUNTIME_PATH"/artifacts/bin/coreclr/osx.x64.Release/ilc/* "$BUILD_PATH/third-party/tools/ilc"
-    cp "$RUNTIME_PATH/artifacts/bin/coreclr/osx.x64.Release/corerun.exe" "$BUILD_PATH/third-party/tools/ilc"
+    cp "$RUNTIME_PATH/artifacts/bin/coreclr/osx.x64.Release/corerun" "$BUILD_PATH/third-party/tools/ilc"
 
 elif [ "$OPERATING_SYSTEM" = "windows" ]; then
 
