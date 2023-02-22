@@ -42,6 +42,7 @@ export META_PATH="$ROOT_PATH/meta"
 export BUILD_PATH="$ROOT_PATH/build"
 export RELEASE_PATH="$ROOT_PATH/release"
 
+export VERSION=$(git rev-parse --short HEAD)
 export CONFIGURATION=Release
 export OPERATING_SYSTEM=$os
 export ARCHITECTURE=x64

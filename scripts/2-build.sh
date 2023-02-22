@@ -5,6 +5,7 @@ SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 source "$SCRIPT_PATH/vars.sh"
 
 if [ ! -d "$RUNTIME_PATH/artifacts" ]; then
+    echo "Building CoreCLR..."
     "$RUNTIME_PATH/build.sh" -subset clr -c $CONFIGURATION
 fi
 
@@ -14,6 +15,8 @@ DOTNET_ROOT="$SDK_PATH"
 PATH="$DOTNET_ROOT:$BUILD_PATH:$PATH"
 export NUGET_PACKAGES="$DEPS_PATH/packages"
 
+echo "Building Sea..."
+
 dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$BUILD_PATH" -c Release
 
 if [ "$OPERATING_SYSTEM" != "windows" ]; then
@@ -21,6 +24,8 @@ if [ "$OPERATING_SYSTEM" != "windows" ]; then
 fi
 
 # Third-Party
+
+echo "Copying files..."
 
 mkdir -p "$BUILD_PATH"/third-party/{ref/,tools/ilc,aot/{framework/,sdk/}}
 
