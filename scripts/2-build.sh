@@ -7,6 +7,8 @@ source "$SCRIPT_PATH/vars.sh"
 if [ ! -d "$RUNTIME_PATH/artifacts" ]; then
     echo "Building CoreCLR..."
     "$RUNTIME_PATH/build.sh" -subset clr -c $CONFIGURATION
+else
+    echo "CoreCLR already built."
 fi
 
 # Sea
@@ -16,7 +18,9 @@ PATH="$DOTNET_ROOT:$BUILD_PATH:$PATH"
 export NUGET_PACKAGES="$DEPS_PATH/packages"
 
 echo "Building Sea..."
+dotnet build "$ROOT_PATH/sea/sea.csproj" -c Release
 
+echo "Publishing Sea..."
 dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$BUILD_PATH" -c Release
 
 if [ "$OPERATING_SYSTEM" != "windows" ]; then
