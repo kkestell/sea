@@ -23,12 +23,12 @@ if [ "$os" = "windows" ]; then
     export INCLUDE=$include
     export LIB=$lib
 
-    echo "PATH=$PATH"
-    echo
-    echo "INCLUDE=$INCLUDE"
-    echo
-    echo "LIB=$LIB"
-    echo
+    # echo "PATH=$PATH"
+    # echo
+    # echo "INCLUDE=$INCLUDE"
+    # echo
+    # echo "LIB=$LIB"
+    # echo
 fi
 
 script_path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"

@@ -10,25 +10,7 @@
 ### Ubuntu
 
 ```console
-$ sudo apt install \
-  build-essential \
-  clang \
-  cmake \
-  curl \
-  git \
-  libicu-dev \
-  libkrb5-dev \
-  liblttng-ust-dev \
-  libnuma-dev \
-  libssl-dev \
-  lld \
-  lldb \
-  llvm \
-  ninja-build \
-  python-is-python3 \
-  unzip \
-  wget \
-  zlib1g-dev
+$ sudo apt install build-essential clang cmake curl git libicu-dev libkrb5-dev liblttng-ust-dev libnuma-dev libssl-dev lld lldb llvm ninja-build python-is-python3 unzip wget zlib1g-dev
 ```
 
 ### macOS

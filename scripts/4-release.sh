@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euox
+set -euo pipefail
 
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 ROOT_PATH="${SCRIPT_PATH%/*}"
@@ -20,8 +20,6 @@ if [ -f "$ARCHIVE" ]; then
 fi
 
 pushd "$BUILD_PATH"
-
-echo "Creating archive $ARCHIVE"
 
 if [ "$OPERATING_SYSTEM" = "windows" ]; then
     ZIP="$ZIP_PATH/7zr.exe"
