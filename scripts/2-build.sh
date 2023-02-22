@@ -7,15 +7,17 @@ source "$SCRIPT_PATH/vars.sh"
 if [ "$OPERATING_SYSTEM" = "win" ]; then
     LIB_EXT=".lib"
     EXE_EXT=".exe"
-    CMD_EXT=".cmd"
 else
     LIB_EXT=".a"
     EXE_EXT=""
-    CMD_EXT=".sh"
 fi
 
 if [ ! -d "$RUNTIME_PATH/artifacts" ]; then
-    "$RUNTIME_PATH/build$CMD_EXT" -subset clr -c $CONFIGURATION -os "$OPERATING_SYSTEM" -arch "$ARCHITECTURE" --ninja
+    if [ "$OPERATING_SYSTEM" = "win" ]; then
+        "$RUNTIME_PATH/build.cmd" -subset clr -c $CONFIGURATION
+    else
+        "$RUNTIME_PATH/build.sh" -subset clr -c $CONFIGURATION --ninja
+    fi
 fi
 
 # Sea
@@ -25,7 +27,10 @@ PATH="$DOTNET_ROOT:$BUILD_PATH:$PATH"
 export NUGET_PACKAGES="$DEPS_PATH/packages"
 
 dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$BUILD_PATH" -c Release
-strip "$BUILD_PATH"/sea
+
+if [ "$OPERATING_SYSTEM" != "win" ]; then
+    strip "$BUILD_PATH"/sea
+fi
 
 # Third-Party
 
