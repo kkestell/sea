@@ -40,6 +40,6 @@ $ brew install ninja icu4c wget
 ### Windows
 
 * [MSYS2](https://www.msys2.org/)
-  * `pacman -Sy git`
+  * `pacman -Sy git unzip`
 * Visual Studio 2022 Preview
   * Install required workloads and components using the [.vsconfig](https://github.com/dotnet/runtime/blob/release/8.0-preview1/.vsconfig) from [dotnet/runtime](https://github.com/dotnet/runtime).

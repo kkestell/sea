@@ -10,7 +10,7 @@ if [ ! -d "$ZIP_PATH" ]; then
         wget -O - https://www.7-zip.org/a/7z2201-linux-x64.tar.xz | tar -xJ -C "$ZIP_PATH"
     elif [ "$OPERATING_SYSTEM" = "osx" ]; then
         wget -O - https://7-zip.org/a/7z2107-mac.tar.xz | tar -xJ -C "$ZIP_PATH"
-    elif [ "$OPERATING_SYSTEM" = "win" ]; then
+    elif [ "$OPERATING_SYSTEM" = "windows" ]; then
         wget https://www.7-zip.org/a/7zr.exe -O "$ZIP_PATH/7zr.exe"
     fi
 fi
@@ -27,7 +27,7 @@ if [ ! -d "$SDK_PATH" ]; then
     elif [ "$OPERATING_SYSTEM" = "osx" ]; then
         URL='https://aka.ms/dotnet/8.0.1xx/daily/dotnet-sdk-osx-x64.tar.gz'
         curl -L "$URL" | tar -xz -C "$SDK_PATH"
-    elif [ "$OPERATING_SYSTEM" = "win" ]; then
+    elif [ "$OPERATING_SYSTEM" = "windows" ]; then
         URL='https://aka.ms/dotnet/8.0.1xx/daily/dotnet-sdk-win-x64.zip'
         curl -L "$URL" -o "$SDK_PATH/dotnet-sdk-win-x64.zip"
         unzip "$SDK_PATH/dotnet-sdk-win-x64.zip" -d "$SDK_PATH"

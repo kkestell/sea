@@ -5,11 +5,11 @@ uname_out="$(uname -s)"
 case "${uname_out}" in
     Linux*)     os=linux;;
     Darwin*)    os=osx;;
-    MINGW*)     os=win;;
+    MINGW*)     os=windows;;
     *)          echo "Unsupported OS: ${uname_out}" && exit 1
 esac
 
-if [ "$os" = "win" ]; then
+if [ "$os" = "windows" ]; then
     query_vcvarsall() {
         local envars=$*
         (cd '/c/Program Files/Microsoft Visual Studio/2022/Preview/Common7/Tools' && cmd //C "VsDevCmd.bat -no_logo -arch=amd64 -host_arch=amd64 && c:/msys64/usr/bin/bash -c 'printenv $envars'")
