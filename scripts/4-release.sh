@@ -23,7 +23,7 @@ pushd "$BUILD_PATH"
 
 echo "Creating archive $ARCHIVE"
 
-if [ "$OPERATING_SYSTEM" = "win" ]; then
+if [ "$OPERATING_SYSTEM" = "windows" ]; then
     ZIP="$ZIP_PATH/7zr.exe"
 else
     ZIP="$ZIP_PATH/7zz"
