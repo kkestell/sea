@@ -8,11 +8,11 @@ DOTNET_ROOT="$SDK_PATH"
 PATH="$DOTNET_ROOT:$BUILD_PATH:$PATH"
 
 cat <<EOT > hello.cs
-System.Console.WriteLine("Hello, Sea!");
+Console.WriteLine("Hello, Sea!");
 EOT
 
 # echo 'Testing build command (default)...'
-sea build hello.cs -v
+sea build hello.cs --optimize:none --verbose:detailed
 ./hello
 # echo $(du -sh hello)
 

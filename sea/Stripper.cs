@@ -11,6 +11,6 @@ internal class Stripper
 
     public void Run(FileInfo executableFile)
     {
-        Process.Execute("strip", $"-S {executableFile.FullName}", verbose: options.Verbosity == VerbosityLevel.Detailed);
+        Process.Execute("strip", $"-S {executableFile.FullName}", verbose: options.Verbosity == VerbosityLevel.Diagnostic);
     }
 }

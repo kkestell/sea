@@ -23,21 +23,21 @@ internal class BuildCommandHandler
             {
                 var buildOptions = new BuildOptions(command);
 
-                if (buildOptions.Verbosity > VerbosityLevel.Quiet)
+                if (buildOptions.Verbosity > VerbosityLevel.Normal)
                 {
                     var table = new Table();
                     table.AddColumn("Option");
                     table.AddColumn("Value");
-                    table.AddRow("Assembly", buildOptions.Assembly);
-                    table.AddRow("Debug", buildOptions.Debug.ToString());
                     table.AddRow("InputFiles", string.Join(Environment.NewLine, buildOptions.InputFiles.Select(x => x.FullName)));
-                    table.AddRow("OptimizationMode", buildOptions.OptimizationMode.ToString());
                     table.AddRow("OutputFile", buildOptions.OutputFile.FullName);
+                    table.AddRow("Assembly", buildOptions.Assembly);
+                    table.AddRow("TargetArchitecture", buildOptions.TargetArchitecture.ToString());
+                    table.AddRow("TargetOperatingSystem", buildOptions.TargetOperatingSystem.ToString());
+                    table.AddRow("Debug", buildOptions.Debug.ToString());
+                    table.AddRow("OptimizationMode", buildOptions.OptimizationMode.ToString());
                     table.AddRow("Reflection", buildOptions.Reflection.ToString());
                     table.AddRow("StackTrace", buildOptions.StackTrace.ToString());
                     table.AddRow("Strip", buildOptions.Strip.ToString());
-                    table.AddRow("TargetArchitecture", buildOptions.TargetArchitecture.ToString());
-                    table.AddRow("TargetOperatingSystem", buildOptions.TargetOperatingSystem.ToString());
                     table.AddRow("Verbosity", buildOptions.Verbosity.ToString());
                     table.HideHeaders();
                     table.Border(TableBorder.Square);
@@ -87,10 +87,9 @@ internal class BuildCommandHandler
                     AnsiConsole.MarkupLine("[green]Build succeeded.[/]");
                 }
 
-                if (buildOptions.Verbosity == VerbosityLevel.Detailed)
+                if (buildOptions.Verbosity > VerbosityLevel.Normal)
                 {
                     AnsiConsole.Write(new BreakdownChart()
-                        .Width(60)
                         .AddItem("C#", ilGeneratorTime, Color.Red)
                         .AddItem("ILC", ilCompilerTime, Color.Blue)
                         .AddItem("Linker", linkerTime, Color.Green));

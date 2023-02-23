@@ -4,5 +4,6 @@ internal enum VerbosityLevel
 {
     Quiet,
     Normal,
-    Detailed
+    Detailed,
+    Diagnostic
 }

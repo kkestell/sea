@@ -240,7 +240,7 @@ internal class ILCompiler
             "--feature:System.Linq.Expressions.CanCreateArbitraryDelegates=false"
         };
 
-        if (buildOptions.Verbosity == VerbosityLevel.Detailed)
+        if (buildOptions.Verbosity == VerbosityLevel.Diagnostic)
         {
             args.Add("--verbose");
         }
@@ -317,7 +317,7 @@ internal class ILCompiler
 
         var ilcArguments = $"@{argFile.FullName}";
         
-        Process.Execute(ilcExecutable, ilcArguments, verbose: buildOptions.Verbosity == VerbosityLevel.Detailed);
+        Process.Execute(ilcExecutable, ilcArguments, verbose: buildOptions.Verbosity == VerbosityLevel.Diagnostic);
 
         return outFile;
     }
