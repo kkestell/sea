@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace DFlat;
 
 internal static class Process
@@ -17,24 +19,24 @@ internal static class Process
             Console.WriteLine($"{fileName} {arguments}");
         }
             
-        process.OutputDataReceived += (_, e) => 
+        process.OutputDataReceived += (_, e) =>
         {
-            if (e.Data is not null)
-            {
-                Console.WriteLine(e.Data);
-            }
+            if (e.Data is null)
+                return;
+
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.WriteLine(StripAnsi(e.Data));
+            Console.ResetColor();
         };
 
         process.ErrorDataReceived += (_, e) =>
         {
-            if (e.Data is not null)
-            {
-                var oldColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(e.Data);
-                Console.ForegroundColor = oldColor;
-
-            }
+            if (e.Data is null)
+                return;
+            
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(e.Data);
+            Console.ResetColor();
         };
 
         process.Start();
@@ -51,5 +53,10 @@ internal static class Process
         }
 
         return process.ExitCode;
+    }
+
+    private static string StripAnsi(string str)
+    {
+        return Regex.Replace(str, @"[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]", "");
     }
 }

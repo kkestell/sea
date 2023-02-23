@@ -8,3 +8,4 @@ sea/bin/*
 sea/obj/*
 build
 release/*
+.vs
