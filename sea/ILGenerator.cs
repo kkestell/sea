@@ -250,17 +250,13 @@ internal class ILGenerator
             }
             else
             {
-                if (!buildOptions.Verbose)
+                if (buildOptions.Verbosity > VerbosityLevel.Quiet)
                 {
-                    continue;
+                    AnsiConsole.WriteLine(diagnostic.ToString());
                 }
 
-                AnsiConsole.WriteLine(diagnostic.ToString());
             }
-
-            Logger.Log(diagnostic.ToString());
         }
-        //Console.ResetColor();
 
         if (!result.Success)
             throw new Exception("Compilation failed");

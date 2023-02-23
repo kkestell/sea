@@ -18,18 +18,19 @@ internal class RunCommandHandler
         {
             var runOptions = new RunOptions(command);
 
-            if (runOptions.Verbose)
+            if (runOptions.Verbosity > VerbosityLevel.Quiet)
             {
                 var table = new Table();
                 table.AddColumn("Option");
                 table.AddColumn("Value");
                 table.AddRow("Assembly", runOptions.Assembly);
-                table.AddRow("Optimization mode", runOptions.OptimizationMode.ToString());
                 table.AddRow("Debug", runOptions.Debug.ToString());
-                table.AddRow("Verbose", runOptions.Verbose.ToString());
-                table.AddRow("Input files", string.Join(", ", runOptions.InputFiles));
+                table.AddRow("InputFiles", string.Join(Environment.NewLine, runOptions.InputFiles.Select(x => x.FullName)));
+                table.AddRow("OptimizationMode", runOptions.OptimizationMode.ToString());
+                table.AddRow("Verbosity", runOptions.Verbosity.ToString());
+                table.HideHeaders();
                 table.Border(TableBorder.Square);
-                AnsiConsole.Render(table);
+                AnsiConsole.Write(table);
             }
 
             if (!Directory.Exists(runOptions.OutputDirectory.FullName))

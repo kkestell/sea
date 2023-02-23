@@ -12,7 +12,7 @@ internal class RunOptions
 
         InputFiles = Argument(command.InputFilePaths);
         Assembly = Option(command.AssemblyName) ?? Path.GetFileNameWithoutExtension(InputFiles.First().Name);
-        Verbose = Option(command.Verbose);
+        Verbosity = Option(command.Verbosity);
         OptimizationMode = Option(command.OptimizationMode);
         Debug = Option(command.EnableDebugInfo);
         
@@ -23,7 +23,7 @@ internal class RunOptions
 
     public bool Debug { get; }
 
-    public bool Verbose { get; }
+    public VerbosityLevel Verbosity { get; }
 
     public string Assembly { get; }
 

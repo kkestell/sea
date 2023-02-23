@@ -16,6 +16,6 @@ internal class Runner
         var corerunExecutable = Path.Combine(ilcPath, $"corerun{Platform.ExecutableFileExtension}");
         var corerunArguments = ilFile.FullName;
 
-        Process.Execute(corerunExecutable, corerunArguments, verbose: options.Verbose);
+        Process.Execute(corerunExecutable, corerunArguments, verbose: options.Verbosity == VerbosityLevel.Detailed);
     }
 }

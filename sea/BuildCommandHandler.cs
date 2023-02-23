@@ -23,7 +23,7 @@ internal class BuildCommandHandler
             {
                 var buildOptions = new BuildOptions(command);
 
-                if (buildOptions.Verbose)
+                if (buildOptions.Verbosity > VerbosityLevel.Quiet)
                 {
                     var table = new Table();
                     table.AddColumn("Option");
@@ -38,8 +38,7 @@ internal class BuildCommandHandler
                     table.AddRow("Strip", buildOptions.Strip.ToString());
                     table.AddRow("TargetArchitecture", buildOptions.TargetArchitecture.ToString());
                     table.AddRow("TargetOperatingSystem", buildOptions.TargetOperatingSystem.ToString());
-                    table.AddRow("Verbose", buildOptions.Verbose.ToString());
-                    table.Title = new TableTitle("Build Options");
+                    table.AddRow("Verbosity", buildOptions.Verbosity.ToString());
                     table.HideHeaders();
                     table.Border(TableBorder.Square);
                     AnsiConsole.Write(table);
@@ -83,25 +82,27 @@ internal class BuildCommandHandler
                     stripper.Run(executable);
                 }
 
-                AnsiConsole.Write(new BarChart()
-                    .Width(60)
-                    .Label("[green bold underline]Success![/]")
-                    .CenterLabel()
-                    .AddItem("C#", ilGeneratorTime, Color.Red)
-                    .AddItem("ILC", ilCompilerTime, Color.Green)
-                    .AddItem("Linker", linkerTime, Color.Blue));
-            });
+                if (buildOptions.Verbosity > VerbosityLevel.Quiet)
+                {
+                    AnsiConsole.MarkupLine("[green]Build succeeded.[/]");
+                }
 
-            //AnsiConsole.MarkupLine("[green]Success![/]");
+                if (buildOptions.Verbosity == VerbosityLevel.Detailed)
+                {
+                    AnsiConsole.Write(new BreakdownChart()
+                        .Width(60)
+                        .AddItem("C#", ilGeneratorTime, Color.Red)
+                        .AddItem("ILC", ilCompilerTime, Color.Blue)
+                        .AddItem("Linker", linkerTime, Color.Green));
+                }
+            });
 
             return 0;
         }
         catch (Exception ex)
         {
-            Logger.LogError(ex.ToString());
-
-            if (ex.StackTrace is not null)
-                Logger.LogError(ex.StackTrace);
+            AnsiConsole.WriteException(ex, ExceptionFormats.ShortenPaths | ExceptionFormats.ShortenTypes |
+                ExceptionFormats.ShortenMethods | ExceptionFormats.ShowLinks);
     
             return 1;
         }

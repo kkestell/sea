@@ -4,12 +4,12 @@ internal class LinkerOptions
 {
     public LinkerOptions(BuildOptions buildOptions)
     {
-        Verbose = buildOptions.Verbose;
+        Verbosity = buildOptions.Verbosity;
         Debug = buildOptions.Debug;
         OptimizationMode = buildOptions.OptimizationMode;
     }
 
-    public bool Verbose { get; }
+    public VerbosityLevel Verbosity { get; }
 
     public bool Debug { get; }
 

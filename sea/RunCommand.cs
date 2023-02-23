@@ -16,8 +16,8 @@ internal class RunCommand: Command
     public Option<string> AssemblyName { get; } =
         new(new[] { "--assembly", "-a" }, "Assembly name");
 
-    public Option<bool> Verbose { get; } =
-        new(new[] { "--verbose", "-v" }, "Verbose output");
+    public Option<VerbosityLevel> Verbosity { get; } =
+        new(new[] { "--verbose", "-v" }, () => VerbosityLevel.Normal, "Verbosity level");    
 
     public Option<OptimizationMode> OptimizationMode { get; } =
         new(new[] { "--optimize", "-O" }, () => Sea.OptimizationMode.Default, "Optimization mode");
@@ -29,7 +29,7 @@ internal class RunCommand: Command
     {
         AddArgument(InputFilePaths);
         AddOption(AssemblyName);
-        AddOption(Verbose);
+        AddOption(Verbosity);
         AddOption(OptimizationMode);
         AddOption(EnableDebugInfo);
 

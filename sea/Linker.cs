@@ -76,7 +76,7 @@ internal class Linker
                 args.Add("/DEBUG");
             }
 
-            if (linkerOptions.Verbose)
+            if (linkerOptions.Verbosity == VerbosityLevel.Detailed)
             {
                 args.Add("/VERBOSE");
             }
@@ -92,7 +92,7 @@ internal class Linker
                 { "VSCMD_SKIP_SENDTELEMETRY", "1" }
             };
             
-            Process.Execute(linkerCommand, linkerArguments, linkerEnvironment, verbose: linkerOptions.Verbose);
+            Process.Execute(linkerCommand, linkerArguments, linkerEnvironment, verbose: linkerOptions.Verbosity == VerbosityLevel.Detailed);
         }
         else
         {
@@ -175,8 +175,8 @@ internal class Linker
             var linkerCommand = "clang";
             var linkerArguments = string.Join(" ", args);
 
-            Process.Execute(linkerCommand, linkerArguments, verbose: linkerOptions.Verbose);
-        }
+            Process.Execute(linkerCommand, linkerArguments, verbose: linkerOptions.Verbosity == VerbosityLevel.Detailed);
+    }
 
         return outFile;
     }

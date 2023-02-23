@@ -14,7 +14,7 @@ internal class BuildOptions
         InputFiles = Argument(command.InputFilePaths).ToList();
         Assembly = Option(command.AssemblyName) ?? Path.GetFileNameWithoutExtension(InputFiles.First().Name);
         OutputFile = Option(command.OutputFile) ?? new FileInfo(Path.Combine(InputFiles.First().DirectoryName!, $"{Assembly}{Platform.ExecutableFileExtension}"));
-        Verbose = Option(command.Verbose);
+        Verbosity = Option(command.Verbosity);
         OptimizationMode = Option(command.OptimizationMode);
         Debug = Option(command.EnableDebugInfo);
         Reflection = Option(command.Reflection);
@@ -24,7 +24,7 @@ internal class BuildOptions
 
     public bool Debug { get; }
 
-    public bool Verbose { get; }
+    public VerbosityLevel Verbosity { get; }
 
     public string Assembly { get; }
 
@@ -49,24 +49,4 @@ internal class BuildOptions
     private T Argument<T>(Argument<T> argument) => command.Result!.GetValueForArgument(argument);
 
     private T? Option<T>(Option<T> option) => command.Result!.GetValueForOption(option);
-
-    public override string ToString()
-    {
-        var sb = new StringBuilder();
-
-        sb.AppendLine("Build Options");
-        sb.AppendLine($"  Assembly      {Assembly}");
-        sb.AppendLine($"  Output        {OutputFile.FullName}");
-        sb.AppendLine($"  Optimization  {OptimizationMode}");
-        sb.AppendLine($"  Debug         {Debug}");
-        sb.AppendLine($"  Verbose       {Verbose}");
-        sb.AppendLine($"  Reflection    {Reflection}");
-        sb.AppendLine($"  StackTrace    {StackTrace}");
-        sb.AppendLine($"  Strip         {Strip}");
-        sb.AppendLine($"  Target OS     {TargetOperatingSystem}");
-        sb.AppendLine($"  Target Arch   {TargetArchitecture}");
-        sb.AppendLine($"  Input File(s) {string.Join(", ", InputFiles)}");
-
-        return sb.ToString();
-    }
 }

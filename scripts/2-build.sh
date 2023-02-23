@@ -43,7 +43,7 @@ if [ "$OPERATING_SYSTEM" = "linux" ]; then
     cp "${FRAMEWORK_FILES[@]}" "$BUILD_PATH/third-party/aot/framework"
 
     SDK_FILES=("$DEPS_PATH"/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.dll)
-    SDK_FILES+=("$DEPS_PATH"/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.lib)
+    SDK_FILES+=("$DEPS_PATH"/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.a)
     cp "${SDK_FILES[@]}" "$BUILD_PATH/third-party/aot/sdk"
 
     cp -r "$RUNTIME_PATH"/artifacts/bin/coreclr/linux.x64.Release/ilc/* "$BUILD_PATH/third-party/tools/ilc"

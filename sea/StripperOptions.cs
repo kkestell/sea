@@ -4,8 +4,8 @@ internal class StripperOptions
 {
     public StripperOptions(BuildOptions buildOptions)
     {
-        Verbose = buildOptions.Verbose;
+        Verbosity = buildOptions.Verbosity;
     }
 
-    public bool Verbose { get; }
+    public VerbosityLevel Verbosity { get; }
 }

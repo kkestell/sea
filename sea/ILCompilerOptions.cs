@@ -4,7 +4,7 @@ internal class ILCompilerOptions
 {
     public ILCompilerOptions(BuildOptions buildOptions)
     {
-        Verbose = buildOptions.Verbose;
+        Verbosity = buildOptions.Verbosity;
         Debug = buildOptions.Debug;
         OptimizationMode = buildOptions.OptimizationMode;
         Assembly = buildOptions.Assembly;
@@ -12,7 +12,7 @@ internal class ILCompilerOptions
         StackTrace = buildOptions.StackTrace;
     }
     
-    public bool Verbose { get; }
+    public VerbosityLevel Verbosity { get; }
     
     public bool Debug { get; }
 

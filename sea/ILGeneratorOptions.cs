@@ -4,7 +4,7 @@ internal class ILGeneratorOptions
 {
     public ILGeneratorOptions(BuildOptions buildOptions)
     {
-        Verbose = buildOptions.Verbose;
+        Verbosity = buildOptions.Verbosity;
         InputFiles = buildOptions.InputFiles;
         Assembly = buildOptions.Assembly;
         OptimizationMode = buildOptions.OptimizationMode;
@@ -12,13 +12,13 @@ internal class ILGeneratorOptions
 
     public ILGeneratorOptions(RunOptions runOptions)
     {
-        Verbose = runOptions.Verbose;
+        Verbosity = runOptions.Verbosity;
         InputFiles = runOptions.InputFiles;
         Assembly = runOptions.Assembly;
         OptimizationMode = runOptions.OptimizationMode;
     }
     
-    public bool Verbose { get; }
+    public VerbosityLevel Verbosity { get; }
 
     public IEnumerable<FileInfo> InputFiles { get; }
 
