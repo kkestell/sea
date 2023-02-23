@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 
-namespace DFlat;
+namespace Sea;
 
 internal static class Process
 {
@@ -16,7 +16,7 @@ internal static class Process
 
         if (verbose)
         {
-            Console.WriteLine($"{fileName} {arguments}");
+            Logger.Log($"{fileName} {arguments}");
         }
             
         process.OutputDataReceived += (_, e) =>
@@ -24,19 +24,15 @@ internal static class Process
             if (e.Data is null)
                 return;
 
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.WriteLine(StripAnsi(e.Data));
-            Console.ResetColor();
+            Logger.Log(StripAnsi(e.Data));
         };
 
         process.ErrorDataReceived += (_, e) =>
         {
             if (e.Data is null)
                 return;
-            
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(e.Data);
-            Console.ResetColor();
+
+            Logger.LogError(e.Data);
         };
 
         process.Start();
@@ -49,7 +45,7 @@ internal static class Process
         
         if (verbose)
         {
-            Console.WriteLine($"{fileName} exited with code {process.ExitCode}");
+            Logger.Log($"{fileName} exited with code {process.ExitCode}");
         }
 
         return process.ExitCode;

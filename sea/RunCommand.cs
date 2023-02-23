@@ -1,7 +1,7 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Parsing;
 
-namespace DFlat;
+namespace Sea;
 
 internal class RunCommand: Command
 {
@@ -20,7 +20,7 @@ internal class RunCommand: Command
         new(new[] { "--verbose", "-v" }, "Verbose output");
 
     public Option<OptimizationMode> OptimizationMode { get; } =
-        new(new[] { "--optimize", "-O" }, () => DFlat.OptimizationMode.Default, "Optimization mode");
+        new(new[] { "--optimize", "-O" }, () => Sea.OptimizationMode.Default, "Optimization mode");
 
     public Option<bool> EnableDebugInfo { get; } =
         new(new[] { "--debug", "-g" }, () => true, "Emit debug information");

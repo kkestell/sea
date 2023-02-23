@@ -1,4 +1,4 @@
-﻿namespace DFlat;
+﻿namespace Sea;
 
 internal class Linker
 {
@@ -163,7 +163,7 @@ internal class Linker
 
         if (linkerOptions.Verbose)
         {
-            Console.WriteLine("Linking...");
+            Logger.Log("Linking...");
         }
 
         Process.Execute(linkerCommand, linkerArguments, verbose: linkerOptions.Verbose);

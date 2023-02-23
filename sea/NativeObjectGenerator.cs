@@ -1,4 +1,4 @@
-﻿namespace DFlat;
+﻿namespace Sea;
 
 internal class NativeObjectGenerator
 {
@@ -314,7 +314,7 @@ internal class NativeObjectGenerator
 
         if (buildOptions.Verbose)
         {
-            Console.WriteLine("Generating native object...");
+            Logger.Log("Generating native object...");
         }
 
         Process.Execute(ilcExecutable, ilcArguments, verbose: buildOptions.Verbose);

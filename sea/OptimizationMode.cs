@@ -1,4 +1,4 @@
-﻿namespace DFlat;
+﻿namespace Sea;
 
 enum OptimizationMode
 {

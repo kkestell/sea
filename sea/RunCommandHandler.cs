@@ -1,6 +1,4 @@
-﻿using dflat;
-
-namespace DFlat;
+﻿namespace Sea;
 
 internal class RunCommandHandler
 {
@@ -19,16 +17,16 @@ internal class RunCommandHandler
 
             if (runOptions.Verbose)
             {
-                Console.WriteLine("Build options:");
-                Console.WriteLine($"  Assembly: {runOptions.Assembly}");
-                Console.WriteLine($"  Optimization mode: {runOptions.OptimizationMode}");
-                Console.WriteLine($"  Debug: {runOptions.Debug}");
-                Console.WriteLine($"  Verbose: {runOptions.Verbose}");
-                Console.WriteLine("  Input files:");
+                Logger.Log("Build options:");
+                Logger.Log($"  Assembly: {runOptions.Assembly}");
+                Logger.Log($"  Optimization mode: {runOptions.OptimizationMode}");
+                Logger.Log($"  Debug: {runOptions.Debug}");
+                Logger.Log($"  Verbose: {runOptions.Verbose}");
+                Logger.Log("  Input files:");
 
                 foreach (var file in runOptions.InputFiles)
                 {
-                    Console.WriteLine($"    {file.FullName}");
+                    Logger.Log($"    {file.FullName}");
                 }
             }
 
@@ -47,8 +45,8 @@ internal class RunCommandHandler
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
-            Console.WriteLine(ex.StackTrace);
+            Logger.LogError(ex.ToString());
+            Logger.Log(ex.StackTrace);
             return 1;
         }
     }

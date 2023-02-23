@@ -1,7 +1,7 @@
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 
-namespace DFlat;
+namespace Sea;
 
 internal class Program
 {

@@ -1,7 +1,7 @@
 ﻿using System.CommandLine;
 using System.Text;
 
-namespace DFlat;
+namespace Sea;
 
 internal class BuildOptions
 {

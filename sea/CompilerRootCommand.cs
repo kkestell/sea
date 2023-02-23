@@ -1,6 +1,6 @@
 ﻿using System.CommandLine;
 
-namespace DFlat;
+namespace Sea;
 
 internal class CompilerRootCommand : RootCommand
 {

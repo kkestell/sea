@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace DFlat;
+namespace Sea;
 
 public static class Platform
 {

@@ -2,7 +2,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace DFlat;
+namespace Sea;
 
 internal class BytecodeGenerator
 {
@@ -42,7 +42,7 @@ internal class BytecodeGenerator
     {
         if (buildOptions.Verbose)
         {
-            Console.WriteLine("Generating IL");
+            Logger.Log("Generating IL...");
         }
 
         var optimizationLevel = buildOptions.OptimizationMode == OptimizationMode.None
@@ -247,11 +247,11 @@ internal class BytecodeGenerator
         {
             if (diagnostic.Severity == DiagnosticSeverity.Error)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                //Console.ForegroundColor = ConsoleColor.Red;
             }
             else if (diagnostic.Severity == DiagnosticSeverity.Warning)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                //Console.ForegroundColor = ConsoleColor.Yellow;
             }
             else
             {
@@ -260,12 +260,12 @@ internal class BytecodeGenerator
                     continue;
                 }
             
-                Console.ForegroundColor = ConsoleColor.Gray;
+                //Console.ForegroundColor = ConsoleColor.Gray;
             }
-           
-            Console.WriteLine(diagnostic);
+
+            Logger.Log(diagnostic.ToString());
         }
-        Console.ResetColor();
+        //Console.ResetColor();
 
         if (!result.Success)
             throw new Exception("Compilation failed");

@@ -1,4 +1,4 @@
-﻿namespace DFlat;
+﻿namespace Sea;
 
 internal class BuildCommandHandler
 {
@@ -16,7 +16,7 @@ internal class BuildCommandHandler
             var buildOptions = new BuildOptions(command);
 
             if (buildOptions.Verbose)
-                Console.WriteLine(buildOptions);
+                Logger.Log(buildOptions.ToString());
 
             if (!Directory.Exists(buildOptions.OutputDirectory.FullName))
                 Directory.CreateDirectory(buildOptions.OutputDirectory.FullName);
@@ -40,8 +40,11 @@ internal class BuildCommandHandler
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
-            Console.WriteLine(ex.StackTrace);
+            Logger.LogError(ex.ToString());
+
+            if (ex.StackTrace is not null)
+                Logger.LogError(ex.StackTrace);
+    
             return 1;
         }
     }
