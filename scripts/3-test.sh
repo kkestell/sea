@@ -9,8 +9,8 @@ PATH="$DOTNET_ROOT:$BUILD_PATH:$PATH"
 
 echo 'Console.WriteLine("Hello World!");' > hello.cs
 echo 'Testing build command...'
-sea build hello.cs -O:Small -g:false -r:false -s:false -S -v
+sea build hello.cs -v
 ./hello
 echo 'Testing run command...'
 sea run hello.cs
-#rm hello*
+rm hello*

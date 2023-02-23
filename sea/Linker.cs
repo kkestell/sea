@@ -161,6 +161,11 @@ internal class Linker
             linkerArguments = string.Join(" ", args);
         }
 
+        if (linkerOptions.Verbose)
+        {
+            Console.WriteLine("Linking...");
+        }
+
         Process.Execute(linkerCommand, linkerArguments, verbose: linkerOptions.Verbose);
 
         return outFile;

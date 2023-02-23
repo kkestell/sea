@@ -305,6 +305,11 @@ internal class NativeObjectGenerator
 
         var ilcArguments = $"@{ilcArgFile.FullName}";
 
+        if (buildOptions.Verbose)
+        {
+            Console.WriteLine("Generating native object...");
+        }
+
         Process.Execute(ilcExecutable, ilcArguments, verbose: buildOptions.Verbose);
 
         return outFile;

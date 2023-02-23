@@ -12,7 +12,8 @@ esac
 if [ "$os" = "windows" ]; then
     query_vcvarsall() {
         local envars=$*
-        (cd '/c/Program Files/Microsoft Visual Studio/2022/Preview/Common7/Tools' && cmd //C "VsDevCmd.bat -no_logo -arch=amd64 -host_arch=amd64 && c:/msys64/usr/bin/bash -c 'printenv $envars'")
+        (cd '/c/Program Files/Microsoft Visual Studio/2022/Preview/Common7/Tools' && \
+            cmd //C "VsDevCmd.bat -no_logo -arch=amd64 -host_arch=amd64 && c:/msys64/usr/bin/bash -c 'printenv $envars'")
     }
 
     path="$(query_vcvarsall PATH)"
@@ -42,7 +43,8 @@ export META_PATH="$ROOT_PATH/meta"
 export BUILD_PATH="$ROOT_PATH/build"
 export RELEASE_PATH="$ROOT_PATH/release"
 
-export SEA_VERSION=$(git rev-parse --short HEAD)
+sea_version=$(git rev-parse --short HEAD)
+export SEA_VERSION=$sea_version
 export CONFIGURATION=Release
 export OPERATING_SYSTEM=$os
 export ARCHITECTURE=x64
