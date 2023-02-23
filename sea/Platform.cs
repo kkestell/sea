@@ -43,6 +43,9 @@ public static class Platform
             _ => throw new PlatformNotSupportedException()
         };
 
+    public static DirectoryInfo RootPath =>
+        new(Environment.GetEnvironmentVariable("SEA_ROOT") ?? AppContext.BaseDirectory);
+
     //public static string StaticLibraryFileExtension =>
     //    OperatingSystem switch
     //    {

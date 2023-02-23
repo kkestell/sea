@@ -13,18 +13,18 @@ internal class ILCompiler
 
     public FileInfo Emit(DirectoryInfo outPath)
     {
-        var rootPath = AppContext.BaseDirectory;
-        var aotPath = Path.Combine(Path.Combine(rootPath, "third-party"), "aot");
-        var toolsPath = Path.Combine(Path.Combine(rootPath, "third-party"), "tools");
-        var ilcExecutable = Path.Combine(toolsPath, Path.Combine("ilc", $"ilc{Platform.ExecutableFileExtension}"));
+        var aotPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "aot");
         var aotFrameworkPath = Path.Combine(aotPath, "framework");
         var aotSdkPath = Path.Combine(aotPath, "sdk");
 
+        var toolsPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "tools");
+        var ilcExecutable = Path.Combine(toolsPath, Path.Combine("ilc", $"ilc{Platform.ExecutableFileExtension}"));
+
         var baseName = Path.GetFileNameWithoutExtension(cilFile.Name);
         var outFile = new FileInfo(Path.Combine(outPath.FullName, $"{baseName}{Platform.ObjectFileExtension}"));
-        var ilcArgFile = new FileInfo(Path.Combine(outPath.FullName, $"{baseName}.ilc.rsp"));
+        var argFile = new FileInfo(Path.Combine(outPath.FullName, $"{baseName}.ilc.rsp"));
 
-        var ilcArgs = new List<string>
+        var args = new List<string>
         {
             cilFile.FullName,
             $"-o:{outFile.FullName}",
@@ -240,46 +240,51 @@ internal class ILCompiler
             "--feature:System.Linq.Expressions.CanCreateArbitraryDelegates=false"
         };
 
+        if (buildOptions.Verbose)
+        {
+            args.Add("--verbose");
+        }
+
         if (buildOptions.Reflection)
         {
-            ilcArgs.Add("--reflectiondata:all");
+            args.Add("--reflectiondata:all");
         }
         else
         {
-            ilcArgs.Add("--reflectiondata:none");
+            args.Add("--reflectiondata:none");
         }
 
         if (buildOptions.StackTrace)
         {
-            ilcArgs.Add("--stacktracedata");
+            args.Add("--stacktracedata");
         }
 
         if (buildOptions.Debug)
         {
-            ilcArgs.Add("-g");
+            args.Add("-g");
         }
 
         if (buildOptions.OptimizationMode != OptimizationMode.None)
         {
-            ilcArgs.Add("--methodbodyfolding");
+            args.Add("--methodbodyfolding");
         
             switch (buildOptions.OptimizationMode)
             {
                 case OptimizationMode.Default:
-                    ilcArgs.Add("--optimize");
+                    args.Add("--optimize");
                     break;
                 case OptimizationMode.Small:
-                    ilcArgs.Add("--optimize-space");
+                    args.Add("--optimize-space");
                     break;
                 case OptimizationMode.Fast:
-                    ilcArgs.Add("--optimize-time");
+                    args.Add("--optimize-time");
                     break;
             }
         }
 
         if (Platform.OperatingSystem == OperatingSystem.Windows)
         {
-            ilcArgs.AddRange(new List<string>()
+            args.AddRange(new List<string>()
             {
                 "--appcontextswitch:RUNTIME_IDENTIFIER=win-x64",
                 "--directpinvoke:System.Globalization.Native",
@@ -289,7 +294,7 @@ internal class ILCompiler
         }
         else
         {
-            ilcArgs.AddRange(new List<string>()
+            args.AddRange(new List<string>()
             {
                 "--directpinvoke:libSystem.Native",
                 "--directpinvoke:libSystem.Globalization.Native",
@@ -300,23 +305,18 @@ internal class ILCompiler
 
             if (Platform.OperatingSystem == OperatingSystem.Linux)
             {
-                ilcArgs.Add("--appcontextswitch:RUNTIME_IDENTIFIER=linux-x64");
+                args.Add("--appcontextswitch:RUNTIME_IDENTIFIER=linux-x64");
             }
             else if (Platform.OperatingSystem == OperatingSystem.MacOS)
             {
-                ilcArgs.Add("--appcontextswitch:RUNTIME_IDENTIFIER=osx-x64");
+                args.Add("--appcontextswitch:RUNTIME_IDENTIFIER=osx-x64");
             }
         }
 
-        File.WriteAllLines(ilcArgFile.FullName, ilcArgs);
+        File.WriteAllLines(argFile.FullName, args);
 
-        var ilcArguments = $"@{ilcArgFile.FullName}";
-
-        if (buildOptions.Verbose)
-        {
-            Logger.Log("Generating native object...");
-        }
-
+        var ilcArguments = $"@{argFile.FullName}";
+        
         Process.Execute(ilcExecutable, ilcArguments, verbose: buildOptions.Verbose);
 
         return outFile;

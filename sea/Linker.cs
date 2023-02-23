@@ -1,4 +1,7 @@
-﻿namespace Sea;
+﻿using System.CommandLine;
+using System.Threading;
+
+namespace Sea;
 
 internal class Linker
 {
@@ -16,19 +19,15 @@ internal class Linker
         var baseName = Path.GetFileNameWithoutExtension(objectFile.Name);
         var outFile = new FileInfo(Path.Combine(outPath.FullName, $"{baseName}{Platform.ExecutableFileExtension}"));
 
-        var exePath = AppContext.BaseDirectory;
-        var aotSdkPath = Path.Combine(Path.Combine(Path.Combine(exePath, "third-party"), "aot", "sdk"));
-        var aotFrameworkPath = Path.Combine(Path.Combine(Path.Combine(exePath, "third-party"), "aot", "framework"));
-
-        string linkerCommand;
-        string linkerArguments;
-
+        var aotSdkPath = Path.Combine(Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "aot", "sdk"));
+        var aotFrameworkPath = Path.Combine(Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "aot", "framework"));
+        
         if (Platform.OperatingSystem == OperatingSystem.Windows)
         {
-            linkerCommand = "link.exe";
+            //linkerCommand = @"C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.35.32213\bin\Hostx64\x64\link.exe";
 
-            var windowsSdkPath = Environment.GetEnvironmentVariable("UniversalCRTSdkDir")?.Trim('\\');
-            var windowsSdkVersion = Environment.GetEnvironmentVariable("UCRTVersion");
+            var windowsSdkPath = @"C:\Program Files (x86)\Windows Kits\10\";//Environment.GetEnvironmentVariable("UniversalCRTSdkDir")?.Trim('\\');
+            var windowsSdkVersion = "10.0.19041.0";//Environment.GetEnvironmentVariable("UCRTVersion");
             
             var args = new List<string>
             {
@@ -61,7 +60,6 @@ internal class Linker
                 "\"ws2_32.lib\"",
                 "/NOLOGO",
                 "/MANIFEST:EMBED",
-                "/DEBUG",
                 "/INCREMENTAL:NO",
                 "/SUBSYSTEM:CONSOLE",
                 "/ENTRY:wmainCRTStartup",
@@ -73,15 +71,31 @@ internal class Linker
                 "/IGNORE:4099"
             };
 
+            if (linkerOptions.Debug)
+            {
+                args.Add("/DEBUG");
+            }
+
+            if (linkerOptions.Verbose)
+            {
+                args.Add("/VERBOSE");
+            }
+
             var argFile = new FileInfo(Path.Combine(outPath.FullName, $"{baseName}.link.rsp"));
             File.WriteAllLines(argFile.FullName, args);
 
-            linkerArguments = $"@{argFile.FullName}";
+            var linkerCommand = @"C:\Windows\System32\cmd.exe";
+            var linkerArguments = @$"/c """"C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VsDevCmd.bat"" && link.exe @{argFile.FullName}""";
+            var linkerEnvironment = new Dictionary<string, string>
+            {
+                { "__VSCMD_ARG_NO_LOGO", "0" },
+                { "VSCMD_SKIP_SENDTELEMETRY", "1" }
+            };
+            
+            Process.Execute(linkerCommand, linkerArguments, linkerEnvironment, verbose: linkerOptions.Verbose);
         }
         else
         {
-            linkerCommand = "clang";
-
             var args = new List<string>
             {
                 objectFile.FullName,
@@ -158,15 +172,11 @@ internal class Linker
                 });
             }
 
-            linkerArguments = string.Join(" ", args);
-        }
+            var linkerCommand = "clang";
+            var linkerArguments = string.Join(" ", args);
 
-        if (linkerOptions.Verbose)
-        {
-            Logger.Log("Linking...");
+            Process.Execute(linkerCommand, linkerArguments, verbose: linkerOptions.Verbose);
         }
-
-        Process.Execute(linkerCommand, linkerArguments, verbose: linkerOptions.Verbose);
 
         return outFile;
     }

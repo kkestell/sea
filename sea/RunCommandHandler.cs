@@ -1,4 +1,7 @@
-﻿namespace Sea;
+﻿using Spectre.Console;
+using System.Text;
+
+namespace Sea;
 
 internal class RunCommandHandler
 {
@@ -17,17 +20,16 @@ internal class RunCommandHandler
 
             if (runOptions.Verbose)
             {
-                Logger.Log("Build options:");
-                Logger.Log($"  Assembly: {runOptions.Assembly}");
-                Logger.Log($"  Optimization mode: {runOptions.OptimizationMode}");
-                Logger.Log($"  Debug: {runOptions.Debug}");
-                Logger.Log($"  Verbose: {runOptions.Verbose}");
-                Logger.Log("  Input files:");
-
-                foreach (var file in runOptions.InputFiles)
-                {
-                    Logger.Log($"    {file.FullName}");
-                }
+                var table = new Table();
+                table.AddColumn("Option");
+                table.AddColumn("Value");
+                table.AddRow("Assembly", runOptions.Assembly);
+                table.AddRow("Optimization mode", runOptions.OptimizationMode.ToString());
+                table.AddRow("Debug", runOptions.Debug.ToString());
+                table.AddRow("Verbose", runOptions.Verbose.ToString());
+                table.AddRow("Input files", string.Join(", ", runOptions.InputFiles));
+                table.Border(TableBorder.Square);
+                AnsiConsole.Render(table);
             }
 
             if (!Directory.Exists(runOptions.OutputDirectory.FullName))

@@ -4,27 +4,31 @@ namespace Sea;
 
 internal static class Process
 {
-    public static int Execute(string fileName, string arguments, int timeout = 99999999, bool verbose = false)
+    public static int Execute(string fileName, string arguments, IEnumerable<KeyValuePair<string, string>>? environment = null, int timeout = 99999999, bool verbose = false)
     {
         using var process = new System.Diagnostics.Process();
 
         process.StartInfo.FileName = fileName;
         process.StartInfo.Arguments = arguments;
+
+        if (environment is not null)
+        {
+            foreach (var (key, value) in environment)
+            {
+                process.StartInfo.EnvironmentVariables[key] = value;
+            }
+        }
+
         process.StartInfo.UseShellExecute = false;
         process.StartInfo.RedirectStandardOutput = true;
         process.StartInfo.RedirectStandardError = true;
 
-        if (verbose)
-        {
-            Logger.Log($"{fileName} {arguments}");
-        }
-            
         process.OutputDataReceived += (_, e) =>
         {
             if (e.Data is null)
                 return;
 
-            Logger.Log(StripAnsi(e.Data));
+            Logger.Log(e.Data);
         };
 
         process.ErrorDataReceived += (_, e) =>
@@ -42,11 +46,6 @@ internal static class Process
 
         if (!process.WaitForExit(timeout))
             throw new Exception($"Process timed out!: {fileName} {arguments}");
-        
-        if (verbose)
-        {
-            Logger.Log($"{fileName} exited with code {process.ExitCode}");
-        }
 
         return process.ExitCode;
     }

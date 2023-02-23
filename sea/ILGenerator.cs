@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Spectre.Console;
 
 namespace Sea;
 
@@ -40,11 +41,6 @@ internal class ILGenerator
 
     public FileInfo Emit(DirectoryInfo outPath)
     {
-        if (buildOptions.Verbose)
-        {
-            Logger.Log("Generating IL...");
-        }
-
         var optimizationLevel = buildOptions.OptimizationMode == OptimizationMode.None
             ? OptimizationLevel.Debug : OptimizationLevel.Release;
 
@@ -54,10 +50,9 @@ internal class ILGenerator
 
         var syntaxTrees = buildOptions.InputFiles
             .Select(x => CSharpSyntaxTree.ParseText(File.ReadAllText(x.FullName)))
-            .Concat(new SyntaxTree[] { AssemblyInfo(), GlobalUsings() });
+            .Concat(new [] { AssemblyInfo(), GlobalUsings() });
 
-        var baseDirectory = AppContext.BaseDirectory;
-        var refPath = Path.Combine(Path.Combine(baseDirectory, "third-party"), "ref");
+        var refPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "ref");
 
         var dllFiles = new List<string>
         {
@@ -247,11 +242,11 @@ internal class ILGenerator
         {
             if (diagnostic.Severity == DiagnosticSeverity.Error)
             {
-                //Console.ForegroundColor = ConsoleColor.Red;
+                AnsiConsole.MarkupLine($"[red]{diagnostic}[/]");
             }
             else if (diagnostic.Severity == DiagnosticSeverity.Warning)
             {
-                //Console.ForegroundColor = ConsoleColor.Yellow;
+                AnsiConsole.MarkupLine($"[yellow]{diagnostic}[/]");
             }
             else
             {
@@ -259,8 +254,8 @@ internal class ILGenerator
                 {
                     continue;
                 }
-            
-                //Console.ForegroundColor = ConsoleColor.Gray;
+
+                AnsiConsole.WriteLine(diagnostic.ToString());
             }
 
             Logger.Log(diagnostic.ToString());
