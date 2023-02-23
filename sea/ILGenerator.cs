@@ -4,11 +4,11 @@ using Microsoft.CodeAnalysis.CSharp;
 
 namespace Sea;
 
-internal class BytecodeGenerator
+internal class ILGenerator
 {
-    private readonly BytecodeGeneratorOptions buildOptions;
+    private readonly ILGeneratorOptions buildOptions;
 
-    public BytecodeGenerator(BytecodeGeneratorOptions buildOptions)
+    public ILGenerator(ILGeneratorOptions buildOptions)
     {
         this.buildOptions = buildOptions;
     }

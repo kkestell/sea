@@ -35,7 +35,7 @@ internal class RunCommandHandler
                 Directory.CreateDirectory(runOptions.OutputDirectory.FullName);
             }
 
-            var ilGenerator = new BytecodeGenerator(new BytecodeGeneratorOptions(runOptions));
+            var ilGenerator = new ILGenerator(new ILGeneratorOptions(runOptions));
             var ilFile = ilGenerator.Emit(runOptions.OutputDirectory);
 
             var runner = new Runner(runOptions);

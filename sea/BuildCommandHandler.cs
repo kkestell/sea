@@ -15,10 +15,11 @@ internal class BuildCommandHandler
     {
         try
         {
-            AnsiConsole.Status().Spinner(Spinner.Known.Dots).Start("Generating IL", ctx => 
+            AnsiConsole.Status()
+                .Spinner(Spinner.Known.Dots)
+                .SpinnerStyle(Style.Parse("blue"))
+                .Start("[blue]Compiling[/]", ctx => 
             {
-                ctx.SpinnerStyle(Style.Parse("purple"));
-
                 var buildOptions = new BuildOptions(command);
 
                 if (buildOptions.Verbose)
@@ -27,22 +28,20 @@ internal class BuildCommandHandler
                 if (!Directory.Exists(buildOptions.OutputDirectory.FullName))
                     Directory.CreateDirectory(buildOptions.OutputDirectory.FullName);
 
-                var ilGenerator = new BytecodeGenerator(new BytecodeGeneratorOptions(buildOptions));
+                var ilGenerator = new ILGenerator(new ILGeneratorOptions(buildOptions));
                 var ilFile = ilGenerator.Emit(buildOptions.OutputDirectory);
 
-                ctx.Status("Compiling IL");
-
-                var nativeObjectGenerator = new NativeObjectGenerator(ilFile, new NativeObjectGeneratorOptions(buildOptions));
+                var nativeObjectGenerator = new ILCompiler(ilFile, new ILCompilerOptions(buildOptions));
                 var objectFile = nativeObjectGenerator.Emit(buildOptions.OutputDirectory);
 
-                ctx.Status("Linking");
+                ctx.Status("[blue]Linking[/]");
 
                 var linker = new Linker(objectFile, new LinkerOptions(buildOptions));
                 var executable = linker.Emit(buildOptions.OutputDirectory);
 
                 if (buildOptions.Strip && Platform.OperatingSystem != OperatingSystem.Windows)
                 {
-                    ctx.Status("Stripping");
+                    ctx.Status("[blue]Stripping[/]");
 
                     var stripper = new Stripper(new StripperOptions(buildOptions));
                     stripper.Run(executable);

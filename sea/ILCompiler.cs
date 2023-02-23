@@ -1,11 +1,11 @@
 ﻿namespace Sea;
 
-internal class NativeObjectGenerator
+internal class ILCompiler
 {
     private readonly FileInfo cilFile;
-    private readonly NativeObjectGeneratorOptions buildOptions;
+    private readonly ILCompilerOptions buildOptions;
 
-    public NativeObjectGenerator(FileInfo cilFile, NativeObjectGeneratorOptions buildOptions)
+    public ILCompiler(FileInfo cilFile, ILCompilerOptions buildOptions)
     {
         this.cilFile = cilFile;
         this.buildOptions = buildOptions;

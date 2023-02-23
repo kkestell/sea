@@ -1,8 +1,8 @@
 ﻿namespace Sea;
 
-internal class NativeObjectGeneratorOptions
+internal class ILCompilerOptions
 {
-    public NativeObjectGeneratorOptions(BuildOptions buildOptions)
+    public ILCompilerOptions(BuildOptions buildOptions)
     {
         Verbose = buildOptions.Verbose;
         Debug = buildOptions.Debug;

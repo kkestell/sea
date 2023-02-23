@@ -1,8 +1,8 @@
 ﻿namespace Sea;
 
-internal class BytecodeGeneratorOptions
+internal class ILGeneratorOptions
 {
-    public BytecodeGeneratorOptions(BuildOptions buildOptions)
+    public ILGeneratorOptions(BuildOptions buildOptions)
     {
         Verbose = buildOptions.Verbose;
         InputFiles = buildOptions.InputFiles;
@@ -10,7 +10,7 @@ internal class BytecodeGeneratorOptions
         OptimizationMode = buildOptions.OptimizationMode;
     }
 
-    public BytecodeGeneratorOptions(RunOptions runOptions)
+    public ILGeneratorOptions(RunOptions runOptions)
     {
         Verbose = runOptions.Verbose;
         InputFiles = runOptions.InputFiles;
