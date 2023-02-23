@@ -5,7 +5,7 @@ uname_out="$(uname -s)"
 case "${uname_out}" in
     Linux*)     os=linux;;
     Darwin*)    os=osx;;
-    MINGW*)     os=windows;;
+    MSYS*)      os=windows;;
     *)          echo "Unsupported OS: ${uname_out}" && exit 1
 esac
 

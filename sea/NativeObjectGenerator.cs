@@ -230,7 +230,6 @@ internal class NativeObjectGenerator
             "--feature:System.StartupHookProvider.IsSupported=false",
             "--feature:System.Threading.Thread.EnableAutoreleasePool=false",
             "--feature:System.Text.Encoding.EnableUnsafeUTF7Encoding=false",
-            "--stacktracedata",
             "--nowarn:\"1701; 1702; IL2121; 1701; 1702\"",
             "--singlewarn",
             $"--root:{cilFile.FullName}",
@@ -238,9 +237,17 @@ internal class NativeObjectGenerator
             "--resilient",
             "--feature:System.Linq.Expressions.CanCompileToIL=false",
             "--feature:System.Linq.Expressions.CanEmitObjectArrayDelegate=false",
-            "--feature:System.Linq.Expressions.CanCreateArbitraryDelegates=false",
-            buildOptions.Reflection ? "--reflectiondata:all" : "--reflectiondata:none"
+            "--feature:System.Linq.Expressions.CanCreateArbitraryDelegates=false"
         };
+
+        if (buildOptions.Reflection)
+        {
+            ilcArgs.Add("--reflectiondata:all");
+        }
+        else
+        {
+            ilcArgs.Add("--reflectiondata:none");
+        }
 
         if (buildOptions.StackTrace)
         {

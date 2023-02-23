@@ -19,7 +19,7 @@ internal class BytecodeGenerator
 
         asmInfo.AppendLine("using System.Reflection;");
         
-        asmInfo.AppendLine("[assembly: AssemblyTitle(\"Test\")]");
+        asmInfo.AppendLine($"[assembly: AssemblyTitle(\"{buildOptions.Assembly}\")]");
         asmInfo.AppendLine("[assembly: AssemblyVersion(\"1.1.0\")]");
         asmInfo.AppendLine("[assembly: AssemblyFileVersion(\"1.1.0\")]");
 
