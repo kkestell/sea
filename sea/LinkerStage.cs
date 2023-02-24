@@ -13,6 +13,8 @@ internal class LinkerStage : CompilerStage
         this.options = options;
     }
     
+    public override string Name => "Link";
+
     protected override void Execute()
     {
         var linker = new Linker(options);

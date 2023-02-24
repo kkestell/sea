@@ -12,7 +12,9 @@ internal class ILCompilerStage : CompilerStage
         this.outputFile = outputFile;
         this.options = options;
     }
-    
+
+    public override string Name => "IL Compiler";
+
     protected override void Execute()
     {
         var ilCompiler = new ILCompiler(options);

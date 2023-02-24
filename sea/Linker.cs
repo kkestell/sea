@@ -18,8 +18,6 @@ internal class Linker
 
         if (Platform.OperatingSystem == OperatingSystem.Windows)
         {
-            //linkerCommand = @"C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.35.32213\bin\Hostx64\x64\link.exe";
-
             var windowsSdkPath =
                 @"C:\Program Files (x86)\Windows Kits\10\"; //Environment.GetEnvironmentVariable("UniversalCRTSdkDir")?.Trim('\\');
             var windowsSdkVersion = "10.0.19041.0"; //Environment.GetEnvironmentVariable("UCRTVersion");
@@ -107,7 +105,7 @@ internal class Linker
                 Path.Combine(aotFrameworkPath, "libSystem.Globalization.Native.a"),
                 Path.Combine(aotFrameworkPath, "libSystem.IO.Compression.Native.a"),
                 Path.Combine(aotFrameworkPath, "libSystem.Net.Security.Native.a"),
-                Path.Combine(aotFrameworkPath, "libSystem.Security.Cryptography.Native.OpenSsl.a"),
+                Path.Combine(aotFrameworkPath, "libSystem.Security.Cryptography.Native.OpenSsl.a")
             };
 
             if (linkerOptions.Verbosity == VerbosityLevel.Diagnostic)
@@ -173,11 +171,16 @@ internal class Linker
                 });
             }
 
-            var linkerCommand = "clang";
+            var linkerExecutable = "clang";
             var linkerArguments = string.Join(" ", args);
 
-            Process.Execute(linkerCommand, linkerArguments,
+            var exitCode = Process.Execute(linkerExecutable, linkerArguments,
                 verbose: linkerOptions.Verbosity == VerbosityLevel.Diagnostic);
+            
+            if (exitCode != 0)
+            {
+                throw new Exception($"{linkerExecutable} failed with exit code {exitCode}");
+            }
         }
     }
 }

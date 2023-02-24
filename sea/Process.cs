@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace Sea;
 
-internal static class Process
+internal static partial class Process
 {
     public static int Execute(string fileName, string arguments, IEnumerable<KeyValuePair<string, string>>? environment = null, int timeout = 99999999, bool verbose = false)
     {
@@ -52,6 +52,9 @@ internal static class Process
 
     private static string StripAnsi(string str)
     {
-        return Regex.Replace(str, @"[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]", "");
+        return StripAnsiRegex().Replace(str, "");
     }
+
+    [GeneratedRegex(@"[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]")]
+    private static partial Regex StripAnsiRegex();
 }

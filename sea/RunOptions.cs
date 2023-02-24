@@ -1,4 +1,5 @@
 ﻿using System.CommandLine;
+using Spectre.Console;
 
 namespace Sea;
 
@@ -15,10 +16,7 @@ internal class RunOptions
         Verbosity = Option(command.Verbosity);
         OptimizationMode = Option(command.OptimizationMode);
         Debug = Option(command.EnableDebugInfo);
-        
-        var tempPath = Path.GetTempPath();
-        var tempDirectory = new DirectoryInfo(tempPath);
-        OutputDirectory = new DirectoryInfo(Path.Combine(tempDirectory.FullName, "dflat"));
+        OutputDirectory = new DirectoryInfo(Path.GetTempPath());
     }
 
     public bool Debug { get; }
@@ -36,4 +34,19 @@ internal class RunOptions
     private T Argument<T>(Argument<T> argument) => command.Result!.GetValueForArgument(argument);
 
     private T? Option<T>(Option<T> option) => command.Result!.GetValueForOption(option);
+
+    public void PrintDiagnostics()
+    {
+        var table = new Table();
+        table.AddColumn("Option");
+        table.AddColumn("Value");
+        table.AddRow("InputFiles", string.Join(Environment.NewLine, InputFiles.Select(x => x.FullName)));
+        table.AddRow("Assembly", Assembly);
+        table.AddRow("Debug", Debug.ToString());
+        table.AddRow("OptimizationMode", OptimizationMode.ToString());
+        table.AddRow("Verbosity", Verbosity.ToString());
+        table.HideHeaders();
+        table.Border(TableBorder.Square);
+        AnsiConsole.Write(table);
+    }
 }

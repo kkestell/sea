@@ -14,7 +14,7 @@ internal class BuildOptions
 
         InputFiles = Argument(command.InputFilePaths).ToList();
         Assembly = Option(command.AssemblyName) ?? Path.GetFileNameWithoutExtension(InputFiles.First().Name);
-        OutputFile = Option(command.OutputFile) ?? new FileInfo(Path.Combine(InputFiles.First().DirectoryName!, $"{Assembly}{Platform.ExecutableFileExtension}"));
+        OutputFile = Option(command.OutputFile) ?? new FileInfo(Path.Combine(InputFiles.First().DirectoryName!, $"{Assembly}{Platform.ExecutableExtension}"));
         Verbosity = Option(command.Verbosity);
         OptimizationMode = Option(command.OptimizationMode);
         Debug = Option(command.EnableDebugInfo);

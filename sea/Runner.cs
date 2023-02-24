@@ -2,19 +2,18 @@
 
 internal class Runner
 {
-    private readonly RunOptions options;
-
-    public Runner(RunOptions options) 
-    {
-        this.options = options;    
-    }
-
     public void Run(FileInfo ilFile)
     {
         var ilcPath = Path.Combine(Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "tools"), "ilc");
-        var corerunExecutable = Path.Combine(ilcPath, $"corerun{Platform.ExecutableFileExtension}");
-        var corerunArguments = ilFile.FullName;
+        var fileName = Path.Combine(ilcPath, $"corerun{Platform.ExecutableExtension}");
+        var arguments = ilFile.FullName;
 
-        Process.Execute(corerunExecutable, corerunArguments, verbose: true);
+        using var process = new System.Diagnostics.Process();
+
+        process.StartInfo.FileName = fileName;
+        process.StartInfo.Arguments = arguments;
+        
+        process.Start();
+        process.WaitForExit();
     }
 }

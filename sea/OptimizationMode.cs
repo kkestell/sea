@@ -1,6 +1,6 @@
 ﻿namespace Sea;
 
-enum OptimizationMode
+internal enum OptimizationMode
 {
     Default,
     None,

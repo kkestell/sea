@@ -10,7 +10,9 @@ internal class ILGeneratorStage : CompilerStage
         this.options = options;
         this.outputFile = outputFile;
     }
-    
+
+    public override string Name => "IL Generator";
+
     protected override void Execute()
     {
         var ilGenerator = new ILGenerator(options);

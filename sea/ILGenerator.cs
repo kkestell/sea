@@ -236,21 +236,26 @@ internal class ILGenerator
 
         var result = compilation.Emit(stream);
 
-        foreach (var diagnostic in result.Diagnostics)
+        if (options.Verbosity >= VerbosityLevel.Quiet)
         {
-            if (diagnostic.Severity == DiagnosticSeverity.Error)
+            foreach (var diagnostic in result.Diagnostics)
             {
-                AnsiConsole.MarkupLine($"[red]{diagnostic}[/]");
-            }
-            else if (diagnostic.Severity == DiagnosticSeverity.Warning)
-            {
-                AnsiConsole.MarkupLine($"[yellow]{diagnostic}[/]");
-            }
-            else
-            {
-                if (options.Verbosity > VerbosityLevel.Quiet)
+                switch (diagnostic.Severity)
                 {
-                    AnsiConsole.WriteLine(diagnostic.ToString());
+                    case DiagnosticSeverity.Error:
+                        AnsiConsole.MarkupLine($"[red]{diagnostic}[/]");
+                        break;
+                    case DiagnosticSeverity.Warning:
+                        AnsiConsole.MarkupLine($"[yellow]{diagnostic}[/]");
+                        break;
+                    case DiagnosticSeverity.Hidden:
+                        AnsiConsole.MarkupLine($"[dim]{diagnostic}[/]");
+                        break;
+                    case DiagnosticSeverity.Info:
+                        AnsiConsole.WriteLine(diagnostic.ToString());
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
         }

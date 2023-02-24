@@ -26,8 +26,8 @@ internal class CompilerPipeline
             Color.Red,
             Color.Green,
             Color.Blue,
+            Color.Cyan1,
             Color.Yellow,
-            Color.Aqua,
             Color.Lime
         };
 
@@ -36,7 +36,7 @@ internal class CompilerPipeline
         for (var i = 0; i < stages.Count(); i++)
         {
             var stage = stages.ElementAt(i);
-            chart.AddItem(stage.GetType().ToString(), stage.Elapsed, colors[i]);
+            chart.AddItem(stage.Name, stage.Elapsed, colors[i]);
         }
 
         AnsiConsole.Write(chart);

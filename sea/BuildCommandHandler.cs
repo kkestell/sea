@@ -21,29 +21,22 @@ internal class BuildCommandHandler
 
         try
         {
-            if (!Directory.Exists(buildOptions.OutputDirectory.FullName))
-                Directory.CreateDirectory(buildOptions.OutputDirectory.FullName);
+            var outputDirectory = buildOptions.OutputDirectory.FullName;
+            var baseName = Path.GetFileNameWithoutExtension(buildOptions.Assembly);
+            
+            if (!Directory.Exists(outputDirectory))
+                Directory.CreateDirectory(outputDirectory);
 
-            var ilFile =
-                new FileInfo(Path.Combine(buildOptions.OutputDirectory.FullName, $"{buildOptions.Assembly}.dll"));
-            var ilGeneratorStage = new ILGeneratorStage(ilFile, new ILGeneratorOptions(buildOptions));
-
-            var objectFile = new FileInfo(Path.Combine(buildOptions.OutputDirectory.FullName,
-                $"{Path.GetFileNameWithoutExtension(ilFile.Name)}{Platform.ObjectFileExtension}"));
-            var ilCompilerStage = new ILCompilerStage(ilFile, objectFile, new ILCompilerOptions(buildOptions));
-
-            var executableFile = new FileInfo(Path.Combine(buildOptions.OutputDirectory.FullName,
-                $"{Path.GetFileNameWithoutExtension(ilFile.Name)}{Platform.ExecutableFileExtension}"));
-            var linkerStage = new LinkerStage(objectFile, executableFile, new LinkerOptions(buildOptions));
-
-            var stripperStage = new StripperStage(executableFile, new StripperOptions(buildOptions));
+            var ilFile = new FileInfo(Path.Combine(outputDirectory, $"{baseName}.dll"));
+            var objectFile = new FileInfo(Path.ChangeExtension(ilFile.FullName, Platform.ObjectExtension));
+            var executableFile = new FileInfo(Path.ChangeExtension(objectFile.FullName, Platform.ExecutableExtension));
 
             var pipeline = new CompilerPipeline(new CompilerStage[]
             {
-                ilGeneratorStage,
-                ilCompilerStage,
-                linkerStage,
-                stripperStage
+                new ILGeneratorStage(ilFile, new ILGeneratorOptions(buildOptions)),
+                new ILCompilerStage(ilFile, objectFile, new ILCompilerOptions(buildOptions)),
+                new LinkerStage(objectFile, executableFile, new LinkerOptions(buildOptions)),
+                new StripperStage(executableFile, new StripperOptions(buildOptions))
             });
 
             pipeline.Run();
@@ -56,7 +49,7 @@ internal class BuildCommandHandler
 
             return 0;
         }
-        catch (ILGeneratorException ex)
+        catch (ILGeneratorException)
         {
             if (buildOptions.Verbosity > VerbosityLevel.Quiet)
                 AnsiConsole.MarkupLine("[red]Build failed.[/]");

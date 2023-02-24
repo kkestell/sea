@@ -13,6 +13,8 @@ internal abstract class CompilerStage
     }
     
     public double Elapsed { get; private set; }
+    
+    public abstract string Name { get; }
 
     protected abstract void Execute();
 }

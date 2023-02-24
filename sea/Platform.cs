@@ -25,7 +25,7 @@ public static class Platform
         }
     }
 
-    public static string ObjectFileExtension =>
+    public static string ObjectExtension =>
         OperatingSystem switch
         {
             OperatingSystem.Linux => ".o",
@@ -34,7 +34,7 @@ public static class Platform
             _ => throw new PlatformNotSupportedException()
         };
 
-    public static string ExecutableFileExtension =>
+    public static string ExecutableExtension =>
         OperatingSystem switch
         {
             OperatingSystem.Linux => string.Empty,

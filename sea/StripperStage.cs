@@ -11,6 +11,8 @@ internal class StripperStage : CompilerStage
         this.options = options;
     }
     
+    public override string Name => "Strip";
+
     protected override void Execute()
     {
         var stripper = new Stripper(options);

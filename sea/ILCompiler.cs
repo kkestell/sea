@@ -16,7 +16,7 @@ internal class ILCompiler
         var aotSdkPath = Path.Combine(aotPath, "sdk");
 
         var toolsPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "tools");
-        var ilcExecutable = Path.Combine(toolsPath, Path.Combine("ilc", $"ilc{Platform.ExecutableFileExtension}"));
+        var ilcExecutable = Path.Combine(toolsPath, Path.Combine("ilc", $"ilc{Platform.ExecutableExtension}"));
         
         var argFile = new FileInfo(Path.Combine(outputFile.DirectoryName!, $"{Path.GetFileNameWithoutExtension(inputFile.Name)}.ilc.rsp"));
 
@@ -319,6 +319,11 @@ internal class ILCompiler
 
         var ilcArguments = $"@{argFile.FullName}";
         
-        Process.Execute(ilcExecutable, ilcArguments, verbose: buildOptions.Verbosity == VerbosityLevel.Diagnostic);
+        var exitCode = Process.Execute(ilcExecutable, ilcArguments, verbose: buildOptions.Verbosity == VerbosityLevel.Diagnostic);
+
+        if (exitCode != 0)
+        {
+            throw new Exception($"{ilcExecutable} failed with exit code {exitCode}");
+        }
     }
 }
