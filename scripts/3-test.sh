@@ -11,17 +11,17 @@ cat <<EOT > hello.cs
 Console.WriteLine("Hello, Sea!");
 EOT
 
-# echo 'Testing build command (default)...'
-sea build hello.cs --optimize:none --verbose:detailed
+echo 'Testing build command (small)...'
+sea build hello.cs --optimize:small --reflection:false --stacktrace:false --strip --verbosity:diagnostic
 ./hello
-# echo $(du -sh hello)
+echo $(du -sh hello)
 
-# echo 'Testing build command (small)...'
-# sea build hello.cs -v --reflection:false --stacktrace:false --debug:false --optimize:small --strip:true --verbose:true
-# ./hello
-# echo $(du -sh hello)
+echo 'Testing build command (default)...'
+sea build hello.cs
+./hello
+echo $(du -sh hello)
 
-# echo 'Testing run command...'
-# sea run hello.cs
+echo 'Testing run command...'
+sea run hello.cs
 
 rm hello*

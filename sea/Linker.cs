@@ -1,38 +1,33 @@
-﻿using System.CommandLine;
-using System.Threading;
-
-namespace Sea;
+﻿namespace Sea;
 
 internal class Linker
 {
-    private readonly FileInfo objectFile;
     private readonly LinkerOptions linkerOptions;
 
-    public Linker(FileInfo objectFile, LinkerOptions linkerOptions)
+    public Linker(LinkerOptions linkerOptions)
     {
-        this.objectFile = objectFile;
         this.linkerOptions = linkerOptions;
     }
 
-    public FileInfo Emit(DirectoryInfo outPath)
+    public void Emit(FileInfo inputFile, FileInfo outputFile)
     {
-        var baseName = Path.GetFileNameWithoutExtension(objectFile.Name);
-        var outFile = new FileInfo(Path.Combine(outPath.FullName, $"{baseName}{Platform.ExecutableFileExtension}"));
+        var aotSdkPath =
+            Path.Combine(Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "aot", "sdk"));
+        var aotFrameworkPath =
+            Path.Combine(Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "aot", "framework"));
 
-        var aotSdkPath = Path.Combine(Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "aot", "sdk"));
-        var aotFrameworkPath = Path.Combine(Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "aot", "framework"));
-        
         if (Platform.OperatingSystem == OperatingSystem.Windows)
         {
             //linkerCommand = @"C:\Program Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.35.32213\bin\Hostx64\x64\link.exe";
 
-            var windowsSdkPath = @"C:\Program Files (x86)\Windows Kits\10\";//Environment.GetEnvironmentVariable("UniversalCRTSdkDir")?.Trim('\\');
-            var windowsSdkVersion = "10.0.19041.0";//Environment.GetEnvironmentVariable("UCRTVersion");
-            
+            var windowsSdkPath =
+                @"C:\Program Files (x86)\Windows Kits\10\"; //Environment.GetEnvironmentVariable("UniversalCRTSdkDir")?.Trim('\\');
+            var windowsSdkVersion = "10.0.19041.0"; //Environment.GetEnvironmentVariable("UCRTVersion");
+
             var args = new List<string>
             {
-                $"\"{objectFile.FullName}\"",
-                $"/OUT:\"{outFile.FullName}\"",
+                $"\"{inputFile.FullName}\"",
+                $"/OUT:\"{outputFile.FullName}\"",
                 @"/LIBPATH:""C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\ATLMFC\lib\x64""",
                 @"/LIBPATH:""C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\lib\x64""",
                 @"/LIBPATH:""C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\lib\um\x64""",
@@ -81,25 +76,28 @@ internal class Linker
                 args.Add("/VERBOSE");
             }
 
-            var argFile = new FileInfo(Path.Combine(outPath.FullName, $"{baseName}.link.rsp"));
+            var argFile = new FileInfo(Path.Combine(outputFile.DirectoryName!,
+                $"{Path.GetFileNameWithoutExtension(inputFile.Name)}.link.rsp"));
             File.WriteAllLines(argFile.FullName, args);
 
             var linkerCommand = @"C:\Windows\System32\cmd.exe";
-            var linkerArguments = @$"/c """"C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VsDevCmd.bat"" && link.exe @{argFile.FullName}""";
+            var linkerArguments =
+                @$"/c """"C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VsDevCmd.bat"" && link.exe @{argFile.FullName}""";
             var linkerEnvironment = new Dictionary<string, string>
             {
                 { "__VSCMD_ARG_NO_LOGO", "0" },
                 { "VSCMD_SKIP_SENDTELEMETRY", "1" }
             };
-            
-            Process.Execute(linkerCommand, linkerArguments, linkerEnvironment, verbose: linkerOptions.Verbosity == VerbosityLevel.Diagnostic);
+
+            Process.Execute(linkerCommand, linkerArguments, linkerEnvironment,
+                verbose: linkerOptions.Verbosity == VerbosityLevel.Diagnostic);
         }
         else
         {
             var args = new List<string>
             {
-                objectFile.FullName,
-                $"-o {outFile.FullName}",
+                inputFile.FullName,
+                $"-o {outputFile.FullName}",
                 Path.Combine(aotSdkPath, "libbootstrapper.a"),
                 Path.Combine(aotSdkPath, "libRuntime.WorkstationGC.a"),
                 Path.Combine(aotSdkPath, "libstdc++compat.a"),
@@ -178,9 +176,8 @@ internal class Linker
             var linkerCommand = "clang";
             var linkerArguments = string.Join(" ", args);
 
-            Process.Execute(linkerCommand, linkerArguments, verbose: linkerOptions.Verbosity == VerbosityLevel.Diagnostic);
-    }
-
-        return outFile;
+            Process.Execute(linkerCommand, linkerArguments,
+                verbose: linkerOptions.Verbosity == VerbosityLevel.Diagnostic);
+        }
     }
 }

@@ -18,7 +18,7 @@ internal class RunCommandHandler
         {
             var runOptions = new RunOptions(command);
 
-            if (runOptions.Verbosity > VerbosityLevel.Quiet)
+            if (runOptions.Verbosity > VerbosityLevel.Normal)
             {
                 var table = new Table();
                 table.AddColumn("Option");
@@ -34,13 +34,14 @@ internal class RunCommandHandler
             }
 
             if (!Directory.Exists(runOptions.OutputDirectory.FullName))
-            {
                 Directory.CreateDirectory(runOptions.OutputDirectory.FullName);
-            }
 
+            var ilFile =
+                new FileInfo(Path.Combine(runOptions.OutputDirectory.FullName, $"{runOptions.Assembly}.dll"));
+            
             var ilGenerator = new ILGenerator(new ILGeneratorOptions(runOptions));
-            var ilFile = ilGenerator.Emit(runOptions.OutputDirectory);
-
+            ilGenerator.Emit(ilFile);
+            
             var runner = new Runner(runOptions);
             runner.Run(ilFile);
 

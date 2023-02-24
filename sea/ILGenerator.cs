@@ -7,11 +7,11 @@ namespace Sea;
 
 internal class ILGenerator
 {
-    private readonly ILGeneratorOptions buildOptions;
+    private readonly ILGeneratorOptions options;
 
-    public ILGenerator(ILGeneratorOptions buildOptions)
+    public ILGenerator(ILGeneratorOptions options)
     {
-        this.buildOptions = buildOptions;
+        this.options = options;
     }
 
     private SyntaxTree AssemblyInfo()
@@ -20,7 +20,7 @@ internal class ILGenerator
 
         asmInfo.AppendLine("using System.Reflection;");
         
-        asmInfo.AppendLine($"[assembly: AssemblyTitle(\"{buildOptions.Assembly}\")]");
+        asmInfo.AppendLine($"[assembly: AssemblyTitle(\"{options.Assembly}\")]");
         asmInfo.AppendLine("[assembly: AssemblyVersion(\"1.1.0\")]");
         asmInfo.AppendLine("[assembly: AssemblyFileVersion(\"1.1.0\")]");
 
@@ -39,17 +39,17 @@ internal class ILGenerator
         return CSharpSyntaxTree.ParseText(asmInfo.ToString());
     }
 
-    public FileInfo Emit(DirectoryInfo outPath)
+    public void Emit(FileInfo outputFile)
     {
-        var optimizationLevel = buildOptions.OptimizationMode == OptimizationMode.None
+        var optimizationLevel = options.OptimizationMode == OptimizationMode.None
             ? OptimizationLevel.Debug : OptimizationLevel.Release;
 
         var compilationOptions = new CSharpCompilationOptions(
             OutputKind.ConsoleApplication,
             optimizationLevel: optimizationLevel);
 
-        var syntaxTrees = buildOptions.InputFiles
-            .Select(x => CSharpSyntaxTree.ParseText(File.ReadAllText(x.FullName)))
+        var syntaxTrees = options.InputFiles
+            .Select(x => CSharpSyntaxTree.ParseText(File.ReadAllText(x.FullName), options: null, path: x.FullName))
             .Concat(new [] { AssemblyInfo(), GlobalUsings() });
 
         var refPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "ref");
@@ -227,14 +227,12 @@ internal class ILGenerator
             Path.Combine(refPath, x))).ToList();
         
         var compilation = CSharpCompilation.Create(
-            buildOptions.Assembly,
+            options.Assembly,
             options: compilationOptions,
             syntaxTrees: syntaxTrees,
             references: refs);
 
-        var outFile = new FileInfo(Path.Combine(outPath.FullName, $"{buildOptions.Assembly}.dll"));
-
-        using var stream = File.OpenWrite(outFile.FullName);
+        using var stream = File.OpenWrite(outputFile.FullName);
 
         var result = compilation.Emit(stream);
 
@@ -250,17 +248,14 @@ internal class ILGenerator
             }
             else
             {
-                if (buildOptions.Verbosity > VerbosityLevel.Quiet)
+                if (options.Verbosity > VerbosityLevel.Quiet)
                 {
                     AnsiConsole.WriteLine(diagnostic.ToString());
                 }
-
             }
         }
 
         if (!result.Success)
-            throw new Exception("Compilation failed");
-
-        return outFile;
+            throw new ILGeneratorException("Compilation failed");
     }
 }

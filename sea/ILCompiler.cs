@@ -2,16 +2,14 @@
 
 internal class ILCompiler
 {
-    private readonly FileInfo cilFile;
     private readonly ILCompilerOptions buildOptions;
 
-    public ILCompiler(FileInfo cilFile, ILCompilerOptions buildOptions)
+    public ILCompiler(ILCompilerOptions buildOptions)
     {
-        this.cilFile = cilFile;
         this.buildOptions = buildOptions;
     }
 
-    public FileInfo Emit(DirectoryInfo outPath)
+    public void Emit(FileInfo inputFile, FileInfo outputFile)
     {
         var aotPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "aot");
         var aotFrameworkPath = Path.Combine(aotPath, "framework");
@@ -19,15 +17,13 @@ internal class ILCompiler
 
         var toolsPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "tools");
         var ilcExecutable = Path.Combine(toolsPath, Path.Combine("ilc", $"ilc{Platform.ExecutableFileExtension}"));
-
-        var baseName = Path.GetFileNameWithoutExtension(cilFile.Name);
-        var outFile = new FileInfo(Path.Combine(outPath.FullName, $"{baseName}{Platform.ObjectFileExtension}"));
-        var argFile = new FileInfo(Path.Combine(outPath.FullName, $"{baseName}.ilc.rsp"));
+        
+        var argFile = new FileInfo(Path.Combine(outputFile.DirectoryName!, $"{Path.GetFileNameWithoutExtension(inputFile.Name)}.ilc.rsp"));
 
         var args = new List<string>
         {
-            cilFile.FullName,
-            $"-o:{outFile.FullName}",
+            inputFile.FullName,
+            $"-o:{outputFile.FullName}",
             $"-r:{Path.Combine(aotFrameworkPath, "Microsoft.CSharp.dll")}",
             $"-r:{Path.Combine(aotFrameworkPath, "Microsoft.VisualBasic.Core.dll")}",
             $"-r:{Path.Combine(aotFrameworkPath, "Microsoft.VisualBasic.dll")}",
@@ -232,13 +228,19 @@ internal class ILCompiler
             "--feature:System.Text.Encoding.EnableUnsafeUTF7Encoding=false",
             "--nowarn:\"1701; 1702; IL2121; 1701; 1702\"",
             "--singlewarn",
-            $"--root:{cilFile.FullName}",
+            $"--root:{inputFile.FullName}",
             $"--nosinglewarnassembly:{buildOptions.Assembly}",
             "--resilient",
             "--feature:System.Linq.Expressions.CanCompileToIL=false",
             "--feature:System.Linq.Expressions.CanEmitObjectArrayDelegate=false",
             "--feature:System.Linq.Expressions.CanCreateArbitraryDelegates=false"
         };
+
+        if (buildOptions.InvariantCulture)
+        {
+            args.Add("--feature:System.Globalization.Invariant=true");
+            args.Add("--appcontextswitch:System.Globalization.Invariant=true");
+        }
 
         if (buildOptions.Verbosity == VerbosityLevel.Diagnostic)
         {
@@ -318,7 +320,5 @@ internal class ILCompiler
         var ilcArguments = $"@{argFile.FullName}";
         
         Process.Execute(ilcExecutable, ilcArguments, verbose: buildOptions.Verbosity == VerbosityLevel.Diagnostic);
-
-        return outFile;
     }
 }

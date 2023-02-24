@@ -17,7 +17,7 @@ internal class RunCommand: Command
         new(new[] { "--assembly", "-a" }, "Assembly name");
 
     public Option<VerbosityLevel> Verbosity { get; } =
-        new(new[] { "--verbose", "-v" }, () => VerbosityLevel.Normal, "Verbosity level");    
+        new(new[] { "--verbosity", "-v" }, () => VerbosityLevel.Normal, "Verbosity level");    
 
     public Option<OptimizationMode> OptimizationMode { get; } =
         new(new[] { "--optimize", "-O" }, () => Sea.OptimizationMode.Default, "Optimization mode");

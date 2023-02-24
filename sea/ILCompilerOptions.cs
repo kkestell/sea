@@ -10,6 +10,7 @@ internal class ILCompilerOptions
         Assembly = buildOptions.Assembly;
         Reflection = buildOptions.Reflection;
         StackTrace = buildOptions.StackTrace;
+        InvariantCulture = buildOptions.InvariantCulture;
     }
     
     public VerbosityLevel Verbosity { get; }
@@ -23,4 +24,6 @@ internal class ILCompilerOptions
     public bool Reflection { get; }
 
     public bool StackTrace { get; }
+
+    public bool InvariantCulture { get; }
 }

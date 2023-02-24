@@ -20,7 +20,7 @@ internal class BuildCommand : Command
         new(new[] { "--assembly", "-a" }, "Assembly name");
 
     public Option<VerbosityLevel> Verbosity { get; } =
-        new(new[] { "--verbose", "-v" }, () => VerbosityLevel.Normal, "Verbosity level");    
+        new(new[] { "--verbosity", "-v" }, () => VerbosityLevel.Normal, "Verbosity level");    
 
     public Option<OptimizationMode> OptimizationMode { get; } =
         new(new[] { "--optimize", "-O" }, () => Sea.OptimizationMode.Default, "Optimization mode");
@@ -33,6 +33,9 @@ internal class BuildCommand : Command
 
     public Option<bool> StackTrace { get; } =
         new(new[] { "--stacktrace", "-s" }, () => true, "Emit stack trace data");
+
+    public Option<bool> InvariantCulture { get; } =
+        new(new[] { "--invariant-culture" }, () => true, "Remove globalization specific code and data");  
 
     public Option<bool> Strip { get; } =
         new(new[] { "--strip", "-S" }, () => false, "Strip executable");
@@ -53,6 +56,7 @@ internal class BuildCommand : Command
         AddOption(EnableDebugInfo);
         AddOption(Reflection);
         AddOption(StackTrace);
+        AddOption(InvariantCulture);
         AddOption(Strip);
         AddOption(TargetArchitecture);
         AddOption(TargetOperatingSystem);
