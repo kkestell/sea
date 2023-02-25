@@ -223,8 +223,19 @@ internal class ILGenerator
             "netstandard.dll"
         };
 
-        var refs = dllFiles.Select(x => MetadataReference.CreateFromFile(
-            Path.Combine(refPath, x))).ToList();
+        var refs = new List<MetadataReference>();
+        
+        foreach (var dll in dllFiles)
+        {
+            var path = Path.Combine(refPath, dll);
+            if (File.Exists(path))
+            {
+                refs.Add(MetadataReference.CreateFromFile(path));
+                
+                if (options.Verbosity >= VerbosityLevel.Detailed)
+                    AnsiConsole.WriteLine($"Referencing {path}");
+            }    
+        }
         
         var compilation = CSharpCompilation.Create(
             options.Assembly,

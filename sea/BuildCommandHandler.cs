@@ -26,13 +26,15 @@ internal class BuildCommandHandler
             if (!Directory.Exists(outputDirectory))
                 Directory.CreateDirectory(outputDirectory);
 
-            var pipeline = new CompilerPipeline(new CompilerStage[]
+            var pipeline = new CompilerPipeline(new List<CompilerStage>
             {
                 new ILGeneratorStage(new ILGeneratorOptions(buildOptions)),
                 new ILCompilerStage(new ILCompilerOptions(buildOptions)),
-                new LinkerStage(new LinkerOptions(buildOptions)),
-                new StripperStage(new StripperOptions(buildOptions))
-            });
+                new LinkerStage(new LinkerOptions(buildOptions))
+            }, buildOptions.Verbosity);
+
+            if (buildOptions.Strip)
+                pipeline.AddStage(new StripperStage(new StripperOptions(buildOptions)));
 
             pipeline.Run();
 

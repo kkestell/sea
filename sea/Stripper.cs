@@ -12,8 +12,18 @@ internal class Stripper
     public void Run()
     {
         var stripExecutable = "strip";
+
+        var args = new List<string>
+        {
+            "-S",
+        };
         
-        var exitCode = Process.Execute(stripExecutable, $"-S {options.ExecutableFile.FullName}", verbose: options.Verbosity == VerbosityLevel.Diagnostic);
+        if (options.Verbosity >= VerbosityLevel.Detailed)
+            args.Add("-v");
+        
+        args.Add(options.ExecutableFile.FullName);
+        
+        var exitCode = Process.Execute(stripExecutable, string.Join(" ", args), verbosity: options.Verbosity);
         
         if (exitCode != 0)
         {

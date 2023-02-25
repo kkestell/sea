@@ -242,7 +242,7 @@ internal class ILCompiler
             args.Add("--appcontextswitch:System.Globalization.Invariant=true");
         }
 
-        if (options.Verbosity == VerbosityLevel.Diagnostic)
+        if (options.Verbosity >= VerbosityLevel.Detailed)
         {
             args.Add("--verbose");
         }
@@ -319,7 +319,7 @@ internal class ILCompiler
 
         var ilcArguments = $"@{argFile.FullName}";
         
-        var exitCode = Process.Execute(ilcExecutable, ilcArguments, verbose: options.Verbosity == VerbosityLevel.Diagnostic);
+        var exitCode = Process.Execute(ilcExecutable, ilcArguments, verbosity: options.Verbosity);
 
         if (exitCode != 0)
         {

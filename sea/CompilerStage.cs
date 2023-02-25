@@ -8,7 +8,10 @@ internal abstract class CompilerStage
     {
         var sw = new Stopwatch();
         sw.Start();
+
         Execute();
+
+        sw.Stop();
         Elapsed = sw.Elapsed.TotalMilliseconds;
     }
     
@@ -17,4 +20,6 @@ internal abstract class CompilerStage
     public abstract string Name { get; }
 
     protected abstract void Execute();
+
+    public abstract void PrintDiagnostics();
 }

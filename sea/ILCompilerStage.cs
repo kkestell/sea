@@ -1,3 +1,7 @@
+using System.Diagnostics;
+using System.Reflection;
+using Spectre.Console;
+
 namespace Sea;
 
 internal class ILCompilerStage : CompilerStage
@@ -15,5 +19,10 @@ internal class ILCompilerStage : CompilerStage
     {
         var ilCompiler = new ILCompiler(options);
         ilCompiler.Emit();
+    }
+
+    public override void PrintDiagnostics()
+    {
+        AnsiConsole.WriteLine("TODO");
     }
 }

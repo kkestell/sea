@@ -39,6 +39,13 @@ internal class RunOptions
 
     public void PrintDiagnostics()
     {
+        var msg = new Rule($"[lime bold]Sea Run[/]")
+        {
+            Style = Style.Parse("lime")
+        };
+        
+        AnsiConsole.Write(new Padder(msg).Padding(1, 1));
+        
         var table = new Table();
         table.AddColumn("Option");
         table.AddColumn("Value");
@@ -47,8 +54,17 @@ internal class RunOptions
         table.AddRow("Debug", Debug.ToString());
         table.AddRow("OptimizationMode", OptimizationMode.ToString());
         table.AddRow("Verbosity", Verbosity.ToString());
+        if (Verbosity == VerbosityLevel.Diagnostic)
+        {
+            table.AddRow("SEA_ROOT", Environment.GetEnvironmentVariable("SEA_ROOT") ?? string.Empty);
+            table.AddRow("RootPath", Platform.RootPath.FullName);
+            table.AddRow("ILFile", ILFile.FullName);
+        }
         table.HideHeaders();
-        table.Border(TableBorder.Square);
+        table.Expand();
+        table.Columns[0].Width(6);
+        table.Columns[0].NoWrap();
+        table.Border(TableBorder.Rounded);
         AnsiConsole.Write(table);
     }
 }

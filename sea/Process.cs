@@ -1,53 +1,68 @@
 using System.Text.RegularExpressions;
+using Spectre.Console;
 
 namespace Sea;
 
 internal static partial class Process
 {
-    public static int Execute(string fileName, string arguments, IEnumerable<KeyValuePair<string, string>>? environment = null, int timeout = 99999999, bool verbose = false)
+    public static int Execute(string fileName, string arguments, IEnumerable<KeyValuePair<string, string>>? environment = null, int timeout = 99999999, VerbosityLevel verbosity = VerbosityLevel.Normal)
     {
-        using var process = new System.Diagnostics.Process();
+        var status = AnsiConsole.Status();
 
-        process.StartInfo.FileName = fileName;
-        process.StartInfo.Arguments = arguments;
-
-        if (environment is not null)
+        status.Start(fileName, ctx =>
         {
-            foreach (var (key, value) in environment)
+            var process = new System.Diagnostics.Process();
+                
+            process.StartInfo.FileName = fileName;
+            process.StartInfo.Arguments = arguments;
+
+            if (verbosity == VerbosityLevel.Diagnostic)
             {
-                process.StartInfo.EnvironmentVariables[key] = value;
+                AnsiConsole.Write(new Padder(new Markup($"Executing [bold]{fileName}[/] [dim]{arguments}[/]")).Padding(0, 0, 0, 1));
             }
-        }
 
-        process.StartInfo.UseShellExecute = false;
-        process.StartInfo.RedirectStandardOutput = true;
-        process.StartInfo.RedirectStandardError = true;
+            if (environment is not null)
+            {
+                foreach (var (key, value) in environment)
+                {
+                    process.StartInfo.EnvironmentVariables[key] = value;
+                }
+            }
 
-        process.OutputDataReceived += (_, e) =>
-        {
-            if (e.Data is null)
-                return;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
 
-            Logger.Log(e.Data);
-        };
+            process.OutputDataReceived += (_, e) =>
+            {
+                if (e.Data is null)
+                    return;
 
-        process.ErrorDataReceived += (_, e) =>
-        {
-            if (e.Data is null)
-                return;
+                if (verbosity >= VerbosityLevel.Detailed)
+                    AnsiConsole.WriteLine(e.Data);
+            };
 
-            Logger.LogError(e.Data);
-        };
+            process.ErrorDataReceived += (_, e) =>
+            {
+                if (e.Data is null)
+                    return;
 
-        process.Start();
+                if (verbosity >= VerbosityLevel.Quiet)
+                    AnsiConsole.WriteLine(e.Data);
+            };
 
-        process.BeginOutputReadLine();
-        process.BeginErrorReadLine();
+            process.Start();
 
-        if (!process.WaitForExit(timeout))
-            throw new Exception($"Process timed out!: {fileName} {arguments}");
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
 
-        return process.ExitCode;
+            if (!process.WaitForExit(timeout))
+                throw new Exception($"Process timed out!: {fileName} {arguments}");
+
+            return process.ExitCode;
+        });
+
+        return 0;
     }
 
     private static string StripAnsi(string str)

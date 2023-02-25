@@ -64,6 +64,13 @@ internal class BuildOptions
 
     public void PrintDiagnostics()
     {
+        var msg = new Rule($"[lime bold]Sea Build[/]")
+        {
+            Style = Style.Parse("lime")
+        };
+        
+        AnsiConsole.Write(new Padder(msg).Padding(1, 1));
+        
         var table = new Table();
         table.AddColumn("Option");
         table.AddColumn("Value");
@@ -83,9 +90,15 @@ internal class BuildOptions
         {
             table.AddRow("SEA_ROOT", Environment.GetEnvironmentVariable("SEA_ROOT") ?? string.Empty);
             table.AddRow("RootPath", Platform.RootPath.FullName);
+            table.AddRow("ILFile", ILFile.FullName);
+            table.AddRow("ObjectFile", ObjectFile.FullName);
+            table.AddRow("ExecutableFile", ExecutableFile.FullName);
         }
         table.HideHeaders();
-        table.Border(TableBorder.Square);
+        table.Expand();
+        table.Columns[0].Width(6);
+        table.Columns[0].NoWrap();        
+        table.Border(TableBorder.Rounded);
         AnsiConsole.Write(table);
     }
 }

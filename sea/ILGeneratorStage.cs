@@ -1,3 +1,5 @@
+using Spectre.Console;
+
 namespace Sea;
 
 internal class ILGeneratorStage : CompilerStage
@@ -15,5 +17,10 @@ internal class ILGeneratorStage : CompilerStage
     {
         var ilGenerator = new ILGenerator(options);
         ilGenerator.Emit();
+    }
+
+    public override void PrintDiagnostics()
+    {
+        AnsiConsole.WriteLine("TODO");
     }
 }
