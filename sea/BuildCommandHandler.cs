@@ -22,21 +22,16 @@ internal class BuildCommandHandler
         try
         {
             var outputDirectory = buildOptions.OutputDirectory.FullName;
-            var baseName = Path.GetFileNameWithoutExtension(buildOptions.Assembly);
-            
+
             if (!Directory.Exists(outputDirectory))
                 Directory.CreateDirectory(outputDirectory);
 
-            var ilFile = new FileInfo(Path.Combine(outputDirectory, $"{baseName}.dll"));
-            var objectFile = new FileInfo(Path.ChangeExtension(ilFile.FullName, Platform.ObjectExtension));
-            var executableFile = new FileInfo(Path.ChangeExtension(objectFile.FullName, Platform.ExecutableExtension));
-
             var pipeline = new CompilerPipeline(new CompilerStage[]
             {
-                new ILGeneratorStage(ilFile, new ILGeneratorOptions(buildOptions)),
-                new ILCompilerStage(ilFile, objectFile, new ILCompilerOptions(buildOptions)),
-                new LinkerStage(objectFile, executableFile, new LinkerOptions(buildOptions)),
-                new StripperStage(executableFile, new StripperOptions(buildOptions))
+                new ILGeneratorStage(new ILGeneratorOptions(buildOptions)),
+                new ILCompilerStage(new ILCompilerOptions(buildOptions)),
+                new LinkerStage(new LinkerOptions(buildOptions)),
+                new StripperStage(new StripperOptions(buildOptions))
             });
 
             pipeline.Run();

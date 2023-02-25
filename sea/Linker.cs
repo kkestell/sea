@@ -2,14 +2,14 @@
 
 internal class Linker
 {
-    private readonly LinkerOptions linkerOptions;
+    private readonly LinkerOptions options;
 
-    public Linker(LinkerOptions linkerOptions)
+    public Linker(LinkerOptions options)
     {
-        this.linkerOptions = linkerOptions;
+        this.options = options;
     }
 
-    public void Emit(FileInfo inputFile, FileInfo outputFile)
+    public void Emit()
     {
         var aotSdkPath =
             Path.Combine(Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "aot", "sdk"));
@@ -24,8 +24,8 @@ internal class Linker
 
             var args = new List<string>
             {
-                $"\"{inputFile.FullName}\"",
-                $"/OUT:\"{outputFile.FullName}\"",
+                $"\"{options.ObjectFile.FullName}\"",
+                $"/OUT:\"{options.ExecutableFile.FullName}\"",
                 @"/LIBPATH:""C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\ATLMFC\lib\x64""",
                 @"/LIBPATH:""C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\lib\x64""",
                 @"/LIBPATH:""C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\lib\um\x64""",
@@ -64,18 +64,18 @@ internal class Linker
                 "/IGNORE:4099"
             };
 
-            if (linkerOptions.Debug)
+            if (options.Debug)
             {
                 args.Add("/DEBUG");
             }
 
-            if (linkerOptions.Verbosity == VerbosityLevel.Diagnostic)
+            if (options.Verbosity == VerbosityLevel.Diagnostic)
             {
                 args.Add("/VERBOSE");
             }
 
-            var argFile = new FileInfo(Path.Combine(outputFile.DirectoryName!,
-                $"{Path.GetFileNameWithoutExtension(inputFile.Name)}.link.rsp"));
+            var argFile = new FileInfo(Path.Combine(options.ExecutableFile.DirectoryName!,
+                $"{Path.GetFileNameWithoutExtension(options.ObjectFile.Name)}.link.rsp"));
             File.WriteAllLines(argFile.FullName, args);
 
             var linkerCommand = @"C:\Windows\System32\cmd.exe";
@@ -88,14 +88,14 @@ internal class Linker
             };
 
             Process.Execute(linkerCommand, linkerArguments, linkerEnvironment,
-                verbose: linkerOptions.Verbosity == VerbosityLevel.Diagnostic);
+                verbose: options.Verbosity == VerbosityLevel.Diagnostic);
         }
         else
         {
             var args = new List<string>
             {
-                inputFile.FullName,
-                $"-o {outputFile.FullName}",
+                options.ObjectFile.FullName,
+                $"-o {options.ExecutableFile.FullName}",
                 Path.Combine(aotSdkPath, "libbootstrapper.a"),
                 Path.Combine(aotSdkPath, "libRuntime.WorkstationGC.a"),
                 Path.Combine(aotSdkPath, "libstdc++compat.a"),
@@ -108,13 +108,13 @@ internal class Linker
                 Path.Combine(aotFrameworkPath, "libSystem.Security.Cryptography.Native.OpenSsl.a")
             };
 
-            if (linkerOptions.Verbosity == VerbosityLevel.Diagnostic)
+            if (options.Verbosity == VerbosityLevel.Diagnostic)
                 args.Add("--verbose");
 
-            if (linkerOptions.Debug)
+            if (options.Debug)
                 args.Add("-g");
 
-            switch (linkerOptions.OptimizationMode)
+            switch (options.OptimizationMode)
             {
                 case OptimizationMode.Default:
                     args.Add("-O2");
@@ -175,7 +175,7 @@ internal class Linker
             var linkerArguments = string.Join(" ", args);
 
             var exitCode = Process.Execute(linkerExecutable, linkerArguments,
-                verbose: linkerOptions.Verbosity == VerbosityLevel.Diagnostic);
+                verbose: options.Verbosity == VerbosityLevel.Diagnostic);
             
             if (exitCode != 0)
             {

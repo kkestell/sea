@@ -26,6 +26,8 @@ internal class RunOptions
     public string Assembly { get; }
 
     public DirectoryInfo OutputDirectory { get; }
+    
+    public FileInfo ILFile => new(Path.Combine(OutputDirectory.FullName, Path.GetRandomFileName()));
 
     public IEnumerable<FileInfo> InputFiles { get; }
 

@@ -2,14 +2,14 @@
 
 internal class ILCompiler
 {
-    private readonly ILCompilerOptions buildOptions;
+    private readonly ILCompilerOptions options;
 
-    public ILCompiler(ILCompilerOptions buildOptions)
+    public ILCompiler(ILCompilerOptions options)
     {
-        this.buildOptions = buildOptions;
+        this.options = options;
     }
 
-    public void Emit(FileInfo inputFile, FileInfo outputFile)
+    public void Emit()
     {
         var aotPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "aot");
         var aotFrameworkPath = Path.Combine(aotPath, "framework");
@@ -18,12 +18,12 @@ internal class ILCompiler
         var toolsPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "tools");
         var ilcExecutable = Path.Combine(toolsPath, Path.Combine("ilc", $"ilc{Platform.ExecutableExtension}"));
         
-        var argFile = new FileInfo(Path.Combine(outputFile.DirectoryName!, $"{Path.GetFileNameWithoutExtension(inputFile.Name)}.ilc.rsp"));
+        var argFile = new FileInfo(Path.Combine(options.ObjectFile.DirectoryName!, $"{Path.GetFileNameWithoutExtension(options.ILFile.Name)}.ilc.rsp"));
 
         var args = new List<string>
         {
-            inputFile.FullName,
-            $"-o:{outputFile.FullName}",
+            options.ILFile.FullName,
+            $"-o:{options.ObjectFile.FullName}",
             $"-r:{Path.Combine(aotFrameworkPath, "Microsoft.CSharp.dll")}",
             $"-r:{Path.Combine(aotFrameworkPath, "Microsoft.VisualBasic.Core.dll")}",
             $"-r:{Path.Combine(aotFrameworkPath, "Microsoft.VisualBasic.dll")}",
@@ -228,26 +228,26 @@ internal class ILCompiler
             "--feature:System.Text.Encoding.EnableUnsafeUTF7Encoding=false",
             "--nowarn:\"1701; 1702; IL2121; 1701; 1702\"",
             "--singlewarn",
-            $"--root:{inputFile.FullName}",
-            $"--nosinglewarnassembly:{buildOptions.Assembly}",
+            $"--root:{options.ILFile.FullName}",
+            $"--nosinglewarnassembly:{options.Assembly}",
             "--resilient",
             "--feature:System.Linq.Expressions.CanCompileToIL=false",
             "--feature:System.Linq.Expressions.CanEmitObjectArrayDelegate=false",
             "--feature:System.Linq.Expressions.CanCreateArbitraryDelegates=false"
         };
 
-        if (buildOptions.InvariantCulture)
+        if (options.InvariantCulture)
         {
             args.Add("--feature:System.Globalization.Invariant=true");
             args.Add("--appcontextswitch:System.Globalization.Invariant=true");
         }
 
-        if (buildOptions.Verbosity == VerbosityLevel.Diagnostic)
+        if (options.Verbosity == VerbosityLevel.Diagnostic)
         {
             args.Add("--verbose");
         }
 
-        if (buildOptions.Reflection)
+        if (options.Reflection)
         {
             args.Add("--reflectiondata:all");
         }
@@ -256,21 +256,21 @@ internal class ILCompiler
             args.Add("--reflectiondata:none");
         }
 
-        if (buildOptions.StackTrace)
+        if (options.StackTrace)
         {
             args.Add("--stacktracedata");
         }
 
-        if (buildOptions.Debug)
+        if (options.Debug)
         {
             args.Add("-g");
         }
 
-        if (buildOptions.OptimizationMode != OptimizationMode.None)
+        if (options.OptimizationMode != OptimizationMode.None)
         {
             args.Add("--methodbodyfolding");
         
-            switch (buildOptions.OptimizationMode)
+            switch (options.OptimizationMode)
             {
                 case OptimizationMode.Default:
                     args.Add("--optimize");
@@ -319,7 +319,7 @@ internal class ILCompiler
 
         var ilcArguments = $"@{argFile.FullName}";
         
-        var exitCode = Process.Execute(ilcExecutable, ilcArguments, verbose: buildOptions.Verbosity == VerbosityLevel.Diagnostic);
+        var exitCode = Process.Execute(ilcExecutable, ilcArguments, verbose: options.Verbosity == VerbosityLevel.Diagnostic);
 
         if (exitCode != 0)
         {

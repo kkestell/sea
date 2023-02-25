@@ -39,7 +39,7 @@ internal class ILGenerator
         return CSharpSyntaxTree.ParseText(asmInfo.ToString());
     }
 
-    public void Emit(FileInfo outputFile)
+    public void Emit()
     {
         var optimizationLevel = options.OptimizationMode == OptimizationMode.None
             ? OptimizationLevel.Debug : OptimizationLevel.Release;
@@ -232,7 +232,7 @@ internal class ILGenerator
             syntaxTrees: syntaxTrees,
             references: refs);
 
-        using var stream = File.OpenWrite(outputFile.FullName);
+        using var stream = File.OpenWrite(options.ILFile.FullName);
 
         var result = compilation.Emit(stream);
 

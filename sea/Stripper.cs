@@ -9,11 +9,11 @@ internal class Stripper
         this.options = options;    
     }
 
-    public void Run(FileInfo executableFile)
+    public void Run()
     {
         var stripExecutable = "strip";
         
-        var exitCode = Process.Execute(stripExecutable, $"-S {executableFile.FullName}", verbose: options.Verbosity == VerbosityLevel.Diagnostic);
+        var exitCode = Process.Execute(stripExecutable, $"-S {options.ExecutableFile.FullName}", verbose: options.Verbosity == VerbosityLevel.Diagnostic);
         
         if (exitCode != 0)
         {

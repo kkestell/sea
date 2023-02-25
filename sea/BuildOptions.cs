@@ -1,5 +1,4 @@
 ﻿using System.CommandLine;
-using System.Text;
 using Spectre.Console;
 
 namespace Sea;
@@ -34,6 +33,15 @@ internal class BuildOptions
 
     public DirectoryInfo OutputDirectory => new(OutputFile.DirectoryName!);
 
+    public FileInfo ILFile =>
+        new(Path.Combine(OutputDirectory.FullName, $"{Assembly}.cil"));
+    
+    public FileInfo ObjectFile =>
+        new(Path.Combine(OutputDirectory.FullName, $"{Assembly}{Platform.ObjectExtension}"));
+    
+    public FileInfo ExecutableFile =>
+        new(Path.Combine(OutputDirectory.FullName, $"{Assembly}{Platform.ExecutableExtension}"));    
+    
     public IEnumerable<FileInfo> InputFiles { get; }
 
     public OptimizationMode OptimizationMode { get; }

@@ -11,6 +11,8 @@ internal class ILCompilerOptions
         Reflection = buildOptions.Reflection;
         StackTrace = buildOptions.StackTrace;
         InvariantCulture = buildOptions.InvariantCulture;
+        ILFile = buildOptions.ILFile;
+        ObjectFile = buildOptions.ObjectFile;
     }
     
     public VerbosityLevel Verbosity { get; }
@@ -26,4 +28,8 @@ internal class ILCompilerOptions
     public bool StackTrace { get; }
 
     public bool InvariantCulture { get; }
+    
+    public FileInfo ILFile { get; }
+    
+    public FileInfo ObjectFile { get; }
 }

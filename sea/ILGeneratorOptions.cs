@@ -8,6 +8,7 @@ internal class ILGeneratorOptions
         InputFiles = buildOptions.InputFiles;
         Assembly = buildOptions.Assembly;
         OptimizationMode = buildOptions.OptimizationMode;
+        ILFile = buildOptions.ILFile;
     }
 
     public ILGeneratorOptions(RunOptions runOptions)
@@ -16,6 +17,7 @@ internal class ILGeneratorOptions
         InputFiles = runOptions.InputFiles;
         Assembly = runOptions.Assembly;
         OptimizationMode = runOptions.OptimizationMode;
+        ILFile = runOptions.ILFile;
     }
     
     public VerbosityLevel Verbosity { get; }
@@ -25,4 +27,6 @@ internal class ILGeneratorOptions
     public string Assembly { get; }
 
     public OptimizationMode OptimizationMode { get; }
+    
+    public FileInfo ILFile { get; }
 }

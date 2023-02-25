@@ -27,7 +27,7 @@ internal class RunCommandHandler
                 new FileInfo(Path.Combine(runOptions.OutputDirectory.FullName, $"{runOptions.Assembly}.dll"));
             
             var ilGenerator = new ILGenerator(new ILGeneratorOptions(runOptions));
-            ilGenerator.Emit(ilFile);
+            ilGenerator.Emit();
             
             var runner = new Runner();
             runner.Run(ilFile);
