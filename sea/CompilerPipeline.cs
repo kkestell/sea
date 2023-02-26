@@ -1,6 +1,9 @@
+#region
+
 using System.Diagnostics;
 using Spectre.Console;
-using Spectre.Console.Rendering;
+
+#endregion
 
 namespace Sea;
 
@@ -30,9 +33,10 @@ internal class CompilerPipeline
         {
             if (verbosity >= VerbosityLevel.Detailed)
             {
-                var msg = new Rule($"[lime bold]{stage.Name}[/]")
+                var msg = new Rule($"[cyan bold]{stage.Name}[/]")
                 {
-                    Style = Style.Parse("lime")
+                    Style = Style.Parse("cyan"),
+                    Justification = Justify.Left
                 };
             
                 AnsiConsole.Write(new Padder(msg).Padding(1, 1));
@@ -47,54 +51,29 @@ internal class CompilerPipeline
     
     public void PrintDiagnostics()
     {
+        var msg = new Rule("[cyan bold]Diagnostics[/]")
+        {
+            Style = Style.Parse("cyan"),
+            Justification = Justify.Left
+        };
+
+        AnsiConsole.Write(new Padder(msg).Padding(1, 1));
+        var table = new Table();
+        table.AddColumn("Stage");
+        table.AddColumn("Elapsed");
+
+        table.Columns[1].RightAligned();
+
         foreach (var stage in stages)
         {
-            var heading = new Rule($"[yellow bold]{stage.Name} Diagnostics[/]")
-            {
-                Style = Style.Parse("orange1")
-            };
-        
-            AnsiConsole.Write(new Padder(heading).Padding(1, 1));
-        
-            stage.PrintDiagnostics();
-        }
-        
-        var colors = new[]
-        {
-            Color.Yellow,
-            Color.Orange1,
-            Color.DarkOrange3,
-            Color.Cyan1,
-            Color.Yellow,
-            Color.Lime
-        };
-
-        var chart = new BreakdownChart();
-
-        var msg = new Markup($"[yellow]Total elapsed time: [bold]{elapsed}[/][/]")
-        {
-            Justification = Justify.Center
-        };
-
-        var rows = new Rows(new List<IRenderable>
-        {
-            new Padder(msg).Padding(2, 1, 2, 0),
-            new Padder(chart).Padding(1, 1)
-        });
-
-        for (var i = 0; i < stages.Count; i++)
-        {
-            var stage = stages.ElementAt(i);
-            chart.AddItem(stage.Name, stage.Elapsed, colors[i]);
+            table.AddRow(stage.Name, $"{stage.Elapsed:F1} ms");
         }
 
-        var panel = new Panel(rows)
-        {
-            Border = BoxBorder.Rounded,
-            Expand = true,
-            BorderStyle = Style.Parse("orange1")
-        };
-        
-        AnsiConsole.Write(new Padder(panel).Padding(0, 1));
+        table.ShowFooters = true;
+        table.ShowHeaders = true;
+        table.AddRow("Total", $"{elapsed.TotalMilliseconds:F1} ms");
+
+        AnsiConsole.Write(table);
+        AnsiConsole.WriteLine();
     }
 }

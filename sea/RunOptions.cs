@@ -1,5 +1,9 @@
-﻿using System.CommandLine;
+﻿#region
+
+using System.CommandLine;
 using Spectre.Console;
+
+#endregion
 
 namespace Sea;
 
@@ -27,7 +31,7 @@ internal class RunOptions
 
     public DirectoryInfo OutputDirectory { get; }
     
-    public FileInfo ILFile => new(Path.Combine(OutputDirectory.FullName, Path.GetRandomFileName()));
+    public FileInfo ILFile => new(Path.Combine(OutputDirectory.FullName, $"{Assembly}.cil"));
 
     public IEnumerable<FileInfo> InputFiles { get; }
 
@@ -39,9 +43,9 @@ internal class RunOptions
 
     public void PrintDiagnostics()
     {
-        var msg = new Rule($"[lime bold]Sea Run[/]")
+        var msg = new Rule($"[cyan bold]Sea Run[/]")
         {
-            Style = Style.Parse("lime")
+            Style = Style.Parse("cyan")
         };
         
         AnsiConsole.Write(new Padder(msg).Padding(1, 1));

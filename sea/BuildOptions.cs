@@ -1,5 +1,9 @@
-﻿using System.CommandLine;
+﻿#region
+
+using System.CommandLine;
 using Spectre.Console;
+
+#endregion
 
 namespace Sea;
 
@@ -64,41 +68,25 @@ internal class BuildOptions
 
     public void PrintDiagnostics()
     {
-        var msg = new Rule($"[lime bold]Sea Build[/]")
+        var msg = new Rule($"[cyan bold]Sea Build[/]")
         {
-            Style = Style.Parse("lime")
+            Style = Style.Parse("cyan"),
+            Justification = Justify.Left
         };
         
         AnsiConsole.Write(new Padder(msg).Padding(1, 1));
         
-        var table = new Table();
-        table.AddColumn("Option");
-        table.AddColumn("Value");
-        table.AddRow("InputFiles", string.Join(Environment.NewLine, InputFiles.Select(x => x.FullName)));
-        table.AddRow("OutputFile", OutputFile.FullName);
-        table.AddRow("Assembly", Assembly);
-        table.AddRow("TargetArchitecture", TargetArchitecture.ToString());
-        table.AddRow("TargetOperatingSystem", TargetOperatingSystem.ToString());
-        table.AddRow("Debug", Debug.ToString());
-        table.AddRow("OptimizationMode", OptimizationMode.ToString());
-        table.AddRow("Reflection", Reflection.ToString());
-        table.AddRow("StackTrace", StackTrace.ToString());
-        table.AddRow("InvariantCulture", InvariantCulture.ToString());
-        table.AddRow("Strip", Strip.ToString());
-        table.AddRow("Verbosity", Verbosity.ToString());
-        if (Verbosity == VerbosityLevel.Diagnostic)
-        {
-            table.AddRow("SEA_ROOT", Environment.GetEnvironmentVariable("SEA_ROOT") ?? string.Empty);
-            table.AddRow("RootPath", Platform.RootPath.FullName);
-            table.AddRow("ILFile", ILFile.FullName);
-            table.AddRow("ObjectFile", ObjectFile.FullName);
-            table.AddRow("ExecutableFile", ExecutableFile.FullName);
-        }
-        table.HideHeaders();
-        table.Expand();
-        table.Columns[0].Width(6);
-        table.Columns[0].NoWrap();        
-        table.Border(TableBorder.Rounded);
-        AnsiConsole.Write(table);
+        AnsiConsole.MarkupLine($"[bold]Input Files[/]       {string.Join(Environment.NewLine, InputFiles.Select(x => x.FullName))}");
+        AnsiConsole.MarkupLine($"[bold]Output File[/]       {OutputFile.FullName}");
+        AnsiConsole.MarkupLine($"[bold]Assembly[/]          {Assembly}");
+        AnsiConsole.MarkupLine($"[bold]Target Arch[/]       {TargetArchitecture.ToString()}");
+        AnsiConsole.MarkupLine($"[bold]Target OS[/]         {TargetOperatingSystem.ToString()}");
+        AnsiConsole.MarkupLine($"[bold]Debug[/]             {Debug.ToString()}");
+        AnsiConsole.MarkupLine($"[bold]Optimization[/]      {OptimizationMode.ToString()}");
+        AnsiConsole.MarkupLine($"[bold]Reflection[/]        {Reflection.ToString()}");
+        AnsiConsole.MarkupLine($"[bold]Stack Traces[/]      {StackTrace.ToString()}");
+        AnsiConsole.MarkupLine($"[bold]Invariant Culture[/] {InvariantCulture.ToString()}");
+        AnsiConsole.MarkupLine($"[bold]Strip[/]             {InvariantCulture.ToString()}");
+        AnsiConsole.MarkupLine($"[bold]Verbosity[/]         {Verbosity.ToString()}");
     }
 }

@@ -17,8 +17,8 @@ internal class ILCompiler
 
         var toolsPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "tools");
         var ilcExecutable = Path.Combine(toolsPath, Path.Combine("ilc", $"ilc{Platform.ExecutableExtension}"));
-        
-        var argFile = new FileInfo(Path.Combine(options.ObjectFile.DirectoryName!, $"{Path.GetFileNameWithoutExtension(options.ILFile.Name)}.ilc.rsp"));
+
+        var argFile = new FileInfo(Path.ChangeExtension(options.ObjectFile.FullName, "ilc.rsp"));
 
         var args = new List<string>
         {
@@ -286,7 +286,7 @@ internal class ILCompiler
 
         if (Platform.OperatingSystem == OperatingSystem.Windows)
         {
-            args.AddRange(new List<string>()
+            args.AddRange(new List<string>
             {
                 "--appcontextswitch:RUNTIME_IDENTIFIER=win-x64",
                 "--directpinvoke:System.Globalization.Native",
@@ -296,7 +296,7 @@ internal class ILCompiler
         }
         else
         {
-            args.AddRange(new List<string>()
+            args.AddRange(new List<string>
             {
                 "--directpinvoke:libSystem.Native",
                 "--directpinvoke:libSystem.Globalization.Native",
@@ -305,25 +305,29 @@ internal class ILCompiler
                 "--directpinvoke:libSystem.Security.Cryptography.Native.OpenSsl"
             });
 
-            if (Platform.OperatingSystem == OperatingSystem.Linux)
+            switch (Platform.OperatingSystem)
             {
-                args.Add("--appcontextswitch:RUNTIME_IDENTIFIER=linux-x64");
-            }
-            else if (Platform.OperatingSystem == OperatingSystem.MacOS)
-            {
-                args.Add("--appcontextswitch:RUNTIME_IDENTIFIER=osx-x64");
+                case OperatingSystem.Linux:
+                    args.Add("--appcontextswitch:RUNTIME_IDENTIFIER=linux-x64");
+                    break;
+                case OperatingSystem.MacOS:
+                    args.Add("--appcontextswitch:RUNTIME_IDENTIFIER=osx-x64");
+                    break;
             }
         }
 
         File.WriteAllLines(argFile.FullName, args);
 
         var ilcArguments = $"@{argFile.FullName}";
-        
-        var exitCode = Process.Execute(ilcExecutable, ilcArguments, verbosity: options.Verbosity);
+
+        var processOptions = new ProcessOptions(ilcExecutable)
+        {
+            Arguments = ilcArguments,
+            Verbosity = options.Verbosity
+        };
+        var exitCode = Process.Execute(processOptions);
 
         if (exitCode != 0)
-        {
             throw new Exception($"{ilcExecutable} failed with exit code {exitCode}");
-        }
     }
 }

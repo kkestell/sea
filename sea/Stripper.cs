@@ -23,7 +23,12 @@ internal class Stripper
         
         args.Add(options.ExecutableFile.FullName);
         
-        var exitCode = Process.Execute(stripExecutable, string.Join(" ", args), verbosity: options.Verbosity);
+        var processOptions = new ProcessOptions(stripExecutable)
+        {
+            Arguments = string.Join(" ", args),
+            Verbosity = options.Verbosity
+        };
+        var exitCode = Process.Execute(processOptions);
         
         if (exitCode != 0)
         {

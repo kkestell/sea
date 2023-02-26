@@ -1,75 +1,93 @@
-using System.Text.RegularExpressions;
+#region
+
 using Spectre.Console;
+
+#endregion
 
 namespace Sea;
 
+class ProcessOptions
+{
+    public ProcessOptions(string fileName)
+    {
+        FileName = fileName;
+    }
+    
+    public string FileName { get; set; }
+
+    public string Arguments { get; set; } = string.Empty;
+
+    public Dictionary<string, string>? Environment { get; set; } = new();
+
+    public int Timeout { get; set; } = 999999;
+
+    public VerbosityLevel Verbosity { get; set; } = VerbosityLevel.Normal;
+}
+
 internal static partial class Process
 {
-    public static int Execute(string fileName, string arguments, IEnumerable<KeyValuePair<string, string>>? environment = null, int timeout = 99999999, VerbosityLevel verbosity = VerbosityLevel.Normal)
+    public static int Execute(ProcessOptions options)
     {
-        var status = AnsiConsole.Status();
-
-        status.Start(fileName, ctx =>
+        if (options.Verbosity >= VerbosityLevel.Detailed)
         {
-            var process = new System.Diagnostics.Process();
-                
-            process.StartInfo.FileName = fileName;
-            process.StartInfo.Arguments = arguments;
-
-            if (verbosity == VerbosityLevel.Diagnostic)
-            {
-                AnsiConsole.Write(new Padder(new Markup($"Executing [bold]{fileName}[/] [dim]{arguments}[/]")).Padding(0, 0, 0, 1));
-            }
-
-            if (environment is not null)
-            {
-                foreach (var (key, value) in environment)
-                {
-                    process.StartInfo.EnvironmentVariables[key] = value;
-                }
-            }
-
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-
-            process.OutputDataReceived += (_, e) =>
-            {
-                if (e.Data is null)
-                    return;
-
-                if (verbosity >= VerbosityLevel.Detailed)
-                    AnsiConsole.WriteLine(e.Data);
-            };
-
-            process.ErrorDataReceived += (_, e) =>
-            {
-                if (e.Data is null)
-                    return;
-
-                if (verbosity >= VerbosityLevel.Quiet)
-                    AnsiConsole.WriteLine(e.Data);
-            };
-
-            process.Start();
-
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-
-            if (!process.WaitForExit(timeout))
-                throw new Exception($"Process timed out!: {fileName} {arguments}");
-
-            return process.ExitCode;
-        });
+            AnsiConsole.Status().Start(options.FileName, ctx => { StartProcess(options); });
+        }
+        else
+        {
+            StartProcess(options);
+        }
 
         return 0;
     }
 
-    private static string StripAnsi(string str)
+    private static int StartProcess(ProcessOptions options)
     {
-        return StripAnsiRegex().Replace(str, "");
-    }
+        var process = new System.Diagnostics.Process();
+                
+        process.StartInfo.FileName = options.FileName;
+        process.StartInfo.Arguments = options.Arguments;
 
-    [GeneratedRegex(@"[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]")]
-    private static partial Regex StripAnsiRegex();
+        if (options.Verbosity == VerbosityLevel.Diagnostic)
+            AnsiConsole.Write(new Padder(new Markup($"[dim]Executing {options.FileName} {options.Arguments}[/]")).Padding(0, 0, 0, 1));
+
+        if (options.Environment is not null)
+        {
+            foreach (var (key, value) in options.Environment)
+            {
+                process.StartInfo.EnvironmentVariables[key] = value;
+            }
+        }
+
+        process.StartInfo.UseShellExecute = false;
+        process.StartInfo.RedirectStandardOutput = true;
+        process.StartInfo.RedirectStandardError = true;
+
+        process.OutputDataReceived += (_, e) =>
+        {
+            if (e.Data is null)
+                return;
+
+            if (options.Verbosity >= VerbosityLevel.Detailed)
+                AnsiConsole.WriteLine(e.Data);
+        };
+
+        process.ErrorDataReceived += (_, e) =>
+        {
+            if (e.Data is null)
+                return;
+
+            if (options.Verbosity >= VerbosityLevel.Quiet)
+                AnsiConsole.WriteLine(e.Data);
+        };
+
+        process.Start();
+
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+
+        if (!process.WaitForExit(options.Timeout))
+            throw new Exception($"Process timed out!: {options.FileName} {options.Arguments}");
+
+        return process.ExitCode;
+    }
 }

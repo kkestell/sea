@@ -1,7 +1,11 @@
-﻿using System.Text;
+﻿#region
+
+using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Spectre.Console;
+
+#endregion
 
 namespace Sea;
 

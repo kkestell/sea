@@ -1,5 +1,8 @@
-﻿using System.Diagnostics;
+﻿#region
+
 using Spectre.Console;
+
+#endregion
 
 namespace Sea;
 

@@ -78,16 +78,21 @@ internal class Linker
                 $"{Path.GetFileNameWithoutExtension(options.ObjectFile.Name)}.link.rsp"));
             File.WriteAllLines(argFile.FullName, args);
 
-            var linkerCommand = @"C:\Windows\System32\cmd.exe";
-            var linkerArguments =
-                @$"/c """"C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VsDevCmd.bat"" && link.exe @{argFile.FullName}""";
+            var linkerExecutable = @"C:\Windows\System32\cmd.exe";
+            var linkerArguments = @$"/c """"C:\Program Files\Microsoft Visual Studio\2022\Preview\Common7\Tools\VsDevCmd.bat"" && link.exe @{argFile.FullName}""";
             var linkerEnvironment = new Dictionary<string, string>
             {
                 { "__VSCMD_ARG_NO_LOGO", "0" },
                 { "VSCMD_SKIP_SENDTELEMETRY", "1" }
             };
 
-            Process.Execute(linkerCommand, linkerArguments, linkerEnvironment, verbosity: options.Verbosity);
+            var processOptions = new ProcessOptions(linkerExecutable)
+            {
+                Arguments = linkerArguments,
+                Environment = linkerEnvironment,
+                Verbosity = options.Verbosity
+            };
+            Process.Execute(processOptions);
         }
         else
         {
@@ -173,7 +178,12 @@ internal class Linker
             var linkerExecutable = "clang";
             var linkerArguments = string.Join(" ", args);
 
-            var exitCode = Process.Execute(linkerExecutable, linkerArguments, verbosity: options.Verbosity);
+            var processOptions = new ProcessOptions(linkerExecutable)
+            {
+                Arguments = linkerArguments,
+                Verbosity = options.Verbosity
+            };
+            var exitCode = Process.Execute(processOptions);
             
             if (exitCode != 0)
             {

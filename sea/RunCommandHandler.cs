@@ -1,4 +1,8 @@
-﻿using Spectre.Console;
+﻿#region
+
+using Spectre.Console;
+
+#endregion
 
 namespace Sea;
 
@@ -23,14 +27,13 @@ internal class RunCommandHandler
             if (!Directory.Exists(runOptions.OutputDirectory.FullName))
                 Directory.CreateDirectory(runOptions.OutputDirectory.FullName);
 
-            var ilFile =
-                new FileInfo(Path.Combine(runOptions.OutputDirectory.FullName, $"{runOptions.Assembly}.dll"));
-            
-            var ilGenerator = new ILGenerator(new ILGeneratorOptions(runOptions));
-            ilGenerator.Emit();
-            
-            var runner = new Runner();
-            runner.Run(ilFile);
+            var pipeline = new CompilerPipeline(new List<CompilerStage>
+            {
+                new ILGeneratorStage(new ILGeneratorOptions(runOptions)),
+                new RunnerStage(new RunnerOptions(runOptions))
+            }, runOptions.Verbosity);
+
+            pipeline.Run();
 
             return 0;
         }

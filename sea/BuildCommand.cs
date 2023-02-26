@@ -1,5 +1,9 @@
-﻿using System.CommandLine;
+﻿#region
+
+using System.CommandLine;
 using System.CommandLine.Parsing;
+
+#endregion
 
 namespace Sea;
 
