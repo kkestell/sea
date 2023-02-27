@@ -16,7 +16,7 @@ internal class ILCompiler
         var aotSdkPath = Path.Combine(aotPath, "sdk");
 
         var toolsPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "tools");
-        var ilcExecutable = Path.Combine(toolsPath, Path.Combine("ilc", $"ilc{Platform.ExecutableExtension}"));
+        var ilcExecutable = Path.Combine(toolsPath, $"ilc{Platform.ExecutableExtension}");
 
         var argFile = new FileInfo(Path.ChangeExtension(options.ObjectFile.FullName, "ilc.rsp"));
 

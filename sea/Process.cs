@@ -24,7 +24,7 @@ class ProcessOptions
     public VerbosityLevel Verbosity { get; set; } = VerbosityLevel.Normal;
 }
 
-internal static partial class Process
+internal static class Process
 {
     public static int Execute(ProcessOptions options)
     {

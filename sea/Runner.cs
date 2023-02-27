@@ -13,8 +13,8 @@ internal class Runner
     
     public void Run()
     {
-        var ilcPath = Path.Combine(Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "tools"), "ilc");
-        var fileName = Path.Combine(ilcPath, $"corerun{Platform.ExecutableExtension}");
+        var toolsPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "tools");
+        var fileName = Path.Combine(toolsPath, $"corerun{Platform.ExecutableExtension}");
 
         var args = new List<string>();
 

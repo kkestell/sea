@@ -31,7 +31,7 @@ fi
 
 echo "Copying files..."
 
-mkdir -p "$BUILD_PATH"/third-party/{ref/,tools/ilc,aot/{framework/,sdk/}}
+mkdir -p "$BUILD_PATH"/third-party/{ref/,tools/,aot/{framework/,sdk/}}
 
 REF_FILES=("$SDK_PATH"/packs/Microsoft.NETCore.App.Ref/8.0.0-preview.2.23116.1/ref/net8.0/*.dll)
 cp "${REF_FILES[@]}" "$BUILD_PATH/third-party/ref"
@@ -46,8 +46,8 @@ if [ "$OPERATING_SYSTEM" = "linux" ]; then
     SDK_FILES+=("$DEPS_PATH"/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.a)
     cp "${SDK_FILES[@]}" "$BUILD_PATH/third-party/aot/sdk"
 
-    cp -r "$RUNTIME_PATH"/artifacts/bin/coreclr/linux.x64.Release/ilc/* "$BUILD_PATH/third-party/tools/ilc"
-    cp "$RUNTIME_PATH/artifacts/bin/coreclr/linux.x64.Release/corerun" "$BUILD_PATH/third-party/tools/ilc"
+    cp -r "$RUNTIME_PATH"/artifacts/bin/coreclr/linux.x64.Release/ilc/* "$BUILD_PATH/third-party/tools/"
+    cp "$RUNTIME_PATH/artifacts/bin/coreclr/linux.x64.Release/corerun" "$BUILD_PATH/third-party/tools/"
 
 elif [ "$OPERATING_SYSTEM" = "osx" ]; then
 
@@ -59,8 +59,8 @@ elif [ "$OPERATING_SYSTEM" = "osx" ]; then
     SDK_FILES+=("$DEPS_PATH"/packages/runtime.osx-x64.microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/sdk/*.a)
     cp "${SDK_FILES[@]}" "$BUILD_PATH/third-party/aot/sdk"
 
-    cp -r "$RUNTIME_PATH"/artifacts/bin/coreclr/osx.x64.Release/ilc/* "$BUILD_PATH/third-party/tools/ilc"
-    cp "$RUNTIME_PATH/artifacts/bin/coreclr/osx.x64.Release/corerun" "$BUILD_PATH/third-party/tools/ilc"
+    cp -r "$RUNTIME_PATH"/artifacts/bin/coreclr/osx.x64.Release/ilc/* "$BUILD_PATH/third-party/tools"
+    cp "$RUNTIME_PATH/artifacts/bin/coreclr/osx.x64.Release/corerun" "$BUILD_PATH/third-party/tools"
 
 elif [ "$OPERATING_SYSTEM" = "windows" ]; then
 
@@ -73,8 +73,8 @@ elif [ "$OPERATING_SYSTEM" = "windows" ]; then
     SDK_FILES+=("$DEPS_PATH"/packages/microsoft.dotnet.ilcompiler/8.0.0-preview.2.23116.1/build/NativeAOT.natvis)
     cp "${SDK_FILES[@]}" "$BUILD_PATH/third-party/aot/sdk"
 
-    cp -r "$RUNTIME_PATH"/artifacts/bin/coreclr/windows.x64.Release/ilc/* "$BUILD_PATH/third-party/tools/ilc"
-    cp "$RUNTIME_PATH/artifacts/bin/coreclr/windows.x64.Release/corerun.exe" "$BUILD_PATH/third-party/tools/ilc"
+    cp -r "$RUNTIME_PATH"/artifacts/bin/coreclr/windows.x64.Release/ilc/* "$BUILD_PATH/third-party/tools"
+    cp "$RUNTIME_PATH/artifacts/bin/coreclr/windows.x64.Release/corerun.exe" "$BUILD_PATH/third-party/tools"
 
 fi
 
