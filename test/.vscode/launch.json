@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${env:SEA_ROOT}/third-party/tools/ilc/corerun",
+            "args": ["hello.cil"],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            // FIXME: Why is this necessary?
+            "requireExactSource": false
+        }
+    ]
+}

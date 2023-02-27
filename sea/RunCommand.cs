@@ -27,7 +27,7 @@ internal class RunCommand: Command
         new(new[] { "--optimize", "-O" }, () => Sea.OptimizationMode.Default, "Optimization mode");
 
     public Option<bool> EnableDebugInfo { get; } =
-        new(new[] { "--debug", "-g" }, () => true, "Emit debug information");
+        new(new[] { "--debug", "-g" }, () => true, "Emit debug information and wait for debugger");
 
     public RunCommand() : base("run", "Run a program")
     {

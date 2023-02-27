@@ -3,6 +3,7 @@
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Emit;
 using Spectre.Console;
 
 #endregion
@@ -31,7 +32,7 @@ internal class ILGenerator
         asmInfo.AppendLine("[assembly: AssemblyProduct(\"Foo\")]");
         asmInfo.AppendLine("[assembly: AssemblyInformationalVersion(\"1.3.3.7\")]");
 
-        return CSharpSyntaxTree.ParseText(asmInfo.ToString());
+        return CSharpSyntaxTree.ParseText(asmInfo.ToString(), encoding: Encoding.UTF8);
     }
 
     private SyntaxTree GlobalUsings()
@@ -40,7 +41,7 @@ internal class ILGenerator
 
         asmInfo.AppendLine("global using System;");
 
-        return CSharpSyntaxTree.ParseText(asmInfo.ToString());
+        return CSharpSyntaxTree.ParseText(asmInfo.ToString(), encoding: Encoding.UTF8);
     }
 
     public void Emit()
@@ -53,7 +54,7 @@ internal class ILGenerator
             optimizationLevel: optimizationLevel);
 
         var syntaxTrees = options.InputFiles
-            .Select(x => CSharpSyntaxTree.ParseText(File.ReadAllText(x.FullName), options: null, path: x.FullName))
+            .Select(x => CSharpSyntaxTree.ParseText(File.ReadAllText(x.FullName), options: null, path: x.FullName, encoding: Encoding.UTF8))
             .Concat(new [] { AssemblyInfo(), GlobalUsings() });
 
         var refPath = Path.Combine(Path.Combine(Platform.RootPath.FullName, "third-party"), "ref");
@@ -249,7 +250,8 @@ internal class ILGenerator
 
         using var stream = File.OpenWrite(options.ILFile.FullName);
 
-        var result = compilation.Emit(stream);
+        var emitOptions = new EmitOptions(debugInformationFormat: DebugInformationFormat.Embedded, defaultSourceFileEncoding: Encoding.UTF8, fallbackSourceFileEncoding: Encoding.UTF8);
+        var result = compilation.Emit(stream, options: emitOptions);
 
         if (options.Verbosity >= VerbosityLevel.Quiet)
         {

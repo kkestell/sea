@@ -88,5 +88,12 @@ internal class BuildOptions
         AnsiConsole.MarkupLine($"[bold]Invariant Culture[/] {InvariantCulture.ToString()}");
         AnsiConsole.MarkupLine($"[bold]Strip[/]             {InvariantCulture.ToString()}");
         AnsiConsole.MarkupLine($"[bold]Verbosity[/]         {Verbosity.ToString()}");
+        
+        AnsiConsole.WriteLine();
+        AnsiConsole.MarkupLine($"[bold]SEA_ROOT[/]          {Environment.GetEnvironmentVariable("SEA_ROOT") ?? string.Empty}");
+        AnsiConsole.MarkupLine($"[bold]RootPath[/]          {Platform.RootPath.FullName}");
+        AnsiConsole.MarkupLine($"[bold]ILFile[/]            {ILFile.FullName}");
+        AnsiConsole.MarkupLine($"[bold]ObjectFile[/]        {ObjectFile.FullName}");
+        AnsiConsole.MarkupLine($"[bold]ExecutableFile[/]    {ExecutableFile.FullName}");
     }
 }
