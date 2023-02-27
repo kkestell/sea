@@ -42,6 +42,7 @@ export ZIP_PATH="$DEPS_PATH/zip"
 export META_PATH="$ROOT_PATH/meta"
 export BUILD_PATH="$ROOT_PATH/build"
 export RELEASE_PATH="$ROOT_PATH/release"
+export INSTALLER_PATH="$ROOT_PATH/installer"
 
 sea_version=$(git rev-parse --short HEAD)
 export SEA_VERSION=$sea_version
