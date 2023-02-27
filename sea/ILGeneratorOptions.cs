@@ -18,7 +18,15 @@ internal class ILGeneratorOptions
         Assembly = runOptions.Assembly;
         OptimizationMode = runOptions.OptimizationMode;
         ILFile = runOptions.ILFile;
-        PDBFile = new FileInfo(Path.ChangeExtension(ILFile.FullName, "pdb"));
+    }
+
+    public ILGeneratorOptions(GenerateOptions generateOptions)
+    {
+        Verbosity = generateOptions.Verbosity;
+        InputFiles = generateOptions.InputFiles;
+        Assembly = generateOptions.Assembly;
+        OptimizationMode = generateOptions.OptimizationMode;
+        ILFile = generateOptions.OutputFile;
     }
     
     public VerbosityLevel Verbosity { get; }
@@ -30,6 +38,4 @@ internal class ILGeneratorOptions
     public OptimizationMode OptimizationMode { get; }
     
     public FileInfo ILFile { get; }
-
-    public FileInfo PDBFile { get; }
 }

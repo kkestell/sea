@@ -38,7 +38,7 @@ internal class BuildOptions
     public DirectoryInfo OutputDirectory => new(OutputFile.DirectoryName!);
 
     public FileInfo ILFile =>
-        new(Path.Combine(OutputDirectory.FullName, $"{Assembly}.cil"));
+        new(Path.Combine(OutputDirectory.FullName, $"{Assembly}.dll"));
     
     public FileInfo ObjectFile =>
         new(Path.Combine(OutputDirectory.FullName, $"{Assembly}{Platform.ObjectExtension}"));

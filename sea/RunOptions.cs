@@ -31,7 +31,7 @@ internal class RunOptions
 
     public DirectoryInfo OutputDirectory { get; }
     
-    public FileInfo ILFile => new(Path.Combine(OutputDirectory.FullName, $"{Assembly}.cil"));
+    public FileInfo ILFile => new(Path.Combine(OutputDirectory.FullName, $"{Assembly}.dll"));
 
     public IEnumerable<FileInfo> InputFiles { get; }
 

@@ -5,9 +5,11 @@ deps
 *.o
 *.obj
 *.rsp
-test/*.exe
+test/*
+!test/hello.cs
 sea/bin/*
 sea/obj/*
 build
 release/*
 .vs
+.DS_Store

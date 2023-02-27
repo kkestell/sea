@@ -7,7 +7,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${env:SEA_ROOT}/third-party/tools/corerun",
-            "args": ["hello.cil"],
+            "args": ["hello.dll"],
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
             // FIXME: Why is this necessary?
