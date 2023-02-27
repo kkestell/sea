@@ -11,6 +11,9 @@ internal class Stripper
 
     public void Run()
     {
+        if (Platform.OperatingSystem == OperatingSystem.Windows)
+            return;
+
         var stripExecutable = "strip";
 
         var args = new List<string>

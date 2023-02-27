@@ -3,7 +3,9 @@ deps
 *.dll
 *.pdb
 *.o
+*.obj
 *.rsp
+test/*.exe
 sea/bin/*
 sea/obj/*
 build
