@@ -43,23 +43,23 @@ internal class RunOptions
 
     public void PrintDiagnostics()
     {
-        var msg = new Rule($"[cyan bold]Sea Run[/]")
+        var msg = new Rule($"[bold]Sea Run[/]")
         {
-            Style = Style.Parse("cyan"),
+            Style = Style.Parse("bold"),
             Justification = Justify.Left
         };
         
         AnsiConsole.Write(new Padder(msg).Padding(1, 1));
         
-        AnsiConsole.MarkupLine($"[bold]Input Files[/]  {string.Join(Environment.NewLine, InputFiles.Select(x => x.FullName))}");
-        AnsiConsole.MarkupLine($"[bold]Assembly[/]     {Assembly}");
-        AnsiConsole.MarkupLine($"[bold]Debug[/]        {Debug.ToString()}");
-        AnsiConsole.MarkupLine($"[bold]Optimization[/] {OptimizationMode.ToString()}");
-        AnsiConsole.MarkupLine($"[bold]Verbosity[/]    {Verbosity.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Input Files[/]  {string.Join(Environment.NewLine, InputFiles.Select(x => x.FullName))}");
+        AnsiConsole.MarkupLine($"[dim]Assembly[/]     {Assembly}");
+        AnsiConsole.MarkupLine($"[dim]Debug[/]        {Debug.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Optimization[/] {OptimizationMode.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Verbosity[/]    {Verbosity.ToString()}");
 
         AnsiConsole.WriteLine();
-        AnsiConsole.MarkupLine($"[bold]SEA_ROOT[/]     {Environment.GetEnvironmentVariable("SEA_ROOT") ?? string.Empty}");
-        AnsiConsole.MarkupLine($"[bold]RootPath[/]     {Platform.RootPath.FullName}");
-        AnsiConsole.MarkupLine($"[bold]ILFile[/]       {ILFile.FullName}");
+        AnsiConsole.MarkupLine($"[dim]SEA_ROOT[/]     {Environment.GetEnvironmentVariable("SEA_ROOT") ?? string.Empty}");
+        AnsiConsole.MarkupLine($"[dim]RootPath[/]     {Platform.RootPath.FullName}");
+        AnsiConsole.MarkupLine($"[dim]ILFile[/]       {ILFile.FullName}");
     }
 }

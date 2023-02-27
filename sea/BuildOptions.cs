@@ -68,32 +68,32 @@ internal class BuildOptions
 
     public void PrintDiagnostics()
     {
-        var msg = new Rule($"[cyan bold]Sea Build[/]")
+        var msg = new Rule($"[bold]Sea Build[/]")
         {
-            Style = Style.Parse("cyan"),
+            Style = Style.Parse("bold"),
             Justification = Justify.Left
         };
         
         AnsiConsole.Write(new Padder(msg).Padding(1, 1));
         
-        AnsiConsole.MarkupLine($"[bold]Input Files[/]       {string.Join(Environment.NewLine, InputFiles.Select(x => x.FullName))}");
-        AnsiConsole.MarkupLine($"[bold]Output File[/]       {OutputFile.FullName}");
-        AnsiConsole.MarkupLine($"[bold]Assembly[/]          {Assembly}");
-        AnsiConsole.MarkupLine($"[bold]Target Arch[/]       {TargetArchitecture.ToString()}");
-        AnsiConsole.MarkupLine($"[bold]Target OS[/]         {TargetOperatingSystem.ToString()}");
-        AnsiConsole.MarkupLine($"[bold]Debug[/]             {Debug.ToString()}");
-        AnsiConsole.MarkupLine($"[bold]Optimization[/]      {OptimizationMode.ToString()}");
-        AnsiConsole.MarkupLine($"[bold]Reflection[/]        {Reflection.ToString()}");
-        AnsiConsole.MarkupLine($"[bold]Stack Traces[/]      {StackTrace.ToString()}");
-        AnsiConsole.MarkupLine($"[bold]Invariant Culture[/] {InvariantCulture.ToString()}");
-        AnsiConsole.MarkupLine($"[bold]Strip[/]             {InvariantCulture.ToString()}");
-        AnsiConsole.MarkupLine($"[bold]Verbosity[/]         {Verbosity.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Input Files[/]       {string.Join(Environment.NewLine, InputFiles.Select(x => x.FullName))}");
+        AnsiConsole.MarkupLine($"[dim]Output File[/]       {OutputFile.FullName}");
+        AnsiConsole.MarkupLine($"[dim]Assembly[/]          {Assembly}");
+        AnsiConsole.MarkupLine($"[dim]Target Arch[/]       {TargetArchitecture.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Target OS[/]         {TargetOperatingSystem.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Debug[/]             {Debug.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Optimization[/]      {OptimizationMode.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Reflection[/]        {Reflection.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Stack Traces[/]      {StackTrace.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Invariant Culture[/] {InvariantCulture.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Strip[/]             {InvariantCulture.ToString()}");
+        AnsiConsole.MarkupLine($"[dim]Verbosity[/]         {Verbosity.ToString()}");
         
         AnsiConsole.WriteLine();
-        AnsiConsole.MarkupLine($"[bold]SEA_ROOT[/]          {Environment.GetEnvironmentVariable("SEA_ROOT") ?? string.Empty}");
-        AnsiConsole.MarkupLine($"[bold]RootPath[/]          {Platform.RootPath.FullName}");
-        AnsiConsole.MarkupLine($"[bold]ILFile[/]            {ILFile.FullName}");
-        AnsiConsole.MarkupLine($"[bold]ObjectFile[/]        {ObjectFile.FullName}");
-        AnsiConsole.MarkupLine($"[bold]ExecutableFile[/]    {ExecutableFile.FullName}");
+        AnsiConsole.MarkupLine($"[dim]SEA_ROOT[/]          {Environment.GetEnvironmentVariable("SEA_ROOT") ?? string.Empty}");
+        AnsiConsole.MarkupLine($"[dim]RootPath[/]          {Platform.RootPath.FullName}");
+        AnsiConsole.MarkupLine($"[dim]ILFile[/]            {ILFile.FullName}");
+        AnsiConsole.MarkupLine($"[dim]ObjectFile[/]        {ObjectFile.FullName}");
+        AnsiConsole.MarkupLine($"[dim]ExecutableFile[/]    {ExecutableFile.FullName}");
     }
 }

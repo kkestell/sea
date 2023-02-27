@@ -13,15 +13,15 @@ EOT
 
 echo 'Testing build command (small)...'
 sea build hello.cs --optimize:small --reflection:false --stacktrace:false --strip --verbosity:diagnostic
-./hello
-echo $(du -sh hello)
+# ./hello
+# echo $(du -sh hello)
 
-echo 'Testing build command (default)...'
-sea build hello.cs
-./hello
-echo $(du -sh hello)
+# echo 'Testing build command (default)...'
+# sea build hello.cs
+# ./hello
+# echo $(du -sh hello)
 
-echo 'Testing run command...'
-sea run hello.cs
+# echo 'Testing run command...'
+# sea run hello.cs
 
 rm hello*

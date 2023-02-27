@@ -33,9 +33,9 @@ internal class CompilerPipeline
         {
             if (verbosity >= VerbosityLevel.Detailed)
             {
-                var msg = new Rule($"[cyan bold]{stage.Name}[/]")
+                var msg = new Rule($"[bold]{stage.Name}[/]")
                 {
-                    Style = Style.Parse("cyan"),
+                    Style = Style.Parse("bold"),
                     Justification = Justify.Left
                 };
             
@@ -51,9 +51,9 @@ internal class CompilerPipeline
     
     public void PrintDiagnostics()
     {
-        var msg = new Rule("[cyan bold]Diagnostics[/]")
+        var msg = new Rule("[bold]Diagnostics[/]")
         {
-            Style = Style.Parse("cyan"),
+            Style = Style.Parse("bold"),
             Justification = Justify.Left
         };
 

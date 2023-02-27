@@ -30,7 +30,12 @@ internal static class Process
     {
         if (options.Verbosity >= VerbosityLevel.Detailed)
         {
-            AnsiConsole.Status().Start(options.FileName, ctx => { StartProcess(options); });
+            AnsiConsole.Status()
+                .SpinnerStyle(Style.Parse("dim"))
+                .Start($"[dim]{options.FileName}[/]", ctx =>
+                {
+                    StartProcess(options);
+                });
         }
         else
         {
