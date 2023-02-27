@@ -11,4 +11,3 @@ sea/obj/*
 build
 release/*
 .vs
-installer/nsis/*

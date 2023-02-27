@@ -21,10 +21,10 @@ cp "$META_PATH/third-party/LICENSE.txt" "$BUILD_PATH/third-party/LICENSE.txt"
 
 if [ "$OPERATING_SYSTEM" = "windows" ]; then
     echo "Creating installer..."
-    if [ ! -d "$INSTALLER_PATH/nsis" ]; then
-        "$ZIP" x "$INSTALLER_PATH/nsis.7z" -o"$INSTALLER_PATH"
+    if [ ! -d "$DEPS_PATH/nsis" ]; then
+        "$ZIP" x "$INSTALLER_PATH/nsis.7z" -o"$DEPS_PATH"
     fi
-    "$INSTALLER_PATH/nsis/makensis.exe" -NOCD -V0 -DVERSION="$SEA_VERSION" "$INSTALLER_PATH"/sea.nsi
+    "$DEPS_PATH/nsis/makensis.exe" -NOCD -V0 -DVERSION="$SEA_VERSION" "$INSTALLER_PATH"/sea.nsi
 fi
 
 ARCHIVE="$RELEASE_PATH/sea-$SEA_VERSION-$OPERATING_SYSTEM-$ARCHITECTURE.7z"
