@@ -5,8 +5,6 @@ deps
 *.o
 *.obj
 *.rsp
-test/*
-!test/hello.cs
 sea/bin/*
 sea/obj/*
 build

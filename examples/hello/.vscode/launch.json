@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${env:SEA_ROOT}/third-party/tools/corerun",
+      "args": [
+        "hello.dll"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      // FIXME: Why does it think the source is different?
+      "requireExactSource": false
+    }
+  ]
+}
