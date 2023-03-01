@@ -1,8 +1,4 @@
-#region
-
 using Spectre.Console;
-
-#endregion
 
 namespace Sea;
 

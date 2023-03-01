@@ -13,16 +13,16 @@ EOT
 
 echo 'Testing build command (small)...'
 sea build "$ROOT_PATH"/examples/hello/hello.cs --optimize:small --reflection:false --stacktrace:false --strip --verbosity:diagnostic
-# ./hello
-# echo $(du -sh hello)
+./examples/hello/hello
+echo $(du -sh ./examples/hello/hello)
 
-# echo 'Testing build command (default)...'
-# sea build hello.cs
-# ./hello
-# echo $(du -sh hello)
+echo 'Testing build command (default)...'
+sea build "$ROOT_PATH"/examples/hello/hello.cs
+./examples/hello/hello
+echo $(du -sh ./examples/hello/hello)
 
-# echo 'Testing run command...'
-# sea run hello.cs
+echo 'Testing run command...'
+sea run "$ROOT_PATH"/examples/hello/hello.cs
 
 rm "$ROOT_PATH"/examples/hello/hello.dll
 rm "$ROOT_PATH"/examples/hello/hello.ilc.rsp
