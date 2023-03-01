@@ -46,9 +46,19 @@ export INSTALLER_PATH="$ROOT_PATH/installer"
 
 sea_version=$(git rev-parse --short HEAD)
 export SEA_VERSION=$sea_version
+
 export CONFIGURATION=Release
 export OPERATING_SYSTEM=$os
 export ARCHITECTURE=x64
+
+export PUBLISH_PATH="$ROOT_PATH/sea/bin/Release/net8.0/$OPERATING_SYSTEM-$ARCHITECTURE/publish"
+
+if [ "$OPERATING_SYSTEM" == "windows" ]; then
+    publish_filename="Sea.exe"
+else
+    publish_filename="Sea"
+fi
+export PUBLISH_FILENAME=$publish_filename
 
 # echo "ROOT_PATH=$ROOT_PATH"
 # echo "DEPS_PATH=$DEPS_PATH"

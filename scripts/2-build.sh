@@ -4,11 +4,11 @@ set -euo pipefail
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 source "$SCRIPT_PATH/vars.sh"
 
+mkdir -p "$BUILD_PATH"/third-party/{ref/,tools/,aot/{framework/,sdk/}}
+
 if [ ! -d "$RUNTIME_PATH/artifacts" ]; then
     echo "Building CoreCLR..."
     "$RUNTIME_PATH/build.sh" -subset clr -c $CONFIGURATION
-else
-    echo "CoreCLR already built."
 fi
 
 # Sea
@@ -17,21 +17,15 @@ DOTNET_ROOT="$SDK_PATH"
 PATH="$DOTNET_ROOT:$BUILD_PATH:$PATH"
 export NUGET_PACKAGES="$DEPS_PATH/packages"
 
-echo "Building Sea..."
-dotnet build "$ROOT_PATH/sea/sea.csproj" -c Release
+dotnet publish "$ROOT_PATH/sea/Sea.csproj" -c Release -nologo -consoleLoggerParameters:NoSummary -verbosity:quiet
 
-echo "Publishing Sea..."
-dotnet publish "$ROOT_PATH/sea/sea.csproj" -o "$BUILD_PATH" -c Release
+cp "$PUBLISH_PATH/$PUBLISH_FILENAME" "$BUILD_PATH/sea"
 
 if [ "$OPERATING_SYSTEM" != "windows" ]; then
     strip "$BUILD_PATH"/sea
 fi
 
 # Third-Party
-
-echo "Copying files..."
-
-mkdir -p "$BUILD_PATH"/third-party/{ref/,tools/,aot/{framework/,sdk/}}
 
 REF_FILES=("$SDK_PATH"/packs/Microsoft.NETCore.App.Ref/8.0.0-preview.2.23116.1/ref/net8.0/*.dll)
 cp "${REF_FILES[@]}" "$BUILD_PATH/third-party/ref"

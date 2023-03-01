@@ -5,18 +5,22 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>sea</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
     <PublishAot>true</PublishAot>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <!-- Supress "Delete explicit 'Microsoft.DotNet.ILCompiler' package reference in your project file. Explicit 'Microsoft.DotNet.ILCompiler' package reference can run into version errors." -->
+    <SuppressGenerateILCompilerExplicitPackageReferenceWarning>true</SuppressGenerateILCompilerExplicitPackageReferenceWarning>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis" Version="4.5.0-2.final" />
     <PackageReference Include="Spectre.Console" Version="0.46.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
-    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" NoWarn="" />
     <PackageReference Include="runtime.linux-x64.Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />
     <PackageReference Include="runtime.win-x64.Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />
     <PackageReference Include="runtime.osx-x64.Microsoft.DotNet.ILCompiler" Version="8.0.0-preview.2.23116.1" />

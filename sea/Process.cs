@@ -2,24 +2,6 @@ using Spectre.Console;
 
 namespace Sea;
 
-class ProcessOptions
-{
-    public ProcessOptions(string fileName)
-    {
-        FileName = fileName;
-    }
-    
-    public string FileName { get; set; }
-
-    public string Arguments { get; set; } = string.Empty;
-
-    public Dictionary<string, string>? Environment { get; set; } = new();
-
-    public int Timeout { get; set; } = 999999;
-
-    public VerbosityLevel Verbosity { get; set; } = VerbosityLevel.Normal;
-}
-
 internal static class Process
 {
     public static int Execute(ProcessOptions options)

@@ -37,7 +37,7 @@ Create 7z archives and installers.
 ### Special Scripts
 
 <tt>[scripts/sea.sh](scripts/sea.sh)</tt><br>
-Equivalent to `dotnet run --project sea/sea.csproj` using the SDK that was downloaded when building the .NET runtime, with `SEA_ROOT` pointed at `build/`.
+Equivalent to `dotnet run --project sea/Sea.csproj` using the SDK that was downloaded when building the .NET runtime, with `SEA_ROOT` pointed at `build/`.
 
 ## Native Builds
 

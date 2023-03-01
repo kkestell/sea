@@ -39,4 +39,4 @@ DOTNET_ROOT="$SDK_PATH"
 PATH="$DOTNET_ROOT:$BUILD_PATH:$PATH"
 export NUGET_PACKAGES="$DEPS_PATH/packages"
 
-dotnet restore "$ROOT_PATH/sea/sea.csproj"
+dotnet restore "$ROOT_PATH/sea/Sea.csproj"
