@@ -1,27 +1,37 @@
 # Sea
 
-* https://github.com/dotnet/runtime/tree/main/docs/design/coreclr/botr
-* https://github.com/dotnet/runtime/blob/main/docs/design/coreclr/botr/ilc-architecture.md
-* https://github.com/dotnet/runtime/blob/main/docs/workflow/testing/using-corerun-and-coreroot.md
-* https://github.com/dotnet/runtime/blob/main/src/coreclr/nativeaot/BuildIntegration/Microsoft.NETCore.Native.targets
+Compile C# to native code with [Roslyn](https://github.com/dotnet/roslyn/tree/main/src/Compilers/CSharp/csc) and [Native AOT](https://github.com/dotnet/runtime/tree/main/src/coreclr/tools/aot/ILCompiler). No .NET CLI, MSBuild, or Visual Studio necessary.
 
-## Build Dependencies
-
-### Ubuntu
+This is an experiment.
 
 ```console
-$ sudo apt install build-essential clang cmake curl git libicu-dev libkrb5-dev liblttng-ust-dev libnuma-dev libssl-dev lld lldb llvm ninja-build python-is-python3 unzip wget zlib1g-dev
+$ echo 'Console.WriteLine("Hello World!");' > hello.cs
+
+$ sea run hello.cs
+Hello World!
+
+$ sea build hello.cs
+
+$ ./hello
+Hello World!
 ```
 
-### macOS
+## Supported Platforms
 
-```command
-$ brew install ninja icu4c wget
-```
+| Platform         | X64 | ARM64 |
+| ---------------- | --- | ----- |
+| Linux¹           | :heavy_check_mark: | :white_check_mark: |          
+| macOS²           | :heavy_check_mark: | :white_check_mark: |          
+| Windows³         | :heavy_check_mark: | :x: |
 
-### Windows
+:heavy_check_mark: Supported<br>
+:white_check_mark: Planned<br>
+:x: Not Planned
 
-* [MSYS2](https://www.msys2.org/)
-  * `pacman -Sy git unzip`
-* Visual Studio 2022 Preview
-  * Install required workloads and components using the [.vsconfig](https://github.com/dotnet/runtime/blob/release/8.0-preview1/.vsconfig) from [dotnet/runtime](https://github.com/dotnet/runtime).
+1. Tested on Ubuntu 20.04
+2. Tested on macOS 11.7.3 (Big Sur)
+3. Tested on Windows 10 22H2
+
+## Building
+
+See [CONTRIBUTING.md](CONTRIBUTING.md)
