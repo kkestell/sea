@@ -48,9 +48,9 @@
 													<key>GID</key>
 													<integer>80</integer>
 													<key>PATH</key>
-													<string>/Users/kyle/Projects/sea/build/LICENSE.txt</string>
+													<string>LICENSE.txt</string>
 													<key>PATH_TYPE</key>
-													<integer>0</integer>
+													<integer>3</integer>
 													<key>PERMISSIONS</key>
 													<integer>420</integer>
 													<key>TYPE</key>
@@ -64,9 +64,9 @@
 													<key>GID</key>
 													<integer>80</integer>
 													<key>PATH</key>
-													<string>/Users/kyle/Projects/sea/build/README.md</string>
+													<string>README.md</string>
 													<key>PATH_TYPE</key>
-													<integer>0</integer>
+													<integer>3</integer>
 													<key>PERMISSIONS</key>
 													<integer>420</integer>
 													<key>TYPE</key>
@@ -80,9 +80,9 @@
 													<key>GID</key>
 													<integer>80</integer>
 													<key>PATH</key>
-													<string>/Users/kyle/Projects/sea/build/sea</string>
+													<string>sea</string>
 													<key>PATH_TYPE</key>
-													<integer>0</integer>
+													<integer>3</integer>
 													<key>PERMISSIONS</key>
 													<integer>493</integer>
 													<key>TYPE</key>
@@ -96,9 +96,9 @@
 													<key>GID</key>
 													<integer>80</integer>
 													<key>PATH</key>
-													<string>/Users/kyle/Projects/sea/build/third-party</string>
+													<string>third-party</string>
 													<key>PATH_TYPE</key>
-													<integer>0</integer>
+													<integer>3</integer>
 													<key>PERMISSIONS</key>
 													<integer>493</integer>
 													<key>TYPE</key>
@@ -533,9 +533,9 @@
 				<key>POSTINSTALL_PATH</key>
 				<dict>
 					<key>PATH</key>
-					<string>/Users/kyle/Projects/sea/installer/add_to_path.sh</string>
+					<string>../installer/add_to_path.sh</string>
 					<key>PATH_TYPE</key>
-					<integer>0</integer>
+					<integer>3</integer>
 				</dict>
 				<key>PREINSTALL_PATH</key>
 				<dict>
@@ -949,6 +949,8 @@
 			<string>sea-0.1.0-osx-x64</string>
 			<key>PAYLOAD_ONLY</key>
 			<false/>
+			<key>REFERENCE_FOLDER_PATH</key>
+			<string>/Users/kyle/Projects/sea/build</string>
 			<key>TREAT_MISSING_PRESENTATION_DOCUMENTS_AS_WARNING</key>
 			<false/>
 		</dict>
